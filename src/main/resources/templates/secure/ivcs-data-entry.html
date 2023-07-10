@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:include="layouts/adminlayout.html">
+
+<body>
+
+  <div class="container-fluid" th:fragment="content">
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <form th:action="@{/secure/ivcs-data-entry}" th:object="${ivcsDataEntryDTO}" method="POST">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title text-center">Rural Finance Format for collecting Village-wise data on IVCS</h3>
+              <div class="form-body">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="mb-3">Select IVCSLTD </label>
+
+                      <div class="form-group mb-3">
+                        <select name="ivcs" class="form-control" id="ivcs">
+                          <option th:each="ivcs : ${ivcsList}" th:value='${ivcs.id}' th:text="${ivcs.name}">
+                          </option>
+                        </select>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <label class="mb-3">Select Villages </label>
+
+                      <div class="form-group mb-3">
+                        <select name="villages" class="form-control" id="villages" th:field="*{villageId}">
+
+                        </select>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div><!-- FORM BODY END  -->
+            </div><!-- CARD BODY END  -->
+          </div>
+        </div>
+      </div><!-- First ROW END  -->
+      <!-- ============================================================== -->
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title mt-4 mb-4">A. HH coverage:</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered" id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Whether Single, Main or Associate village
+                      </th>
+                      <th class="text-center">
+                        Distance from Main Village (in kms.)
+                      </th>
+                      <th class="text-center">
+                        No. of HHs in the village
+                      </th>
+                      <th class="text-center">
+                        No. of HHs covered by IVCS
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='smav[]' th:field="*{typeOfAssociatedVillage}" placeholder='Single, Main or Associate'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='distance[]' th:field="*{distanceFromVillage}"
+                          placeholder='from Main Village (in kms.)' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='hhv[]' th:field="*{noOfHH}" placeholder='HHs in the village'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='hhivcs[]' th:field="*{noOfHHCovered}"
+                          placeholder='HHs covered by IVCS' class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h4 class="card-title mt-5 mb-4">B. Representation in the Managing Committee (MC):</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered" id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Male
+                      </th>
+                      <th class="text-center">
+                        Female
+                      </th>
+                      <th class="text-center">
+                        Total
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='male[]' th:field="*{noOfMaleMc}" placeholder='Enter Male' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='female[]' th:field="*{noOfFemaleMc}" placeholder='Enter Female'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='total[]' th:field="*{totalMc}" placeholder='Total'
+                          class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h4 class="card-title mt-5 mb-4">C. Shareholding in the IVCS</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered" id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Male
+                      </th>
+                      <th class="text-center">
+                        Female
+                      </th>
+                      <th class="text-center">
+                        SHGs/ Other CBOs
+                      </th>
+                      <th class="text-center">
+                        Total
+                      </th>
+                      <th class="text-center">
+                        No. of Shares subscribed
+                      </th>
+                      <th class="text-center">
+                        Total Amt. of Share Capital mobilised
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='male[]' th:field="*{maleShareHolding}" placeholder='Enter Male' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='female[]' th:field="*{femaleShareHolding}" placeholder='Enter Female'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='shgs[]' th:field="*{SHGShareHolding}" placeholder='Enter SHGs/CBOs'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='total[]' th:field="*{totalShareHolding}" placeholder='Enter total'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='shares[]' th:field="*{noOfSharesSubscribed}"
+                          placeholder='Enter shares' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-shares[]' th:field="*{totalAmountShareMobilized}"
+                          placeholder='Enter total shares' class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h4 class="card-title mt-5 mb-2">D. Deposit mobilisation in the IVCS</h4>
+              <h4 class="card-title mb-4">D.1. Savings A/c</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered  " id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Male
+                      </th>
+                      <th class="text-center">
+                        Female
+                      </th>
+                      <th class="text-center">
+                        SHGs/ Other CBOs
+                      </th>
+                      <th class="text-center">
+                        Joint A/c
+                      </th>
+                      <th class="text-center">
+                        Total No. of Savings A/c
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='male[]' th:field="*{noOfMaleSA}" placeholder='Enter Male' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='female[]' th:field="*{noOfFemaleSA}" placeholder='Enter Female'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='shgs[]' th:field="*{noOfSHGSA}" placeholder='Enter SHGs/CBOs'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='jointacc[]' th:field="*{noOfJointSavingAcc}"
+                          placeholder='Enter total' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-saving-acc[]' th:field="*{totalNoOfSAAcc}"
+                          placeholder='Enter shares' class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h4 class="card-title mt-5 mb-4">D.1.1. Savings A/c – Amount of Deposits & withdrawals</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered  " id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Total Amt. of Savings mobilised
+                      </th>
+                      <th class="text-center">
+                        Total Amt. withdrawn
+                      </th>
+                      <th class="text-center">
+                        Balance in Savings A/c
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='t-saving-mob[]' th:field="*{totalAmountOfSavingMobilized}" placeholder='Enter Male' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-amt-withdrawn[]' th:field="*{totalAmountWithdrawn}"
+                          placeholder='Enter Female' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='bal-saving-acc[]' th:field="*{balanceInSavingAccs}"
+                          placeholder='Enter SHGs/CBOs' class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h4 class="card-title mt-5 mb-4">D.2. Fixed Deposits (FD) A/c</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered  " id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Male
+                      </th>
+                      <th class="text-center">
+                        Female
+                      </th>
+                      <th class="text-center">
+                        SHGs/ Other CBOs
+                      </th>
+                      <th class="text-center">
+                        Joint A/c
+                      </th>
+                      <th class="text-center">
+                        Total No. of FD A/c
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='male[]' th:field="*{noOfMaleFD}" placeholder='Enter Male' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='female[]' placeholder='Enter Female' th:field="*{noOfFemaleFD}"
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='shgs[]' placeholder='Enter SHGs/CBOs' th:field="*{noOfSHGFD}"
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='joint-acc[]' placeholder='Enter joint A/C'
+                          th:field="*{noOfJointAccFD}" class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='fd-acc[]' placeholder='total FD' th:field="*{totalNoOfFDAcc}"
+                          class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h4 class="card-title mt-5 mb-4">D.2.1. Fixed Deposits A/c – Amount of Deposits & withdrawals</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered  " id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Total Amt. of FD mobilised
+                      </th>
+                      <th class="text-center">
+                        Total Amt. of FD matured & withdrawn
+                      </th>
+                      <th class="text-center">
+                        Balance in FD A/c
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='t-amt-fd-mob[]' th:field="*{totalAmountOfFDMobilized}" placeholder='Enter Male' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-amt-fd-withdrawn[]' th:field="*{totalAmountFDMatured}"
+                          placeholder='Enter Female' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='bal-fd[]' th:field="*{balanceInFDAccs}" placeholder='Enter SHGs/CBOs'
+                          class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h4 class="card-title mt-5 mb-4">D.3. Recurring Deposits (RD) A/c</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered  " id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Male
+                      </th>
+                      <th class="text-center">
+                        Female
+                      </th>
+                      <th class="text-center">
+                        SHGs/ Other CBOs
+                      </th>
+                      <th class="text-center">
+                        Joint A/c
+                      </th>
+                      <th class="text-center">
+                        Total No. of RD A/c
+                      </th>
+                      <th class="text-center">
+                        Total Amt. of RD mobilised
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='male[]' th:field="*{noOfMaleRA}" placeholder='Enter Male' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='female[]' th:field="*{noOfFemaleRA}" placeholder='Enter Female'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='shgs[]' th:field="*{noOfSHGRA}" placeholder='Enter SHGs/CBOs'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='joint-acc[]' th:field="*{noOfJointRecurringAcc}"
+                          placeholder='Enter joint A/C' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-rd-acc[]' th:field="*{totalNoOfRDAcc}" placeholder='Enter Male'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-amt-rd-mob[]' th:field="*{totalAmountOfRDMobilized}"
+                          placeholder='Enter Female' class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h4 class="card-title mt-5 mb-4">3.1. Recurring Deposits A/c – Amount of Deposits & withdrawals</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered  " id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Total Amt. of RD mobilised
+                      </th>
+                      <th class="text-center">
+                        Total Amt. of RD matured & withdrawn
+                      </th>
+                      <th class="text-center">
+                        Balance in RD A/c
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='t-amt-rd-mob[]' th:field="*{totalAmountOfRDMobilized}" placeholder='Enter Male' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-amt-rd-withdrawn[]' th:field="*{totalRDWithdrawn}"
+                          placeholder='Enter Female' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='bal-rd-acc[]' th:field="*{balanceInRecurringAccs}"
+                          placeholder='Enter SHGs/CBOs' class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h4 class="card-title mt-5 mb-2">E. Disbursement of Loans by the IVCS</h4>
+              <h4 class="card-title mb-4">E.1. Loan A/c in the IVCS</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered  " id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Male
+                      </th>
+                      <th class="text-center">
+                        Female
+                      </th>
+                      <th class="text-center">
+                        SHGs/ Other CBOs
+                      </th>
+                      <th class="text-center">
+                        Total No. of Loans A/c
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='male[]' th:field="*{noOfLoansByMale}" placeholder='Enter Male' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='female[]' th:field="*{noOfLoansByFemale}" placeholder='Enter Female'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='shgs[]' th:field="*{noOfLoansBySHGs}" placeholder='Enter SHGs/CBOs'
+                          class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-loans-acc[]' th:field="*{totalNoOfLoanAcc}"
+                          placeholder='Enter shares' class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+              <h4 class="card-title mb-4">E.1.1 Loan A/c – Amount disbursed & repayment</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered  " id="tab_logic">
+                  <thead class="bg-primary text-white">
+                    <tr>
+                      <th class="text-center">
+                        SN
+                      </th>
+                      <th class="text-center">
+                        Total Amt. of Loan disbursed
+                      </th>
+                      <th class="text-center">
+                        Total Amt. due as on date (Principal + interest)
+                      </th>
+                      <th class="text-center">
+                        Total Amt. repaid
+                      </th>
+                      <th class="text-center">
+                        Total Amt. outstanding
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id='addr0'>
+                      <td>1</td>
+                      <td>
+                        <input type="number" name='t-amt-loan-dis[]' th:field="*{totalNoOfLoanDisbursed}" placeholder='Enter Male' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-amt-loan-due[]' th:field="*{totalAmountDue}"
+                          placeholder='Enter Female' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-amt-loan-repaid[]' th:field="*{totalAmountRepaid}"
+                          placeholder='Enter SHGs/CBOs' class="form-control" />
+                      </td>
+                      <td>
+                        <input type="number" name='t-loans-outstanding[]' th:field="*{totalOutstanding}"
+                          placeholder='Enter shares' class="form-control" />
+                      </td>
+                    </tr>
+                    <tr id='addr1'></tr>
+                  </tbody>
+                 
+                </table>
+              </div>
+
+              <div class="form-actions mt-5">
+                <div class="text-center">
+                  <button type="submit" class="btn btn-info">Submit</button>
+                  <button type="reset" class="btn btn-dark">Reset</button>
+                </div>
+              </div>
+            </div><!-- CARD BODY  -->
+          </div><!-- CARD END  -->
+        </div>
+      </div><!-- ROW END  -->
+    </form>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+
+
+        $("#ivcs").change(function () {
+          $.ajax({
+            type: 'GET',
+            url: "/secure/ivcs/" + $("#ivcs option:selected").val() + "/villagesOperatedIn",
+            success: function (data) {
+
+              $('#villages').empty().append('<option disabled>select</option>');
+              for (villages in data) {
+                $("#villages").append("<option value=" + data[villages].id + ">" + data[villages].name + "</option>");
+              }
+            }
+          });
+        });
+
+        
+      });
+
+
+
+
+    </script>
+  </div>
+
+</body>
+
+</html>

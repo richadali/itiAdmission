@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:include="layouts/adminlayout.html">
+<head>
+    <!-- Include required CSS and JS files -->
+
+</head>
+<body>
+
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+
+<div class="container-fluid" th:fragment="content">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- basic table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <h4 class="card-title">Meritlist Candidates</h4>
+                        <div class="ms-auto">
+                            <!--                            <div class="dropdown sub-dropdown">-->
+                            <!--                                <button class="btn btn-link text-muted dropdown-toggle" type="button"-->
+                            <!--                                        id="dd2" data-bs-toggle="dropdown" aria-haspopup="true"-->
+                            <!--                                        aria-expanded="false">-->
+                            <!--                                    <i data-feather="more-vertical"></i>-->
+                            <!--                                </button>-->
+                            <!--                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd2">-->
+                            <!--                                    <a class="dropdown-item" href="registration">Insert</a>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <form>
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+
+                                    <select id="itiSelect" class="form-select">
+                                        <option selected disabled>Select ITI</option>
+                                        <option th:each="center : ${getCenters}" th:value="${center.centerId}"
+                                                th:text="${center.centerName}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <select id="tradeSelect" class="form-select" disabled>
+                                        <option selected disabled>Select Trade</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select id="phaseSelect" class="form-select" disabled>
+                                        <option selected disabled>Select Phase</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="submit" name="submit" value="View List" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="row mt-5" style="display: none" id="tableContainer">
+
+                        <div class="table-responsive">
+                            <table id="zero_config"
+                                   class="table border table-striped table-bordered table-hover text-nowrap">
+                                <thead class="bg-info text-white">
+                                <tr>
+                                    <th>#</th>
+                                    <th>App No</th>
+                                    <th>Name</th>
+                                    <th>DOB</th>
+                                    <th>Gender</th>
+                                    <th>Address</th>
+                                    <th>Center</th>
+                                    <th>Action</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="border border-info">
+
+                                <!--                                <tr>-->
+                                <!--                                    <td></td>-->
+                                <!--                                    <td></td>-->
+                                <!--                                    <td ></td>-->
+                                <!--                                    <td ></td>-->
+                                <!--                                    <td ></td>-->
+                                <!--                                    <td ></td>-->
+                                <!--                                    <td ></td>-->
+                                <!--                                    <td ></td>-->
+                                <!--                                </tr>-->
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- View Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel"><span id="applicantNameTitle"></span>'s Application
+                    </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>Personal Details:</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="applicationNumber">Application Number</label>
+                                <input id="applicationNumber" class="form-control" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fatherName">Father's Name</label>
+                                <input id="fatherName" class="form-control" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <input id="gender" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <input id="category" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="maritalStatus">Marital Status</label>
+                                <input id="maritalStatus" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input id="email" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobileNumber">Mobile Number</label>
+                                <input id="mobileNumber" class="form-control" readonly>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="centerName">Center Name</label>
+                                <input id="centerName" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="motherName">Mother's Name</label>
+                                <input id="motherName" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input id="dob" class="form-control" readonly>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="tribe">Tribe</label>
+                                <input id="tribe" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="religion">Religion</label>
+                                <input id="religion" class="form-control" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="motherTongue">Mother Tongue</label>
+                                <input id="motherTongue" class="form-control" readonly>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <h4>Address (Permanent):</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="statePerm">State</label>
+                                <input id="statePerm" class="form-control" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="townPerm">Town</label>
+                                <input id="townPerm" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressPerm">Address</label>
+                                <textarea id="addressPerm" class="form-control" readonly></textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="districtPerm">District</label>
+                                <input id="districtPerm" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="pincodePerm">Pincode</label>
+                                <input id="pincodePerm" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <h4>Address (Correspondence):</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="stateCorr">State</label>
+                                <input id="stateCorr" class="form-control" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="townCorr">Town</label>
+                                <input id="townCorr" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressCorr">Address</label>
+                                <textarea id="addressCorr" class="form-control" readonly></textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="districtCorr">District</label>
+                                <input id="districtCorr" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="pincodeCorr">Pincode</label>
+                                <input id="pincodeCorr" class="form-control" readonly>
+                            </div>
+
+                        </div>
+                    </div>
+                    <h4>Bank Details:</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="accountNumber">Account Number</label>
+                                <input id="accountNumber" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="ifscCode">IFSC Code</label>
+                                <input id="ifscCode" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="bankName">Bank Name</label>
+                                <input id="bankName" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+    $(document).ready(function() {
+        // Get references to the select boxes
+        var itiSelect = $('#itiSelect');
+        var tradeSelect = $('#tradeSelect');
+
+        // Add an event listener to the ITI select box
+        itiSelect.on('change', function() {
+            var selectedITI = itiSelect.val();
+            populateTradeSelect(selectedITI);
+        });
+
+        function populateTradeSelect(selectedITI) {
+    // Disable the trade select box
+    tradeSelect.prop('disabled', true);
+
+    // Clear existing options except the first one
+    tradeSelect.find('option:not(:first)').remove();
+
+    // Make an AJAX request to fetch the trades based on the selected ITI
+    $.ajax({
+        url: '/api/getCenterTradesByCenterId/' + selectedITI,
+        method: 'GET',
+        data: { centerId: selectedITI },
+        success: function(response) {
+                    // Process the response and populate the trade select box
+                    response.forEach(function(trade) {
+                        tradeSelect.append($('<option></option>')
+                            .val(trade.id)
+                            .text(trade.tradeId.tradeName));
+                    });
+
+                    // Enable the trade select box
+                    tradeSelect.prop('disabled', false);
+                },
+                error: function() {
+                    console.error('Error fetching trades.');
+                }
+            });
+        }
+    });
+
+
+$(document).ready(function() {
+        var table = $('#zero_config').DataTable({
+        dom: 'Bfrtip',
+            buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'pdfHtml5'
+            ],
+                    "drawCallback": function (settings) {
+                        var api = this.api();
+                        var startIndex = api.context[0]._iDisplayStart;
+                        api.column(0).nodes().each(function (cell, i) {
+                            cell.innerHTML = startIndex + i + 1;
+                        });
+                    }
+        });
+
+    function populateCandidateTable(selectedITI, selectedTrade) {
+        // Clear the table body
+        table.clear().draw();
+
+        // Make an AJAX request to fetch the candidates with the selected ITI and trade
+        $.ajax({
+            url: '/secure/getApplicationByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
+            method: 'GET',
+            success: function(response) {
+                // Process the response and populate the candidate table
+                response.forEach(function(candidate, index) {
+                    var row = [
+                        index + 1, // Index column
+                        '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
+                        candidate.applicantname,
+                        candidate.dob,
+                        candidate.gender.genderName,
+                        candidate.addressperm,
+                        candidate.centers.centerName,
+                        '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>',
+                        '<button onclick="editApplicant(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>'
+                    ];
+                    table.row.add(row).draw(false);
+                    var tableContainer = document.getElementById("tableContainer");
+                    tableContainer.style.display = "block";
+                });
+            },
+            error: function() {
+                console.error('Error fetching candidates.');
+            }
+        });
+    }
+
+    // Add an event listener to the form submission
+    $('form').on('submit', function(event) {
+        event.preventDefault();
+
+        var selectedITI = $('#itiSelect').val();
+        var selectedTrade = $('#tradeSelect').val();
+        populateCandidateTable(selectedITI, selectedTrade);
+    });
+});
+
+
+    function abc(id) {
+        console.log("inside abc");
+        $.ajax({
+            type: "GET",
+            url: "/secure/application_no/" + id,
+            success: function (data) {
+                $("#applicationNumber").val(data.applicationnumber);
+                $("#centerName").val(data.centers.centerName);
+                var applicantName = data.applicantname;
+                document.getElementById("applicantNameTitle").textContent = applicantName;
+                $("#fatherName").val(data.fathername);
+                $("#motherName").val(data.mothername);
+                $("#gender").val(data.gender.genderName);
+                $("#dob").val(data.dob);
+                $("#category").val(data.categories.categoryName);
+                $("#religion").val(data.religions.religionName);
+
+                // Check if tribes object exists before accessing properties
+                if (data.tribes) {
+                    $("#tribe").val(data.tribes.tribeName);
+                } else {
+                    $("#tribe").val("N/A");
+                }
+
+                $("#maritalStatus").val(data.maritalStatus.maritalStatus);
+                $("#motherTongue").val(data.mothertongue);
+                $("#mobileNumber").val(data.mobileno);
+                $("#photograph").val(data.photograph);
+                $("#highestQualification").val(data.highestQualification.qualificationName);
+                $("#email").val(data.email);
+                $("#statePerm").val(data.states.name);
+                $("#districtPerm").val(data.districts.name);
+                $("#townPerm").val(data.townperm);
+                $("#addressPerm").val(data.addressperm);
+                $("#pincodePerm").val(data.pincodeperm);
+                $("#stateCorr").val(data.statescorr.name);
+                $("#districtCorr").val(data.districtscorr.name);
+                $("#townCorr").val(data.towncorr);
+                $("#addressCorr").val(data.addresscorr);
+                $("#pincodeCorr").val(data.pincodecorr);
+                $("#accountNumber").val(data.accountnumber);
+                $("#ifscCode").val(data.ifsccode);
+                $("#bankName").val(data.bankname);
+                $("#instituteTenth").val(data.institutetenth);
+                $("#boardTenth").val(data.boardtenth);
+                $("#yearPassingTenth").val(data.yearpassingtenth);
+                $("#percentageTenth").val(data.percentagetenth);
+                $("#divisionTenth").val(data.divisiontenth);
+                $("#subjectsTenth").val(data.subjectstenth);
+                $("#havePassedBoth").val(data.haveyoupassedboth);
+                $("#marksMaths").val(data.marksmaths);
+                $("#marksScience").val(data.marksscience);
+                $("#instituteEight").val(data.instituteeight);
+                $("#boardEight").val(data.boardeight);
+                $("#yearPassingEight").val(data.yearpassingeight);
+                $("#percentageEight").val(data.percentageeight);
+                $("#divisionEight").val(data.divisioneight);
+                $("#subjectsEight").val(data.subjectseight);
+                $("#preferenceOne").val(data.trades1.tradeName);
+                $("#preferenceTwo").val(data.trades2.tradeName);
+                $("#preferenceThree").val(data.trades3.tradeName);
+                $("#submissionDate").val(data.submissiondatte);
+                $("#ph").val(data.ph);
+
+                console.log(data);
+            },
+            error: function (data) {
+                console.log("Error");
+            }
+        });
+    }
+
+
+
+
+</script>
+
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+</body>
+</html>

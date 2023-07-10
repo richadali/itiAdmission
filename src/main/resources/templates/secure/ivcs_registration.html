@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:include="layouts/adminlayout.html">
+
+<body>
+
+    <div class="container-fluid" th:fragment="content">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <form th:action="@{/secure/registration}" th:object="${ivcsDTO}" method="POST">
+            <div class="row justify-content-center">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 mt-4">
+                                <h4 class="card-title">Enter IVCSLTD name</h4>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="name"  th:field="*{name}"
+                                        placeholder="Enter IVCSLTD Name">
+                                    </div>
+                            </div>
+                            <div class="col-lg-6 mt-4">
+                                <h4 class="card-title">Enter Registration No (Optional)</h4>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="registrationNo" th:field="*{registrationNo}"
+                                            placeholder="Enter Registration No">
+                                    </div>
+                            </div>
+
+                            <div class="col-lg-4 mt-4">
+                                <h4 class="card-title">District</h4>
+                                    <div class="form-group">
+                                        <select class="form-select mr-sm-2" id="district"
+                                        th:field="*{districtId}" name="*{districtId}">
+                                            <!-- <option th selected>Select District</option> -->
+
+                                        </select>
+                                    </div>
+                            </div>
+
+                            <div class="col-lg-4 mt-4">
+                                <h4 class="card-title">Block</h4>
+                                    <div class="form-group">
+                                        <select class="form-select mr-sm-2" id="block"
+                                        th:field="*{blockId}">
+                                            <!-- <option th:selected>Select Block</option> -->
+
+                                        </select>
+                                    </div>
+                            </div>
+
+                            <div class="col-lg-4 mt-4">
+                                <h4 class="card-title">Villages Covered (area of operation)</h4>
+                                    <div class="form-group">
+                                        <select class="form-select mr-sm-2 select2" id="villages"
+                                        th:field="*{villageOperatedInList}"
+                                            multiple="multiple">
+                                            <!-- <option th:disabled>Select Village</option> -->
+
+                                        </select>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End of first row -->
+
+            <div class="row justify-content-center">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3 mt-4">
+                                <h4 class="card-title">Whether Bank Account Opened. </h4>
+                                <div class="form-check form-check-inline">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="whetherBankAccountOpened2"
+                                               th:field="*{whetherBankAccountOpened}"
+                                               th:value="1"
+                                               name="radio-stacked">
+                                        <label class="custom-control-label" for="customControlValidation2">Yes</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="whetherBankAccountOpened3"
+                                               th:field="*{whetherBankAccountOpened}"
+                                               th:value="0"
+                                               name="radio-stacked">
+                                        <label class="custom-control-label" for="customControlValidation3">No</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-9 mt-4" style="display:none">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-3">IFSC Code</label>
+                                            <input type="text" class="form-control" id="bankIfsc"
+                                                   th:field="*{bankIfsc}"
+                                                   placeholder="Enter IFSC Code">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-3">Account Number</label>
+                                            <input type="text" class="form-control" id="bankAccount"
+                                                   th:field="*{bankAccount}"
+                                                   placeholder="Enter Account Number">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End of second row -->
+
+            <div class="row justify-content-center">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-lg-6 mt-4">
+                                <h4 class="card-title">Whether PAN card obtained. </h4>
+                                <div class="form-check form-check-inline">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="isPanCardAvailable2"
+                                               th:field="*{isPanCardAvailable}"
+                                               th:value="1"
+                                               name="radio-stacked">
+                                        <label class="custom-control-label" for="customControlValidation2">Yes</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="isPanCardAvailable3"
+                                               th:field="*{isPanCardAvailable}"
+                                               th:value="0"
+                                               name="radio-stacked">
+                                        <label class="custom-control-label" for="customControlValidation3">No</label>
+                                    </div>
+                                </div>
+                                <h6 class="card-subtitle mt-2">If Yes Please Enter the PAN Number</h6>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="panCardNo" th:field="*{panCardNo}"
+                                           placeholder="Enter PAN Number" style="display:none">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mt-4">
+                                <h4 class="card-title">Whether IVCS has an office space. </h4>
+                                <div class="form-check form-check-inline">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="isOfficeSpaceAvailable2"
+                                               th:field="*{isOfficeSpaceAvailable}"
+                                               th:value="1"
+                                               name="radio-stacked">
+                                        <label class="custom-control-label" for="customControlValidation2">Yes</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="isOfficeSpaceAvailable3"
+                                               th:field="*{isOfficeSpaceAvailable}"
+                                               th:value="0"
+                                               name="radio-stacked">
+                                        <label class="custom-control-label" for="customControlValidation3">No</label>
+                                    </div>
+                                </div>
+                                <h6 class="card-subtitle mt-2">If Yes Please Enter the Address</h6>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="addressOfficeSpace" th:field="*{addressOfficeSpace}"
+                                           placeholder="Enter Address" style="display:none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End of second row -->
+
+            <div class="row">
+                <div class="card p-4">
+                    <div class="card-body">
+                        <h4 class="card-title">General Details of Secretary</h4>
+
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label class="mb-3">Secretary Name </label>
+                                            <div class="form-group mb-3">
+                                                <input type="text" class="form-control" placeholder="Name"
+                                                th:field="*{secretaryName}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mb-3">Gender </label>
+                                        <div class="form-group mb-3">
+                                            <div class="form-check form-check-inline">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" class="custom-control-input"
+                                                        id="customControlValidation2" 
+                                                        th:field="*{gender}"
+                                                        th:value="Male"
+                                                        name="radio-stacked">
+                                                    <label class="custom-control-label"
+                                                        for="customControlValidation2">Male</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" class="custom-control-input"
+                                                        id="customControlValidation3"
+                                                        th:field="*{gender}"
+                                                        th:value="Female"
+                                                        name="radio-stacked">
+                                                    <label class="custom-control-label"
+                                                        for="customControlValidation3">Female</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-3">
+                                            <label class="mb-3">Date of Birth</label>
+                                            <div class="form-group mb-3" >
+                                                <input type="date" class="form-control" th:attr="max=${#dates.format(maxdate, 'yyyy-MM-dd')}" placeholder="Enter Age" th:field="*{dob}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-3">
+                                            <label class="mb-3">Religion</label>
+                                            <select class="form-select mr-sm-2" id="CustomSelect-religion"
+                                            th:field="*{religion}">
+                                                <!-- <option th:selected>Select Religion</option> -->
+                                                <option th:value="1">Christian</option>
+                                                <option th:value="2">Hindu</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-3">
+                                            <label class="mb-3">Marital Status</label>
+
+                                            <select class="form-select mr-sm-2" id="CustomSelect-marital-status" th:field="*{maritalStatus}">
+                                                <!-- <option th:selected>Select Marital</option> -->
+                                                <option th:value="1">Single</option>
+                                                <option th:value="2">Married</option>
+                                                <option th:value="3">Widowed</option>
+                                                <option th:value="4">Divorce</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label class="mb-3">Permanent Residential Address </label>
+                                        <div class="form-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Enter Address" th:field="*{permanentAddress}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="mb-3">Pincode </label>
+                                        <div class="form-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Enter Pincode" th:field="*{pincode}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="mb-3">District </label>
+
+                                        <div class="form-group mb-3">
+                                            <select class="form-select mr-sm-2" id="districtsec"
+                                            th:field="*{districtsSecretary}">
+                                                <!-- <option th:selected>Select District</option> -->
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="mb-3">Block </label>
+
+                                        <div class="form-group mb-3">
+                                            <select class="form-select mr-sm-2" id="blocksec"
+                                            th:field="*{blocksSecretary}">
+                                                <!-- <option th:selected>Select Block</option> -->
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="mb-3">Village </label>
+
+                                        <div class="form-group mb-3">
+                                            <select class="form-select mr-sm-2" id="villagesec" th:field="*{villagesSecretary}">
+                                                <!-- <option th:selected>Select Village</option> -->
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <h4 class="mb-3">Contact Details</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="mb-3">Phone No</label>
+
+                                        <div class="form-group mb-3">
+                                            <input type="tel" class="form-control" placeholder="+ 91 " value="+ 91 " th:field="*{mobileNoSecretary}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mb-3">Email ID</label>
+
+                                        <div class="form-group mb-3">
+                                            <input type="email" class="form-control" placeholder="email@gmail.com" th:field="*{emailSecretary}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="mb-3">Qualification</label>
+                                        <div class="form-group mb-3">
+                                            <select class="form-select mr-sm-2" id="qualification" th:field="*{qualification}">
+                                                <!-- <option th:th:selected>Select Qualification</option> -->
+                                                <option th:value="1">10th</option>
+                                                <option th:value="2">12th</option>
+                                                <option th:value="3">Degree</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mb-3">Occupation</label>
+                                        <div class="form-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Enter Occupation" th:field="*{occupation}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="mb-3">ID Proof</label>
+                                        <div class="form-group mb-3">
+                                            <select class="form-select mr-sm-2" id="CustomSelect-ID" th:field="*{idProof}">
+                                                <!-- <option th:selected>Select ID</option> -->
+                                                <option th:value="1">EPIC</option>
+                                                <option th:value="2">Adhaar</option>
+                                                <option th:value="3">PAN</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="mb-3">ID Card No</label>
+                                        <div class="form-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Enter ID Card No" th:field="*{idCardNo}">
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-4">
+                                        <label class="mb-3">Upload File</label>
+                                        <div class="form-group mb-3">
+                                            <input class="form-control" type="file" name="file" id="file">
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <button th:type="submit" class="btn btn-primary btn-rounded" id="submit_fields">Submit</button>
+            </div>
+        </form>
+
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              $.ajax({
+                    type: 'GET',
+                    url: "/districts",
+                    success:function(data){
+
+                     $('#district').empty().append('<option disabled>select</option>');
+                     $('#districtsec').empty().append('<option disabled>select</option>');
+                     for (district in data) {
+                        $("#district").append("<option value="+data[district].id+">"+data[district].name+"</option>");
+                        $("#districtsec").append("<option value="+data[district].id+">"+data[district].name+"</option>");
+                     }
+                    }
+                });
+
+                $("#district").change(function(){
+                    $.ajax({
+                        type: 'GET',
+                        url: "/blocks/"+$("#district option:selected").val(),
+                        success:function(data){
+
+                         $('#block').empty().append('<option disabled>select</option>');
+                         for (block in data) {
+                            $("#block").append("<option value="+data[block].id+">"+data[block].name+"</option>");
+                         }
+                        }
+                    });
+                });
+
+
+                $("#block").change(function(){
+                    $.ajax({
+                        type: 'GET',
+                        url: "/villages/"+$("#block option:selected").val(),
+                        success:function(data){
+
+                         $('#villages').select2('destroy');
+
+                         $('#villages').empty().append('<option disabled>select</option>');
+                         for (villages in data) {
+                            $("#villages").append("<option value="+data[villages].id+">"+data[villages].name+"</option>");
+                         }
+
+                         $('#villages').select2();
+                        }
+                    });
+                });
+
+
+
+                $("#districtsec").change(function(){
+                    $.ajax({
+                        type: 'GET',
+                        url: "/blocks/"+$("#districtsec option:selected").val(),
+                        success:function(data){
+
+                         $('#blocksec').empty().append('<option disabled>select</option>');
+                         for (block in data) {
+                            $("#blocksec").append("<option value="+data[block].id+">"+data[block].name+"</option>");
+                         }
+                        }
+                    });
+                });
+
+                $("#blocksec").change(function(){
+                    $.ajax({
+                        type: 'GET',
+                        url: "/villages/"+$("#blocksec option:selected").val(),
+                        success:function(data){
+
+
+                         $('#villagesec').empty().append('<option disabled>select</option>');
+                         for (villages in data) {
+                            $("#villagesec").append("<option value="+data[villages].id+">"+data[villages].name+"</option>");
+                         }
+                        }
+                    });
+                });
+
+                $("input:radio[name='whetherBankAccountOpened']").change(function(){
+                    var _val = $(this).val();
+                    console.log(_val);
+
+                    if(_val==1){
+                        $('#bankAccount').parent().parent().parent().parent().show();
+                    }else{
+                        $('#bankAccount').parent().parent().parent().parent().hide();
+                    }
+                });
+
+                $("input:radio[name='isPanCardAvailable']").change(function(){
+                    var _val = $(this).val();
+                    console.log(_val);
+
+                    if(_val==1){
+                        $('#panCardNo').show();
+                    }else{
+                        $('#panCardNo').hide();
+                    }
+                });
+
+                $("input:radio[name='isOfficeSpaceAvailable']").change(function(){
+                    var _val = $(this).val();
+                    console.log(_val);
+
+                    if(_val==1){
+                        $('#addressOfficeSpace').show();
+                    }else{
+                        $('#addressOfficeSpace').hide();
+                    }
+                });
+            });
+        </script>
+    </div>
+
+</body>
+
+</html>

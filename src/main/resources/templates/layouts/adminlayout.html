@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${pageTitle}">ITI Admissions</title>
+  <div th:replace="fragments/admin/htmlhead.html"> </div>
+
+</head>
+<body>
+<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+
+<nav th:replace="fragments/admin/navbar.html"></nav>
+<div th:replace="fragments/admin/sidebar.html"></div>
+
+  <!-- ============================================================== -->
+  <!-- Page wrapper  -->
+  <!-- ============================================================== -->
+  <div class="page-wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb noprint">
+      <div class="row">
+        <div class="col-7 align-self-center">
+          <h4 class="page-title text-truncate text-dark font-weight-medium mb-1"></h4>
+
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+
+    <div th:replace="${view} :: content"></div>
+
+  </div>
+
+  <footer th:replace="fragments/admin/footer.html"></footer>
+
+
+  <script src="/admin/assets/libs/chart.js/dist/Chart.min.js"></script>
+  <script>
+      $(document).ready(function() {
+            $('.select2').select2();
+       });
+
+       function printPageArea(areaID){
+          var printContent = document.getElementById(areaID).innerHTML;
+          var originalContent = document.body.innerHTML;
+          document.body.innerHTML = printContent;
+          window.print();
+          document.body.innerHTML = originalContent;
+      }
+
+      function getRandomColor() {
+          var letters = '0123456789ABCDEF'.split('');
+          var color = '#';
+          for (var i = 0; i < 6; i++ ) {
+              color += letters[Math.floor(Math.random() * 16)];
+          }
+          return color;
+      }
+    </script>
+</div>
+</body>
+</html>
