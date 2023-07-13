@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-4">
-                        <h4 class="card-title">Meritlist Candidates</h4>
+                        <h4 class="card-title">Add to Merit List</h4>
                         <div class="ms-auto">
                             <!--                            <div class="dropdown sub-dropdown">-->
                             <!--                                <button class="btn btn-link text-muted dropdown-toggle" type="button"-->
@@ -54,10 +54,12 @@
                                 <div class="col-md-2">
                                     <select id="phaseSelect" class="form-select" disabled>
                                         <option selected disabled>Select Phase</option>
+                                        <option value="1">Phase 1</option>
+                                        <option value="2">Phase 2</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="submit" name="submit" value="View List" class="btn btn-primary">
+                                    <input type="submit" name="submit" value="Get List" class="btn btn-primary">
                                 </div>
                             </div>
                         </form>
@@ -71,14 +73,16 @@
                                 <thead class="bg-info text-white">
                                 <tr>
                                     <th>#</th>
-                                    <th>App No</th>
+                                    <th>AppNo</th>
                                     <th>Name</th>
-                                    <th>DOB</th>
-                                    <th>Gender</th>
-                                    <th>Address</th>
-                                    <th>Center</th>
-                                    <th>Action</th>
-                                    <th>Action</th>
+                                    <th>% 8th</th>
+                                    <th>% 10th</th>
+                                    <th>% MathSci</th>
+                                    <th>Category</th>
+                                    <th>Ph</th>
+                                    <th>View</th>
+                                    <th>Cat</th>
+                                    <th>Ph</th>
                                 </tr>
                                 </thead>
                                 <tbody class="border border-info">
@@ -99,6 +103,7 @@
                             </table>
                         </div>
                     </div>
+                    <button id="add-to-merit-list-btn"> Add to meritlist</button>
                 </div>
             </div>
         </div>
@@ -269,20 +274,19 @@
     </div>
 
 
-
-        <!-- ============================================================== -->
-        <!-- End PAge Content -->
-        <!-- ============================================================== -->
-
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
 
 
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
     $(document).ready(function() {
         // Get references to the select boxes
         var itiSelect = $('#itiSelect');
         var tradeSelect = $('#tradeSelect');
+        var phaseSelect = $('#phaseSelect');
+
 
         // Add an event listener to the ITI select box
         itiSelect.on('change', function() {
@@ -290,7 +294,20 @@
             populateTradeSelect(selectedITI);
         });
 
-        function populateTradeSelect(selectedITI) {
+        // Add an event listener to the trade select box
+    tradeSelect.on('change', function() {
+        var selectedTrade = tradeSelect.val();
+
+        // Enable/disable the phase select box based on the selected trade
+        if (selectedTrade !== '') {
+            phaseSelect.prop('disabled', false);
+        } else {
+            phaseSelect.prop('disabled', true);
+            phaseSelect.val(''); // Reset the phase selection
+        }
+    });
+
+      function populateTradeSelect(selectedITI) {
     // Disable the trade select box
     tradeSelect.prop('disabled', true);
 
@@ -312,6 +329,7 @@
 
                     // Enable the trade select box
                     tradeSelect.prop('disabled', false);
+
                 },
                 error: function() {
                     console.error('Error fetching trades.');
@@ -349,21 +367,87 @@ $(document).ready(function() {
             success: function(response) {
                 // Process the response and populate the candidate table
                 response.forEach(function(candidate, index) {
+
+                    var totalMarks = parseFloat(candidate.marksmaths || 0) + parseFloat(candidate.marksscience || 0);
+                    var totalPercentageMathSci = (totalMarks / 200) * 100;
+
                     var row = [
                         index + 1, // Index column
                         '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
                         candidate.applicantname,
-                        candidate.dob,
-                        candidate.gender.genderName,
-                        candidate.addressperm,
-                        candidate.centers.centerName,
+                        candidate.percentageeight,
+                        candidate.percentagetenth,
+                        totalPercentageMathSci.toFixed(2),
+                        candidate.categories.categoryName,
+                        candidate.ph,
                         '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>',
-                        '<button onclick="editApplicant(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>'
+                        '<select class="select-reservation">' +
+                            '<option value="">Not Selected</option>' +
+                            '<option value="GEN">General</option>'+
+                            '<option value="ST">ST</option>' +
+                            '<option value="SC">SC</option>' +
+                            '<option value="OBC">OBC</option>'+
+                        '</select>',
+                        candidate.ph === 'YES' ? '<select class="select-ph">' +
+                        '<option value="NO">No</option>' +
+                        '<option value="YES">Yes</option>' +
+                    '</select>' : '<select class="select-ph" disabled>' +
+                        '<option value="NO" selected>No</option>' +
+                        '<option value="YES">Yes</option>' +
+                    '</select>'
+
                     ];
                     table.row.add(row).draw(false);
                     var tableContainer = document.getElementById("tableContainer");
                     tableContainer.style.display = "block";
                 });
+                $('#add-to-merit-list-btn').on('click', function() {
+    selectedApplicants = [];
+
+
+    var selectedPhase = $('#phaseSelect').val();
+
+    // Iterate through the table rows and collect the selected applicants
+    $('#zero_config tbody tr').each(function() {
+        var applicationNumber = $(this).find('.view-details').text();
+        var selectedReservation = $(this).find('.select-reservation').val();
+        var selectedPh = $(this).find('.select-ph').val();
+
+       // Exclude the applicants where the select box value is empty
+        if (selectedReservation !== "") {
+            selectedApplicants.push({
+                applicationNumber: applicationNumber,
+                selectedReservation: selectedReservation,
+                selectedPhase: selectedPhase,
+                selectedPh: selectedPh,
+                selectedTrade: selectedTrade,
+                selectedITI: selectedITI
+            });
+        }
+    });
+
+    // Check if any applicants were selected
+    if (selectedApplicants.length > 0) {
+        // Perform actions with the selected applicants
+        console.log(selectedApplicants);
+        $.ajax({
+            method: "POST",
+            url: "/secure/addMeritList",
+            data: JSON.stringify(selectedApplicants),
+            contentType: "application/json",
+            success: function(response) {
+                // Handle the success response
+                console.log("Applicants added to the merit list.");
+            },
+            error: function() {
+                // Handle the error response
+                console.log("Error adding applicants to the merit list.");
+            }
+        });
+    } else {
+        console.log("No applicants selected.");
+    }
+});
             },
             error: function() {
                 console.error('Error fetching candidates.');
@@ -386,7 +470,8 @@ $(document).ready(function() {
         console.log("inside abc");
         $.ajax({
             type: "GET",
-            url: "/secure/application_no/" + id,
+            url: "/secure/application_no",
+            data: "id="+id,
             success: function (data) {
                 $("#applicationNumber").val(data.applicationnumber);
                 $("#centerName").val(data.centers.centerName);
@@ -453,16 +538,12 @@ $(document).ready(function() {
             }
         });
     }
+    </script>
 
 
-
-
-</script>
-
-
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Container fluid  -->
-    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
 </body>
 </html>

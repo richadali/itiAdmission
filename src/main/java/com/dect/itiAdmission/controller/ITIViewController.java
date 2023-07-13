@@ -81,6 +81,14 @@ public class ITIViewController {
         model.addAttribute("getTrades", tradesService.getTrades());
         return "secure/merit_list";
     }
+
+    @GetMapping("/secure/view_merit_list")
+    public String viewMeritlist(Model model){
+        model.addAttribute("getCenters", centerService.getCenters());
+        System.out.println( centerService.getCenters());
+        model.addAttribute("getTrades", tradesService.getTrades());
+        return "secure/view_merit_list";
+    }
 //
 ////    @PostMapping("/secure/registration")
 ////

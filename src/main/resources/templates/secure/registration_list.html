@@ -432,9 +432,12 @@ $(document).ready(function() {
 
     function abc(id) {
         console.log("inside abc");
+
+
         $.ajax({
             type: "GET",
-            url: "/secure/application_no/" + id,
+            url: "/secure/application_no",
+            data: "id="+id,
             success: function (data) {
                 $("#applicationNumber").val(data.applicationnumber);
                 $("#centerName").val(data.centers.centerName);
@@ -507,7 +510,8 @@ function editApplicant(id) {
         console.log("inside editApplicant");
         $.ajax({
             type: "GET",
-            url: "/secure/application_no/" + id,
+            url: "/secure/application_no",
+            data: "id="+id,
             success: function (data) {
                 $("#editapplicationNumber").val(data.applicationnumber);
                 $("#editapplicantName").val(data.applicantname);

@@ -10,7 +10,9 @@ import com.dect.itiAdmission.service.CenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -28,8 +30,9 @@ public class ApplicationDetailsController {
     @Autowired
     private GenderRepository genderRepository;
 
-    @GetMapping("/secure/application_no/{id}")
-    public ApplicationDetails getDetailsByApplicationNo(@PathVariable String id, Model model){
+    @GetMapping("/secure/application_no")
+    public ApplicationDetails getDetailsByApplicationNo(String id, Model model){
+        System.out.println(id);
         ApplicationDetails applicationDetails = applicationDetailsService.applicationDetails(id);
         System.out.println(applicationDetails);
         model.addAttribute("applicationDetails", applicationDetails);
