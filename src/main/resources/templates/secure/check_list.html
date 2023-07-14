@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-4">
-                        <h4 class="card-title">Add to Merit List</h4>
+                        <h4 class="card-title">Generate Check List</h4>
                         <div class="ms-auto">
                             <!--                            <div class="dropdown sub-dropdown">-->
                             <!--                                <button class="btn btn-link text-muted dropdown-toggle" type="button"-->
@@ -51,13 +51,13 @@
                                         <option selected disabled>Select Trade</option>
                                     </select>
                                 </div>
-                                <div class="col-md-2">
-                                    <select id="phaseSelect" class="form-select" disabled>
-                                        <option selected disabled>Select Phase</option>
-                                        <option value="1">Phase 1</option>
-                                        <option value="2">Phase 2</option>
-                                    </select>
-                                </div>
+<!--                                <div class="col-md-2">-->
+<!--                                    <select id="phaseSelect" class="form-select" disabled>-->
+<!--                                        <option selected disabled>Select Phase</option>-->
+<!--                                        <option value="1">Phase 1</option>-->
+<!--                                        <option value="2">Phase 2</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
                                 <div class="col-md-2">
                                     <input type="submit" name="submit" value="Get List" class="btn btn-primary">
                                 </div>
@@ -68,6 +68,12 @@
                     <div class="row mt-5" style="display: none" id="tableContainer">
 
                         <div class="table-responsive">
+                            <div class="mb-3">
+                                <label for="counselingDateInput">Counselling Date: </label>
+                                <input type="date" class="form-control w-25" id="counselingDateInput">
+                            </div>
+
+
                             <table id="zero_config"
                                    class="table border table-striped table-bordered table-hover text-nowrap">
                                 <thead class="bg-info text-white">
@@ -102,8 +108,9 @@
 
                             </table>
                         </div>
+
                     </div>
-                    <button id="add-to-merit-list-btn"> Add to meritlist</button>
+<!--                    <button id="add-to-merit-list-btn"> Add to meritlist</button>-->
                 </div>
             </div>
         </div>
@@ -285,7 +292,6 @@
         // Get references to the select boxes
         var itiSelect = $('#itiSelect');
         var tradeSelect = $('#tradeSelect');
-        var phaseSelect = $('#phaseSelect');
 
 
         // Add an event listener to the ITI select box
@@ -295,16 +301,8 @@
         });
 
         // Add an event listener to the trade select box
-    tradeSelect.on('change', function() {
+        tradeSelect.on('change', function() {
         var selectedTrade = tradeSelect.val();
-
-        // Enable/disable the phase select box based on the selected trade
-        if (selectedTrade !== '') {
-            phaseSelect.prop('disabled', false);
-        } else {
-            phaseSelect.prop('disabled', true);
-            phaseSelect.val(''); // Reset the phase selection
-        }
     });
 
       function populateTradeSelect(selectedITI) {
@@ -343,9 +341,63 @@ $(document).ready(function() {
         var table = $('#zero_config').DataTable({
         dom: 'Bfrtip',
             buttons: [
+            {
+                extend: 'pdfHtml5',
+                customize: function(doc) {
+
+           var counselingDate = document.getElementById('counselingDateInput').value;
+
+           // Check if counseling date is not empty
+                    if (!counselingDate) {
+                        alert('Please enter a counseling date.');
+                        this.disable();
+                        return false; // Prevent PDF generation
+                    }
+
+          // Set page size to A4 landscape
+          doc.pageSize = 'A4';
+          doc.pageOrientation = 'landscape';
+
+          // Customize column names in the exported PDF
+          var columnNames = [
+            'Slno', 'Application No', 'Applicant Name', '8th Percentage', '10th Percentage', 'Math+Sci Percentage', 'Category'
+          ];
+
+          // Replace the column names in the table with customized names
+                    for (var i = 0; i < columnNames.length; i++) {
+                        doc.content[1].table.body[0][i] = { text: columnNames[i], bold: true, fillColor: '#007bff', color: '#ffffff', fontSize: 12 };
+                    }
+
+          // Remove the "exported data" heading
+          doc.content.splice(0, 1);
+
+          // Add selected ITI and Trade as headings
+          var selectedITI = $('#itiSelect option:selected').text();
+          var selectedTrade = $('#tradeSelect option:selected').text();
+          var headings = 'Candidates Selected for Counselling \n\n' + selectedITI + '\nTrade: ' + selectedTrade + '\nCounseling Date: ' + counselingDate;
+          doc.content.splice(0, 0, { text: headings, fontSize: 14, bold: true, margin: [0, 0, 0, 10] });
+
+          // Customize table design
+                    var tableBody = doc.content[1].table.body;
+                    var rowCount = tableBody.length;
+
+                    // Add custom styles to table cells
+                    for (var row = 0; row < rowCount; row++) {
+                        for (var col = 0; col < columnNames.length; col++) {
+                            var cell = tableBody[row][col];
+                            cell.alignment = 'center'; // Set cell alignment
+                            cell.margin = [5, 5, 5, 5]; // Set cell margins
+                            cell.fontSize = 10; // Set font size
+                            cell.bold = (row === 0); // Make header cells bold
+                        }
+                    }
+        },
+                exportOptions: {
+                    columns: ':not(:last-child):not(:nth-last-child(2)):not(:nth-last-child(3)):not(:nth-last-child(4))'
+                }
+            },
             'copyHtml5',
-            'excelHtml5',
-            'pdfHtml5'
+            'excelHtml5'
             ],
                     "drawCallback": function (settings) {
                         var api = this.api();
@@ -374,7 +426,7 @@ $(document).ready(function() {
                     var row = [
                         index + 1, // Index column
                         '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
-                        candidate.applicantname,
+                        candidate.applicantname.toUpperCase(),
                         candidate.percentageeight,
                         candidate.percentagetenth,
                         totalPercentageMathSci.toFixed(2),
@@ -405,8 +457,6 @@ $(document).ready(function() {
     selectedApplicants = [];
 
 
-    var selectedPhase = $('#phaseSelect').val();
-
     // Iterate through the table rows and collect the selected applicants
     $('#zero_config tbody tr').each(function() {
         var applicationNumber = $(this).find('.view-details').text();
@@ -418,7 +468,6 @@ $(document).ready(function() {
             selectedApplicants.push({
                 applicationNumber: applicationNumber,
                 selectedReservation: selectedReservation,
-                selectedPhase: selectedPhase,
                 selectedPh: selectedPh,
                 selectedTrade: selectedTrade,
                 selectedITI: selectedITI

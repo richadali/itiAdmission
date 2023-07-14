@@ -12,7 +12,6 @@ import java.io.Serializable;
 @Builder
 public class MeritListDTO implements Serializable {
     private final String applicationNumber;
-    private final Integer selectedPhase;
     private final String selectedReservation;
     private final String selectedPh;
     private final Integer selectedTrade;

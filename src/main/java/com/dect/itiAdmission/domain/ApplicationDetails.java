@@ -11,7 +11,7 @@ public class ApplicationDetails {
     @Id
     private String applicationnumber;
     @OneToOne
-    @JoinColumn(name = "iticentercode")
+    @JoinColumn(name = "iticentrecode")
     private Centers centers;
     private String applicantname;
     private String fathername;
@@ -34,7 +34,8 @@ public class ApplicationDetails {
     @JoinColumn(name = "maritalstatus")
     private MaritalStatus maritalStatus;
     private String mothertongue;
-    private String mobileno;
+    private String mobilenumber;
+    @Column(columnDefinition = "TEXT")
     private String photograph;
     @OneToOne
     @JoinColumn(name = "highestqualification")
@@ -86,7 +87,7 @@ public class ApplicationDetails {
     @JoinColumn(name = "preferencethree", nullable = true )
     private Trades trades3;
     @Temporal(TemporalType.DATE)
-    private Date submissiondatte;
+    private Date submissiondate;
     private String ph;
 
 }

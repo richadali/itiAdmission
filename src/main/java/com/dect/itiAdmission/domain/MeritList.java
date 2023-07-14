@@ -19,7 +19,6 @@ public class MeritList {
     @OneToOne
     @JoinColumn(name = "applicantionnumber")
     private ApplicationDetails applicationDetails;
-    private Integer phase;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Categories categories;

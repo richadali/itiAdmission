@@ -19,9 +19,9 @@ public class MeritListController {
         return meritListService.addMeritList(meritListDTO);
     }
 
-    @GetMapping("/getMeritListByCenterIdAndTradeId/{centerId}/{tradeId}/{phase}")
-    public List<MeritList> getMeritListByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId, @PathVariable Integer phase){
-        return meritListService.getMeritListByCenterIdAndTradeId(centerId, tradeId, phase);
+    @GetMapping("/getMeritListByCenterIdAndTradeId/{centerId}/{tradeId}")
+    public List<MeritList> getMeritListByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId){
+        return meritListService.getMeritListByCenterIdAndTradeId(centerId, tradeId);
     }
 }
 

@@ -32,7 +32,6 @@ public class MeritListService {
                 return MeritList.builder()
                         .applicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO1.getApplicationNumber()))
                         .categories(categoriesRepository.getReferenceById(meritListDTO1.getSelectedReservation()))
-                        .phase(meritListDTO1.getSelectedPhase())
                         .ph(meritListDTO1.getSelectedPh())
                         .trades(tradesRepository.getReferenceById(meritListDTO1.getSelectedTrade()))
                         .centers(centerRepository.getReferenceById(meritListDTO1.getSelectedITI()))
@@ -49,8 +48,8 @@ public class MeritListService {
         return null;
     }
 
-    public List<MeritList> getMeritListByCenterIdAndTradeId(Integer centerId, Integer tradeId, Integer phase) {
-        return meritListRepository.findByCentersCenterIdAndTradesTradeCodeAndPhase(centerId, tradeId, phase);
+    public List<MeritList> getMeritListByCenterIdAndTradeId(Integer centerId, Integer tradeId) {
+        return meritListRepository.findByCentersCenterIdAndTradesTradeCode(centerId, tradeId);
     }
 
 //    public List<MeritList> convertToMeritList(List<MeritListDTO> meritListDTO){
