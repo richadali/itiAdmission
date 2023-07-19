@@ -82,12 +82,12 @@ public class ITIViewController {
         return "secure/check_list";
     }
 
-    @GetMapping("/secure/view_merit_list")
+    @GetMapping("/secure/add_merit_list")
     public String viewMeritlist(Model model){
         model.addAttribute("getCenters", centerService.getCenters());
         System.out.println( centerService.getCenters());
         model.addAttribute("getTrades", tradesService.getTrades());
-        return "secure/view_merit_list";
+        return "secure/add_merit_list";
     }
 //
 ////    @PostMapping("/secure/registration")

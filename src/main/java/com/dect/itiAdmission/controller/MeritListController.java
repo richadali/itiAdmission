@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/secure")
+@RequestMapping("secure")
 public class MeritListController {
     @Autowired
     private MeritListService meritListService;
     @PostMapping("/addMeritList")
-    public String addMeritList(@RequestBody List<MeritListDTO> meritListDTO){
+    public String addMeritList(@RequestBody MeritListDTO meritListDTO){
         return meritListService.addMeritList(meritListDTO);
     }
 

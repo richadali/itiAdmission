@@ -87,8 +87,6 @@
                                     <th>Category</th>
                                     <th>Ph</th>
                                     <th>View</th>
-                                    <th>Cat</th>
-                                    <th>Ph</th>
                                 </tr>
                                 </thead>
                                 <tbody class="border border-info">
@@ -433,20 +431,7 @@ $(document).ready(function() {
                         candidate.categories.categoryName,
                         candidate.ph,
                         '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>',
-                        '<select class="select-reservation">' +
-                            '<option value="">Not Selected</option>' +
-                            '<option value="GEN">General</option>'+
-                            '<option value="ST">ST</option>' +
-                            '<option value="SC">SC</option>' +
-                            '<option value="OBC">OBC</option>'+
-                        '</select>',
-                        candidate.ph === 'YES' ? '<select class="select-ph">' +
-                        '<option value="NO">No</option>' +
-                        '<option value="YES">Yes</option>' +
-                    '</select>' : '<select class="select-ph" disabled>' +
-                        '<option value="NO" selected>No</option>' +
-                        '<option value="YES">Yes</option>' +
-                    '</select>'
+
 
                     ];
                     table.row.add(row).draw(false);

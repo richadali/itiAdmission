@@ -20,87 +20,87 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex align-items-center mb-4">
-            <h4 class="card-title">View Merit List</h4>
-            <div class="ms-auto">
-              <!--                            <div class="dropdown sub-dropdown">-->
-              <!--                                <button class="btn btn-link text-muted dropdown-toggle" type="button"-->
-              <!--                                        id="dd2" data-bs-toggle="dropdown" aria-haspopup="true"-->
-              <!--                                        aria-expanded="false">-->
-              <!--                                    <i data-feather="more-vertical"></i>-->
-              <!--                                </button>-->
-              <!--                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd2">-->
-              <!--                                    <a class="dropdown-item" href="registration">Insert</a>-->
-              <!--                                </div>-->
-              <!--                            </div>-->
-            </div>
+            <h4 class="card-title">Add to Merit List</h4>
           </div>
-          <div class="mb-3">
-            <form>
-              <div class="row align-items-center">
-                <div class="col-md-4">
+          <div class="container text-center">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <form>
+                  <div class="mb-3 row">
+                    <label for="applicationNumberInput" class="col-sm-4 col-form-label">Application Number</label>
+                    <div class="col-sm-8">
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="applicationNumberInput" placeholder="Enter Application Number">
+                        <button type="button" class="btn btn-primary" id="getNameButton" onclick="onClickGetName()">Get Name</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="applicantName" class="col-sm-4 col-form-label">Applicant Name</label>
+                    <div class="col-sm-8">
+                      <input class="form-control" id="applicantName" placeholder="Applicant Name" value="" readonly>
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="centerName" class="col-sm-4 col-form-label">Centre</label>
+                    <div class="col-sm-8">
+                      <input class="form-control" id="centerName" placeholder="Centre Name" value="" readonly>
+                      <input type="hidden" class="form-control" id="centerId" placeholder="Centre Name" value="" readonly>
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="selectedTradesDropdown" class="col-sm-4 col-form-label">Trades Selected (Preference Wise)</label>
+                    <div class="col-sm-8">
+                      <select class="form-select" id="selectedTradesDropdown">
 
-                  <select id="itiSelect" class="form-select">
-                    <option selected disabled>Select ITI</option>
-                    <option th:each="center : ${getCenters}" th:value="${center.centerId}"
-                            th:text="${center.centerName}"></option>
-                  </select>
-                </div>
-                <div class="col-md-4">
+                      </select>
+                    </div>
+                  </div>
+                  <div class="mb-3 row text-start">
+                    <label class="col-sm-4 col-form-label">Qualifying Category</label>
+                    <div class="col-sm-8">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="qualifyingCategory" id="qualifyingCategoryGEN" value="GEN">
+                        <label class="form-check-label" for="qualifyingCategoryGEN">GEN</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="qualifyingCategory" id="qualifyingCategoryST" value="ST">
+                        <label class="form-check-label" for="qualifyingCategoryST">ST</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="qualifyingCategory" id="qualifyingCategorySC" value="SC">
+                        <label class="form-check-label" for="qualifyingCategorySC">SC</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="qualifyingCategory" id="qualifyingCategoryOBC" value="OBC">
+                        <label class="form-check-label" for="qualifyingCategoryOBC">OBC</label>
+                      </div>
+                    </div>
+                  </div>
 
-                  <select id="tradeSelect" class="form-select" disabled>
-                    <option selected disabled>Select Trade</option>
-                  </select>
-                </div>
-                <div class="col-md-2">
-                  <select id="phaseSelect" class="form-select" disabled>
-                    <option selected disabled>Select Phase</option>
-                    <option value="1">Phase 1</option>
-                    <option value="2">Phase 2</option>
-                  </select>
-                </div>
-                <div class="col-md-2">
-                  <input type="submit" name="submit" value="Get List" class="btn btn-primary">
-                </div>
+                  <div class="mb-3 row text-start">
+                    <label class="col-sm-4 col-form-label">PH Category</label>
+                    <div class="col-sm-8">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ph" id="phYes" value="NO" checked>
+                        <label class="form-check-label" for="phYes">NO</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ph" id="phNo" value="YES">
+                        <label class="form-check-label" for="phNo">YES</label>
+                      </div>
+                    </div>
+                  </div>
+
+                    <div class="text-center">
+                      <button type="button" class="btn btn-primary" id="add-to-merit-list-btn"> Add to Merit List</button>
+                      <button type="button" class="btn btn-primary" id="remove-from-merit-list-btn"> Remove from Merit List</button>
+                  </div>
+                </form>
               </div>
-            </form>
-          </div>
-
-          <div class="row mt-5" style="display: none" id="tableContainer">
-
-            <div class="table-responsive">
-              <table id="zero_config"
-                     class="table border table-striped table-bordered table-hover text-nowrap">
-                <thead class="bg-info text-white">
-                <tr>
-                  <th>#</th>
-                  <th>AppNo</th>
-                  <th>Name</th>
-                  <th>% 8th</th>
-                  <th>% 10th</th>
-                  <th>% MathSci</th>
-                  <th>Reservation</th>
-                  <th>Ph</th>
-                  <th>View</th>
-                </tr>
-                </thead>
-                <tbody class="border border-info">
-
-                <!--                                <tr>-->
-                <!--                                    <td></td>-->
-                <!--                                    <td></td>-->
-                <!--                                    <td ></td>-->
-                <!--                                    <td ></td>-->
-                <!--                                    <td ></td>-->
-                <!--                                    <td ></td>-->
-                <!--                                    <td ></td>-->
-                <!--                                    <td ></td>-->
-                <!--                                </tr>-->
-
-                </tbody>
-
-              </table>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -278,137 +278,8 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
-    $(document).ready(function() {
-        // Get references to the select boxes
-        var itiSelect = $('#itiSelect');
-        var tradeSelect = $('#tradeSelect');
-        var phaseSelect = $('#phaseSelect');
-
-
-        // Add an event listener to the ITI select box
-        itiSelect.on('change', function() {
-            var selectedITI = itiSelect.val();
-            populateTradeSelect(selectedITI);
-        });
-
-        // Add an event listener to the trade select box
-    tradeSelect.on('change', function() {
-        var selectedTrade = tradeSelect.val();
-
-        // Enable/disable the phase select box based on the selected trade
-        if (selectedTrade !== '') {
-            phaseSelect.prop('disabled', false);
-        } else {
-            phaseSelect.prop('disabled', true);
-            phaseSelect.val(''); // Reset the phase selection
-        }
-    });
-
-      function populateTradeSelect(selectedITI) {
-    // Disable the trade select box
-    tradeSelect.prop('disabled', true);
-
-    // Clear existing options except the first one
-    tradeSelect.find('option:not(:first)').remove();
-
-    // Make an AJAX request to fetch the trades based on the selected ITI
-    $.ajax({
-        url: '/api/getCenterTradesByCenterId/' + selectedITI,
-        method: 'GET',
-        data: { centerId: selectedITI },
-        success: function(response) {
-                    // Process the response and populate the trade select box
-                    response.forEach(function(trade) {
-                        tradeSelect.append($('<option></option>')
-                            .val(trade.id)
-                            .text(trade.tradeId.tradeName));
-                    });
-
-                    // Enable the trade select box
-                    tradeSelect.prop('disabled', false);
-
-                },
-                error: function() {
-                    console.error('Error fetching trades.');
-                }
-            });
-        }
-    });
-
-
-$(document).ready(function() {
-        var table = $('#zero_config').DataTable({
-        dom: 'Bfrtip',
-            buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'pdfHtml5'
-            ],
-                    "drawCallback": function (settings) {
-                        var api = this.api();
-                        var startIndex = api.context[0]._iDisplayStart;
-                        api.column(0).nodes().each(function (cell, i) {
-                            cell.innerHTML = startIndex + i + 1;
-                        });
-                    }
-        });
-
-    function populateCandidateTable(selectedITI, selectedTrade, selectedPhase) {
-        // Clear the table body
-        table.clear().draw();
-
-        // Make an AJAX request to fetch the candidates with the selected ITI and trade
-        $.ajax({
-            url: '/secure/getMeritListByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade + '/' + selectedPhase,
-            method: 'GET',
-            success: function(response) {
-                console.log(response);
-                // Process the response and populate the candidate table
-                response.forEach(function(candidate, index) {
-
-                    var totalMarks = parseFloat(candidate.applicationDetails.marksmaths || 0) + parseFloat(candidate.applicationDetails.marksscience || 0);
-                    var totalPercentageMathSci = (totalMarks / 200) * 100;
-
-                    var row = [
-                        index + 1, // Index column
-                        '<button onclick="abc(\'' + candidate.applicationDetails.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationDetails.applicationnumber + '</button>', // App No column with button
-                        candidate.applicationDetails.applicantname,
-                        candidate.applicationDetails.percentageeight,
-                        candidate.applicationDetails.percentagetenth,
-                        totalPercentageMathSci.toFixed(2),
-                        candidate.categories.categoryName,
-                        candidate.ph,
-                        '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>',
-
-                    ];
-                    table.row.add(row).draw(false);
-                    var tableContainer = document.getElementById("tableContainer");
-                    tableContainer.style.display = "block";
-                });
-                $('#add-to-merit-list-btn').on('click', function() {
-    selectedApplicants = [];
-});
-            },
-            error: function() {
-                console.error('Error fetching candidates.');
-            }
-        });
-    }
-
-    // Add an event listener to the form submission
-    $('form').on('submit', function(event) {
-        event.preventDefault();
-
-        var selectedITI = $('#itiSelect').val();
-        var selectedTrade = $('#tradeSelect').val();
-        var selectedPhase = $('#phaseSelect').val();
-        populateCandidateTable(selectedITI, selectedTrade, selectedPhase);
-    });
-});
-
-
-    function abc(id) {
-        console.log("inside abc");
+    function getDetails(id) {
+        console.log("inside getDetails");
         $.ajax({
             type: "GET",
             url: "/secure/application_no",
@@ -416,8 +287,8 @@ $(document).ready(function() {
             success: function (data) {
                 $("#applicationNumber").val(data.applicationnumber);
                 $("#centerName").val(data.centers.centerName);
-                var applicantName = data.applicantname;
-                document.getElementById("applicantNameTitle").textContent = applicantName;
+                $("#centerId").val(data.centers.centerId);
+                $("#applicantName").val(data.applicantname);
                 $("#fatherName").val(data.fathername);
                 $("#motherName").val(data.mothername);
                 $("#gender").val(data.gender.genderName);
@@ -472,13 +343,103 @@ $(document).ready(function() {
                 $("#submissionDate").val(data.submissiondatte);
                 $("#ph").val(data.ph);
 
-                console.log(data);
-            },
-            error: function (data) {
-                console.log("Error");
-            }
-        });
+                var selectedTrades = [
+        { id: data.trades1.tradeCode, name: data.trades1.tradeName },
+        { id: data.trades2.tradeCode, name: data.trades2.tradeName },
+        { id: data.trades3.tradeCode, name: data.trades3.tradeName }
+    ];
+
+    var selectedTradesDropdown = $('#selectedTradesDropdown');
+    console.log(selectedTradesDropdown);
+    selectedTradesDropdown.empty(); // Clear previous options
+
+    // Add options for selected trades
+    for (var i = 0; i < selectedTrades.length; i++) {
+  var option = $('<option></option>').text(selectedTrades[i].name);
+  option.val(selectedTrades[i].id);
+  selectedTradesDropdown.append(option);
+}
+                      console.log(data);
+                  },
+    error: function(xhr, status, error) {
+    console.log(xhr.responseText);
+    alert(xhr.responseText);
+  }
+              });
+          }
+    function onClickGetName() {
+    var id = $("#applicationNumberInput").val();
+    console.log("ApplicantionNumber:" + id)
+    getDetails(id);
+}
+
+
+$(document).ready(function() {
+  $("#add-to-merit-list-btn").click(function() {
+    // Get form field values
+    var applicationNumber = $("#applicationNumberInput").val();
+    var centerId = $("#centerId").val();
+    var category = $('input[name=qualifyingCategory]:checked').val();
+    var ph = $('input[name=ph]:checked').val();
+    var selectedTrade = $('#selectedTradesDropdown option:selected').val();
+
+    if (!category) {
+      alert("Please select a Qualifying Category.");
+      return;
     }
+
+    var data = {
+      applicationNumber: applicationNumber,
+      selectedITI: centerId,
+      selectedReservation: category,
+      selectedPh: ph,
+      selectedTrade: selectedTrade
+    };
+
+    console.log(data);
+
+    // Perform AJAX request
+   $.ajax({
+  type: "POST",
+  url: "/secure/addMeritList",
+  data: JSON.stringify(data),
+  contentType: "application/json",
+  success: function(response) {
+    console.log("Merit list added successfully");
+    console.log(response);
+    alert(response);
+
+    // Clear the form fields
+    $('#applicationNumberInput').val('');
+    $('#applicantName').val('');
+    $('#centerName').val('');
+    $('#centerId').val('');
+    $('input[name=qualifyingCategory]').prop('checked', false);
+    $('input[name=ph][value="NO"]').prop('checked', true);
+    var selectedTradesDropdown = $('#selectedTradesDropdown');
+    selectedTradesDropdown.empty();
+  },
+  error: function(xhr, status, error) {
+    console.error("Error adding merit list:", error);
+    console.log(xhr.responseText);
+    alert(xhr.responseText);
+
+    // Clear the form fields
+    $('#applicationNumberInput').val('');
+    $('#applicantName').val('');
+    $('#centerName').val('');
+    $('#centerId').val('');
+    $('input[name=qualifyingCategory]').prop('checked', false);
+    $('input[name=ph][value="NO"]').prop('checked', true);
+    var selectedTradesDropdown = $('#selectedTradesDropdown');
+    selectedTradesDropdown.empty();
+  }
+});
+  });
+});
+
+
+
     </script>
 
 

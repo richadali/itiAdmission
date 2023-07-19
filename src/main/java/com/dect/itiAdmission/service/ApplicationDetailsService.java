@@ -2,6 +2,7 @@ package com.dect.itiAdmission.service;
 
 import com.dect.itiAdmission.domain.ApplicationDetails;
 import com.dect.itiAdmission.dtos.ApplicationDetailsDTO;
+import com.dect.itiAdmission.exception.ApplicantNotPresent;
 import com.dect.itiAdmission.repository.ApplicationDetailsRepository;
 import com.dect.itiAdmission.repository.GenderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class ApplicationDetailsService {
     }
 
      public ApplicationDetails applicationDetails(String applicationnumber){
-        return applicationDetailsRepository.findById(applicationnumber).orElseThrow();
+        return applicationDetailsRepository.findById(applicationnumber)
+                .orElseThrow(()->new ApplicantNotPresent("Application No with "+applicationnumber+" is not present."));
     }
 
     public List<ApplicationDetails> getApplicationByCenterIdAndTradeId(Integer centerId, Integer tradeId) {

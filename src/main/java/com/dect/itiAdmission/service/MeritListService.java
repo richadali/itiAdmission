@@ -2,12 +2,16 @@ package com.dect.itiAdmission.service;
 
 import com.dect.itiAdmission.domain.MeritList;
 import com.dect.itiAdmission.dtos.MeritListDTO;
+import com.dect.itiAdmission.exception.ApplicantAlreadyExists;
+import com.dect.itiAdmission.exception.DataInsertionException;
 import com.dect.itiAdmission.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,26 +30,31 @@ public class MeritListService {
     @Autowired
     private CenterRepository centerRepository;
 
-    public String addMeritList(List<MeritListDTO> meritListDTO) {
+    public String addMeritList(MeritListDTO meritListDTO) {
         try{
-            List<MeritList> meritLists= meritListDTO.stream().map(meritListDTO1 -> {
-                return MeritList.builder()
-                        .applicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO1.getApplicationNumber()))
-                        .categories(categoriesRepository.getReferenceById(meritListDTO1.getSelectedReservation()))
-                        .ph(meritListDTO1.getSelectedPh())
-                        .trades(tradesRepository.getReferenceById(meritListDTO1.getSelectedTrade()))
-                        .centers(centerRepository.getReferenceById(meritListDTO1.getSelectedITI()))
+            if(!meritListRepository.existsByApplicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO.getApplicationNumber()))){
+                MeritList meritLists=MeritList.builder()
+                        .applicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO.getApplicationNumber()))
+                        .categories(categoriesRepository.getReferenceById(meritListDTO.getSelectedReservation()))
+                        .ph(meritListDTO.getSelectedPh())
+                        .trades(tradesRepository.getReferenceById(meritListDTO.getSelectedTrade()))
+                        .centers(centerRepository.getReferenceById(meritListDTO.getSelectedITI()))
                         .build();
-            }).toList();
-
-            meritLists.forEach(System.out::println);
-//            List<MeritList> meritLists=convertToMeritList(meritListDTO)
-            meritListRepository.saveAll(meritLists);
-            return "Data Inserted Successfully to MeritList Table";
+                meritListRepository.save(meritLists);
+                return "Applicant successfully added to MeritList";
+            }else{
+                throw new DataIntegrityViolationException("Applicant already present");
+            }
+        }catch (DataIntegrityViolationException e){
+                throw new ApplicantAlreadyExists("Applicant already present");
         }catch(Exception e){
             e.printStackTrace();
+            throw new DataInsertionException("Could not add to merit list, Please try again!");
         }
-        return null;
+//        catch(ApplicantAlreadyExists e){
+//            e.printStackTrace();
+//            throw new ApplicantAlreadyExists("Applicant already present");
+//        }
     }
 
     public List<MeritList> getMeritListByCenterIdAndTradeId(Integer centerId, Integer tradeId) {
