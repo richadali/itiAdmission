@@ -31,9 +31,9 @@ public class MeritListService {
     private CenterRepository centerRepository;
 
     public String addMeritList(MeritListDTO meritListDTO) {
-        try{
-            if(!meritListRepository.existsByApplicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO.getApplicationNumber()))){
-                MeritList meritLists=MeritList.builder()
+        try {
+            if (!meritListRepository.existsByApplicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO.getApplicationNumber()))) {
+                MeritList meritLists = MeritList.builder()
                         .applicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO.getApplicationNumber()))
                         .categories(categoriesRepository.getReferenceById(meritListDTO.getSelectedReservation()))
                         .ph(meritListDTO.getSelectedPh())
@@ -42,40 +42,28 @@ public class MeritListService {
                         .build();
                 meritListRepository.save(meritLists);
                 return "Applicant successfully added to MeritList";
-            }else{
+            } else {
                 throw new DataIntegrityViolationException("Applicant already present");
             }
-        }catch (DataIntegrityViolationException e){
-                throw new ApplicantAlreadyExists("Applicant already present");
-        }catch(Exception e){
+        } catch (DataIntegrityViolationException e) {
+            throw new ApplicantAlreadyExists("Applicant already present");
+        } catch (Exception e) {
             e.printStackTrace();
             throw new DataInsertionException("Could not add to merit list, Please try again!");
         }
-//        catch(ApplicantAlreadyExists e){
-//            e.printStackTrace();
-//            throw new ApplicantAlreadyExists("Applicant already present");
-//        }
     }
 
     public List<MeritList> getMeritListByCenterIdAndTradeId(Integer centerId, Integer tradeId) {
         return meritListRepository.findByCentersCenterIdAndTradesTradeCode(centerId, tradeId);
     }
 
-//    public List<MeritList> convertToMeritList(List<MeritListDTO> meritListDTO){
-//       List<MeritList> meritLists = null;
-//       for(MeritListDTO meritListDTO1:meritListDTO){
-////           MeritList meritList=new MeritList();\
-//
-//           MeritList meritList=MeritList.builder()
-//                   .applicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO1.getApplicationNumber()))
-//                   .categories(categoriesRepository.getReferenceById(meritListDTO1.getSelectedReservation()))
-//                   .phase(meritListDTO1.getSelectedPhase())
-//                   .ph(meritListDTO1.getSelectedPh())
-//                   .trades(tradesRepository.getReferenceById(meritListDTO1.getSelectedTrade()))
-//                   .build();
-//           meritLists.add(meritList);
-//       }
-//        return meritLists;
-//    }
-
+    public String removeFromMeritList(String applicationNumber) {
+        try {
+            meritListRepository.deleteByApplicationDetailsApplicationnumber(applicationNumber);
+            return "Successfully deleted";
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Something went wrong!!");
+        }
+    }
 }

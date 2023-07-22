@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:include="layouts/adminlayout.html">
 <head>
-  <!-- Include required CSS and JS files -->
+    <!-- Include required CSS and JS files -->
 
 </head>
 <body>
@@ -11,273 +11,289 @@
 <!-- ============================================================== -->
 
 <div class="container-fluid" th:fragment="content">
-  <!-- ============================================================== -->
-  <!-- Start Page Content -->
-  <!-- ============================================================== -->
-  <!-- basic table -->
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex align-items-center mb-4">
-            <h4 class="card-title">Add to Merit List</h4>
-          </div>
-          <div class="container text-center">
-            <div class="row justify-content-center">
-              <div class="col-md-6">
-                <form>
-                  <div class="mb-3 row">
-                    <label for="applicationNumberInput" class="col-sm-4 col-form-label">Application Number</label>
-                    <div class="col-sm-8">
-                      <div class="input-group">
-                        <input type="text" class="form-control" id="applicationNumberInput" placeholder="Enter Application Number">
-                        <button type="button" class="btn btn-primary" id="getNameButton" onclick="onClickGetName()">Get Name</button>
-                      </div>
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- basic table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <h4 class="card-title">Add to Merit List</h4>
                     </div>
-                  </div>
-                  <div class="mb-3 row">
-                    <label for="applicantName" class="col-sm-4 col-form-label">Applicant Name</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" id="applicantName" placeholder="Applicant Name" value="" readonly>
-                    </div>
-                  </div>
-                  <div class="mb-3 row">
-                    <label for="centerName" class="col-sm-4 col-form-label">Centre</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" id="centerName" placeholder="Centre Name" value="" readonly>
-                      <input type="hidden" class="form-control" id="centerId" placeholder="Centre Name" value="" readonly>
-                    </div>
-                  </div>
-                  <div class="mb-3 row">
-                    <label for="selectedTradesDropdown" class="col-sm-4 col-form-label">Trades Selected (Preference Wise)</label>
-                    <div class="col-sm-8">
-                      <select class="form-select" id="selectedTradesDropdown">
+                    <div class="container text-center">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <form>
+                                    <div class="mb-3 row">
+                                        <label for="applicationNumberInput" class="col-sm-4 col-form-label">Application
+                                            Number</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="applicationNumberInput"
+                                                       placeholder="Enter Application Number">
+                                                <button type="button" class="btn btn-primary" id="getNameButton"
+                                                        onclick="onClickGetName()">Get Name
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="applicantName" class="col-sm-4 col-form-label">Applicant
+                                            Name</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" id="applicantName" placeholder="Applicant Name"
+                                                   value="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="centerName" class="col-sm-4 col-form-label">Centre</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" id="centerName" placeholder="Centre Name"
+                                                   value="" readonly>
+                                            <input type="hidden" class="form-control" id="centerId"
+                                                   placeholder="Centre Name" value="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="selectedTradesDropdown" class="col-sm-4 col-form-label">Trades
+                                            Selected (Preference Wise)</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-select" id="selectedTradesDropdown">
 
-                      </select>
-                    </div>
-                  </div>
-                  <div class="mb-3 row text-start">
-                    <label class="col-sm-4 col-form-label">Qualifying Category</label>
-                    <div class="col-sm-8">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="qualifyingCategory" id="qualifyingCategoryGEN" value="GEN">
-                        <label class="form-check-label" for="qualifyingCategoryGEN">GEN</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="qualifyingCategory" id="qualifyingCategoryST" value="ST">
-                        <label class="form-check-label" for="qualifyingCategoryST">ST</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="qualifyingCategory" id="qualifyingCategorySC" value="SC">
-                        <label class="form-check-label" for="qualifyingCategorySC">SC</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="qualifyingCategory" id="qualifyingCategoryOBC" value="OBC">
-                        <label class="form-check-label" for="qualifyingCategoryOBC">OBC</label>
-                      </div>
-                    </div>
-                  </div>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row text-start">
+                                        <label class="col-sm-4 col-form-label">Qualifying Category</label>
+                                        <div class="col-sm-8">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="qualifyingCategory"
+                                                       id="qualifyingCategoryGEN" value="GEN">
+                                                <label class="form-check-label" for="qualifyingCategoryGEN">GEN</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="qualifyingCategory"
+                                                       id="qualifyingCategoryST" value="ST">
+                                                <label class="form-check-label" for="qualifyingCategoryST">ST</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="qualifyingCategory"
+                                                       id="qualifyingCategorySC" value="SC">
+                                                <label class="form-check-label" for="qualifyingCategorySC">SC</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="qualifyingCategory"
+                                                       id="qualifyingCategoryOBC" value="OBC">
+                                                <label class="form-check-label" for="qualifyingCategoryOBC">OBC</label>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                  <div class="mb-3 row text-start">
-                    <label class="col-sm-4 col-form-label">PH Category</label>
-                    <div class="col-sm-8">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="ph" id="phYes" value="NO" checked>
-                        <label class="form-check-label" for="phYes">NO</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="ph" id="phNo" value="YES">
-                        <label class="form-check-label" for="phNo">YES</label>
-                      </div>
-                    </div>
-                  </div>
+                                    <div class="mb-3 row text-start">
+                                        <label class="col-sm-4 col-form-label">PH Category</label>
+                                        <div class="col-sm-8">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="ph" id="phYes"
+                                                       value="NO" checked>
+                                                <label class="form-check-label" for="phYes">NO</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="ph" id="phNo"
+                                                       value="YES">
+                                                <label class="form-check-label" for="phNo">YES</label>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                    <div class="text-center">
-                      <button type="button" class="btn btn-primary" id="add-to-merit-list-btn"> Add to Merit List</button>
-                      <button type="button" class="btn btn-primary" id="remove-from-merit-list-btn"> Remove from Merit List</button>
-                  </div>
-                </form>
-              </div>
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-primary" id="add-to-merit-list-btn"> Add to
+                                            Merit List
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-          </div>
-
         </div>
-      </div>
     </div>
-  </div>
 
 
-  <!-- View Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLabel"><span id="applicantNameTitle"></span>'s Application
-          </h3>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- View Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel"><span id="applicantNameTitle"></span>'s Application
+                    </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>Personal Details:</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="applicationNumber">Application Number</label>
+                                <input id="applicationNumber" class="form-control" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fatherName">Father's Name</label>
+                                <input id="fatherName" class="form-control" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <input id="gender" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <input id="category" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="maritalStatus">Marital Status</label>
+                                <input id="maritalStatus" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input id="email" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobileNumber">Mobile Number</label>
+                                <input id="mobileNumber" class="form-control" readonly>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="centerName">Center Name</label>
+                                <input id="centerName" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="motherName">Mother's Name</label>
+                                <input id="motherName" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input id="dob" class="form-control" readonly>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="tribe">Tribe</label>
+                                <input id="tribe" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="religion">Religion</label>
+                                <input id="religion" class="form-control" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="motherTongue">Mother Tongue</label>
+                                <input id="motherTongue" class="form-control" readonly>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <h4>Address (Permanent):</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="statePerm">State</label>
+                                <input id="statePerm" class="form-control" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="townPerm">Town</label>
+                                <input id="townPerm" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressPerm">Address</label>
+                                <textarea id="addressPerm" class="form-control" readonly></textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="districtPerm">District</label>
+                                <input id="districtPerm" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="pincodePerm">Pincode</label>
+                                <input id="pincodePerm" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <h4>Address (Correspondence):</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="stateCorr">State</label>
+                                <input id="stateCorr" class="form-control" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="townCorr">Town</label>
+                                <input id="townCorr" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressCorr">Address</label>
+                                <textarea id="addressCorr" class="form-control" readonly></textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="districtCorr">District</label>
+                                <input id="districtCorr" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="pincodeCorr">Pincode</label>
+                                <input id="pincodeCorr" class="form-control" readonly>
+                            </div>
+
+                        </div>
+                    </div>
+                    <h4>Bank Details:</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="accountNumber">Account Number</label>
+                                <input id="accountNumber" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="ifscCode">IFSC Code</label>
+                                <input id="ifscCode" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="bankName">Bank Name</label>
+                                <input id="bankName" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
-        <div class="modal-body">
-          <h4>Personal Details:</h4>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="applicationNumber">Application Number</label>
-                <input id="applicationNumber" class="form-control" readonly>
-              </div>
-
-              <div class="form-group">
-                <label for="fatherName">Father's Name</label>
-                <input id="fatherName" class="form-control" readonly>
-              </div>
-
-              <div class="form-group">
-                <label for="gender">Gender</label>
-                <input id="gender" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="category">Category</label>
-                <input id="category" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="maritalStatus">Marital Status</label>
-                <input id="maritalStatus" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="mobileNumber">Mobile Number</label>
-                <input id="mobileNumber" class="form-control" readonly>
-              </div>
-
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="centerName">Center Name</label>
-                <input id="centerName" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="motherName">Mother's Name</label>
-                <input id="motherName" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="dob">Date of Birth</label>
-                <input id="dob" class="form-control" readonly>
-              </div>
-
-
-              <div class="form-group">
-                <label for="tribe">Tribe</label>
-                <input id="tribe" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="religion">Religion</label>
-                <input id="religion" class="form-control" readonly>
-              </div>
-
-              <div class="form-group">
-                <label for="motherTongue">Mother Tongue</label>
-                <input id="motherTongue" class="form-control" readonly>
-              </div>
-
-
-            </div>
-          </div>
-          <h4>Address (Permanent):</h4>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="statePerm">State</label>
-                <input id="statePerm" class="form-control" readonly>
-              </div>
-
-              <div class="form-group">
-                <label for="townPerm">Town</label>
-                <input id="townPerm" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="addressPerm">Address</label>
-                <textarea id="addressPerm" class="form-control" readonly></textarea>
-              </div>
-
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="districtPerm">District</label>
-                <input id="districtPerm" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="pincodePerm">Pincode</label>
-                <input id="pincodePerm" class="form-control" readonly>
-              </div>
-            </div>
-          </div>
-          <h4>Address (Correspondence):</h4>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="stateCorr">State</label>
-                <input id="stateCorr" class="form-control" readonly>
-              </div>
-
-              <div class="form-group">
-                <label for="townCorr">Town</label>
-                <input id="townCorr" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="addressCorr">Address</label>
-                <textarea id="addressCorr" class="form-control" readonly></textarea>
-              </div>
-
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="districtCorr">District</label>
-                <input id="districtCorr" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="pincodeCorr">Pincode</label>
-                <input id="pincodeCorr" class="form-control" readonly>
-              </div>
-
-            </div>
-          </div>
-          <h4>Bank Details:</h4>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="accountNumber">Account Number</label>
-                <input id="accountNumber" class="form-control" readonly>
-              </div>
-              <div class="form-group">
-                <label for="ifscCode">IFSC Code</label>
-                <input id="ifscCode" class="form-control" readonly>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="bankName">Bank Name</label>
-                <input id="bankName" class="form-control" readonly>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
     </div>
-  </div>
 
 
-  <!-- ============================================================== -->
-  <!-- End PAge Content -->
-  <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
 
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
     function getDetails(id) {
         console.log("inside getDetails");
         $.ajax({
@@ -383,8 +399,8 @@ $(document).ready(function() {
     var ph = $('input[name=ph]:checked').val();
     var selectedTrade = $('#selectedTradesDropdown option:selected').val();
 
-    if (!category) {
-      alert("Please select a Qualifying Category.");
+    if (!applicationNumber || !centerId || !selectedTrade || !category || !ph) {
+      alert("Please fill in all the required fields.");
       return;
     }
 
@@ -437,6 +453,7 @@ $(document).ready(function() {
 });
   });
 });
+
 
 
 

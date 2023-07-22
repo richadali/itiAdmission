@@ -3,6 +3,7 @@ package com.dect.itiAdmission.controller;
 import com.dect.itiAdmission.domain.ApplicationDetails;
 import com.dect.itiAdmission.domain.Gender;
 import com.dect.itiAdmission.dtos.ApplicationDetailsDTO;
+import com.dect.itiAdmission.dtos.GetApplicationDetailsDTO;
 import com.dect.itiAdmission.repository.ApplicationDetailsRepository;
 import com.dect.itiAdmission.repository.GenderRepository;
 import com.dect.itiAdmission.service.ApplicationDetailsService;
@@ -31,20 +32,22 @@ public class ApplicationDetailsController {
     private GenderRepository genderRepository;
 
     @GetMapping("/secure/application_no")
-    public ApplicationDetails getDetailsByApplicationNo(String id, Model model){
-        System.out.println(id);
+    public ApplicationDetails getDetailsByApplicationNo(String id, Model model) {
         ApplicationDetails applicationDetails = applicationDetailsService.applicationDetails(id);
-        System.out.println(applicationDetails);
         model.addAttribute("applicationDetails", applicationDetails);
         return applicationDetails;
     }
 
-    @GetMapping("/secure/getApplicationByCenterIdAndTradeId/{centerId}/{tradeId}")
-    public List<ApplicationDetails> getApplicationByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId){
+    ///secure
+    @GetMapping("secure/getApplicationByCenterIdAndTradeId/{centerId}/{tradeId}")
+    public List<?> getApplicationByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId) {
 //        ApplicationDetails applicationDetails = applicationnumber.applicationDetails(id);
 //        System.out.println(applicationDetails);
 //        model.addAttribute("applicationDetails", applicationDetails);
-        return applicationDetailsService.getApplicationByCenterIdAndTradeId(centerId, tradeId);
+        System.out.println("-----------------------------------------------");
+        List<GetApplicationDetailsDTO> getApplicationDetailsDTO = applicationDetailsService.getApplicationByCenterIdAndTradeId(centerId, tradeId);
+        getApplicationDetailsDTO.forEach(System.out::println);
+        return getApplicationDetailsDTO;
     }
 
 //    @PutMapping("/editApplicationDetails")

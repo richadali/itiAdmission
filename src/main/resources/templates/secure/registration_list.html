@@ -71,7 +71,6 @@
                                     <th>DOB</th>
                                     <th>Gender</th>
                                     <th>Address</th>
-                                    <th>Center</th>
                                     <th>Action</th>
                                     <th>Action</th>
                                 </tr>
@@ -354,7 +353,7 @@
                     // Process the response and populate the trade select box
                     response.forEach(function(trade) {
                         tradeSelect.append($('<option></option>')
-                            .val(trade.id)
+                            .val(trade.tradeId.tradeCode)
                             .text(trade.tradeId.tradeName));
                     });
 
@@ -403,8 +402,7 @@ $(document).ready(function() {
                         candidate.applicantname,
                         candidate.dob,
                         candidate.gender.genderName,
-                        candidate.addressperm,
-                        candidate.centers.centerName,
+                         candidate.districts + '<br>' + candidate.townperm + '<br>' +candidate.addressperm+ '<br>' + candidate.pincodeperm,
                         '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>',
                         '<button onclick="editApplicant(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>'
                     ];

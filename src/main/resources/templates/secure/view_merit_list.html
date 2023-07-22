@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-4">
-                        <h4 class="card-title">Generate Check List</h4>
+                        <h4 class="card-title">View Merit List</h4>
                         <div class="ms-auto">
                             <!--                            <div class="dropdown sub-dropdown">-->
                             <!--                                <button class="btn btn-link text-muted dropdown-toggle" type="button"-->
@@ -51,13 +51,6 @@
                                         <option selected disabled>Select Trade</option>
                                     </select>
                                 </div>
-                                <!--                                <div class="col-md-2">-->
-                                <!--                                    <select id="phaseSelect" class="form-select" disabled>-->
-                                <!--                                        <option selected disabled>Select Phase</option>-->
-                                <!--                                        <option value="1">Phase 1</option>-->
-                                <!--                                        <option value="2">Phase 2</option>-->
-                                <!--                                    </select>-->
-                                <!--                                </div>-->
                                 <div class="col-md-2">
                                     <input type="submit" name="submit" value="Get List" class="btn btn-primary">
                                 </div>
@@ -68,25 +61,20 @@
                     <div class="row mt-5" style="display: none" id="tableContainer">
 
                         <div class="table-responsive">
-                            <div class="mb-3">
-                                <label for="counselingDateInput">Counselling Date: </label>
-                                <input type="date" class="form-control w-25" id="counselingDateInput">
-                            </div>
-
-
                             <table id="zero_config"
                                    class="table border table-striped table-bordered table-hover text-nowrap">
                                 <thead class="bg-info text-white">
                                 <tr>
-                                    <th>Slno</th>
-                                    <th>Application No</th>
-                                    <th>Applicant Name</th>
-                                    <th>Class Eight(%)</th>
-                                    <th>Class Ten(%)</th>
-                                    <th>Maths-Sci(%)</th>
-                                    <th>Category</th>
+                                    <th>#</th>
+                                    <th>AppNo</th>
+                                    <th>Name</th>
+                                    <th>% 8th</th>
+                                    <th>% 10th</th>
+                                    <th>% MathSci</th>
+                                    <th>Reservation</th>
                                     <th>Ph</th>
                                     <th>View</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="border border-info">
@@ -95,9 +83,7 @@
 
                             </table>
                         </div>
-
                     </div>
-                    <!--                    <button id="add-to-merit-list-btn"> Add to meritlist</button>-->
                 </div>
             </div>
         </div>
@@ -288,7 +274,7 @@
         });
 
         // Add an event listener to the trade select box
-        tradeSelect.on('change', function() {
+    tradeSelect.on('change', function() {
         var selectedTrade = tradeSelect.val();
     });
 
@@ -325,104 +311,57 @@
 
 
 $(document).ready(function() {
-    var table = $('#zero_config').DataTable({
+        var table = $('#zero_config').DataTable({
         dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'pdfHtml5',
-                customize: function(doc) {
-                    var counselingDate = document.getElementById('counselingDateInput').value;
-
-                    // Check if counseling date is not empty
-                    if (!counselingDate) {
-                        alert('Please enter a counseling date.');
-                        this.disable();
-                        return false; // Prevent PDF generation
-                    }
-
-                    // Set page size to A4 landscape
-                    doc.pageSize = 'A4';
-                    doc.pageOrientation = 'portrait';
-
-                    // Remove the "exported data" heading
-                    doc.content.splice(0, 1);
-
-                    // Add selected ITI and Trade as headings
-                    var selectedITI = $('#itiSelect option:selected').text();
-                    var selectedTrade = $('#tradeSelect option:selected').text();
-                    var headings = 'Candidates Selected for Counselling \n\n' + selectedITI + '\nTrade: ' + selectedTrade + '\nCounseling Date: ' + counselingDate;
-                    doc.content.splice(0, 0, { text: headings, fontSize: 14, bold: true, margin: [0, 0, 0, 10] });
-                },
-                exportOptions: {
-                    columns: ':visible:not(:last-child)'
-                }
-            },
+            buttons: [
             'copyHtml5',
-            'excelHtml5'
-        ],
-        columnDefs: [
-            // Column Definitions for customizations
-            {
-                targets: [3, 4, 5], // Indexes of columns to customize (0-based index)
-            }
-        ],
-        drawCallback: function(settings) {
-            var api = this.api();
-            var startIndex = api.context[0]._iDisplayStart;
-            api.column(0).nodes().each(function(cell, i) {
-                cell.innerHTML = startIndex + i + 1;
-            });
-        }
-    });
-
+            'excelHtml5',
+            'pdfHtml5'
+            ],
+                    "drawCallback": function (settings) {
+                        var api = this.api();
+                        var startIndex = api.context[0]._iDisplayStart;
+                        api.column(0).nodes().each(function (cell, i) {
+                            cell.innerHTML = startIndex + i + 1;
+                        });
+                    }
+        });
 
     function populateCandidateTable(selectedITI, selectedTrade) {
         // Clear the table body
         table.clear().draw();
 
-        // Make an AJAX request to fetch the candidates with the selected ITI and trade
+        console.log("Selected ITI : "+selectedITI);
+        console.log("Selected Trade : "+selectedTrade);
+
+        // Make an AJAX request to fetch the candidates from merit list with the selected ITI and trade
         $.ajax({
-            url: '/secure/getApplicationByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
+            url: '/secure/getMeritListByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
             method: 'GET',
-
             success: function(response) {
-            console.log(response);
+                console.log(response);
+                // Process the response and populate the candidate table
+                response.forEach(function(candidate, index) {
 
-            response.forEach(function(candidate, index) {
+                    var totalMarks = parseFloat(candidate.applicationDetails.marksmaths || 0) + parseFloat(candidate.applicationDetails.marksscience || 0);
+                    var totalPercentageMathSci = (totalMarks / 200) * 100;
+
                     var row = [
                         index + 1, // Index column
-                        '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
-                        candidate.applicantname.toUpperCase(),
+                        '<button onclick="abc(\'' + candidate.applicationDetails.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationDetails.applicationnumber + '</button>', // App No column with button
+                        candidate.applicationDetails.applicantname,
+                        candidate.applicationDetails.percentageeight,
+                        candidate.applicationDetails.percentagetenth,
+                        totalPercentageMathSci.toFixed(2),
+                        candidate.categories.categoryName,
+                        candidate.ph,
+                        '<button onclick="abc(\'' + candidate.applicationDetails.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>',
+                        '<button onclick="removeApplicant(\'' + candidate.applicationDetails.applicationnumber + '\')" class="btn btn-primary btn-sm">Remove</button>',
                     ];
-
-                    // Check the values of mathsSci and tenthPass to determine column visibility
-                    if (candidate.mathsScience === 'Y' && candidate.tenthPass === 'Y') {
-                        console.log("mathsScience = Y, tenthPass = Y ")
-                       row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
-                        table.column(3).visible(false); // Show %8th column
-                        table.column(4).visible(true); // Show %10th column
-                        table.column(5).visible(true); // Show %mathsSci column
-                    } else if (candidate.mathsScience === 'N' && candidate.tenthPass === 'Y') {
-                        console.log("mathsScience = N, tenthPass = Y ")
-                        row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
-                        table.column(3).visible(false); // Hide %8th column
-                        table.column(4).visible(true); // Show %10th column
-                        table.column(5).visible(false); // Hide %mathSci column
-                    } else {
-                        console.log("mathsScience = N, tenthPass = N ")
-                        row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
-                        table.column(3).visible(true); // Show %8th column
-                        table.column(4).visible(false); // Hide %10th column
-                        table.column(5).visible(false); // Hide %mathSci column
-                    }
-
-                 // Convert PH value to 'YES' or 'NO'
-                var phValue = (candidate.ph === '1') ? 'YES' : 'NO';
-                row.push(candidate.categories, phValue, '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>');
-                table.row.add(row).draw(false);
-                var tableContainer = document.getElementById("tableContainer");
-                tableContainer.style.display = "block";
-            });
+                    table.row.add(row).draw(false);
+                    var tableContainer = document.getElementById("tableContainer");
+                    tableContainer.style.display = "block";
+                });
 
             },
             error: function() {
@@ -516,36 +455,23 @@ $(document).ready(function() {
     }
 
 
+    function removeApplicant(id) {
+        console.log("inside removeApplicant");
+        $.ajax({
+            type: "DELETE",
+            url: "/secure/removeFromMeritList",
+            data: "id="+id,
+            success: function(response) {
+            console.log('Applicant removed successfully:', response);
+            alert('Applicant removed successfully.');
+            location.reload();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        },
+        error: function(xhr, status, error) {
+            console.error('Error removing applicant:', error);
+        }
+    });
+}
 
 
 

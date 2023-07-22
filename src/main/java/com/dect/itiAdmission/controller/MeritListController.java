@@ -14,13 +14,19 @@ import java.util.List;
 public class MeritListController {
     @Autowired
     private MeritListService meritListService;
+
     @PostMapping("/addMeritList")
-    public String addMeritList(@RequestBody MeritListDTO meritListDTO){
+    public String addMeritList(@RequestBody MeritListDTO meritListDTO) {
         return meritListService.addMeritList(meritListDTO);
     }
 
+    @DeleteMapping("/removeFromMeritList")
+    public String removeFromMeritList(String id) {
+        return meritListService.removeFromMeritList(id);
+    }
+
     @GetMapping("/getMeritListByCenterIdAndTradeId/{centerId}/{tradeId}")
-    public List<MeritList> getMeritListByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId){
+    public List<MeritList> getMeritListByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId) {
         return meritListService.getMeritListByCenterIdAndTradeId(centerId, tradeId);
     }
 }
