@@ -81,11 +81,11 @@
                                     <th>Slno</th>
                                     <th>Application No</th>
                                     <th>Applicant Name</th>
+                                    <th>Category</th>
+                                    <th>Ph</th>
                                     <th>Class Eight(%)</th>
                                     <th>Class Ten(%)</th>
                                     <th>Maths-Sci(%)</th>
-                                    <th>Category</th>
-                                    <th>Ph</th>
                                     <th>View</th>
                                 </tr>
                                 </thead>
@@ -345,14 +345,36 @@ $(document).ready(function() {
                     doc.pageOrientation = 'portrait';
 
                     // Remove the "exported data" heading
-                    doc.content.splice(0, 1);
+    doc.content.splice(0, 1);
 
-                    // Add selected ITI and Trade as headings
-                    var selectedITI = $('#itiSelect option:selected').text();
-                    var selectedTrade = $('#tradeSelect option:selected').text();
-                    var headings = 'Candidates Selected for Counselling \n\n' + selectedITI + '\nTrade: ' + selectedTrade + '\nCounseling Date: ' + counselingDate;
-                    doc.content.splice(0, 0, { text: headings, fontSize: 14, bold: true, margin: [0, 0, 0, 10] });
-                },
+    // Add selected ITI and Trade as headings
+    var selectedITI = $('#itiSelect option:selected').text();
+    var selectedTrade = $('#tradeSelect option:selected').text();
+    var headings = 'Candidates Selected for Counselling \n\n' + selectedITI + '\nTrade: ' + selectedTrade + '\nCounseling Date: ' + counselingDate;
+    doc.content.splice(0, 0, { text: headings, fontSize: 14, bold: true, margin: [0, 0, 0, 10] });
+
+    // Get the table body
+    var tableBody = doc.content[1].table.body;
+    var rowCount = tableBody.length;
+
+    // Customize table design for visible columns only
+    for (var row = 0; row < rowCount; row++) {
+        var rowData = tableBody[row];
+
+        // Loop through each column and apply simple formatting
+        for (var col = 0; col < rowData.length; col++) {
+            var cell = rowData[col];
+
+            // Check if the cell is defined before setting its properties
+            if (cell) {
+                cell.alignment = 'center'; // Set cell alignment
+                cell.margin = [5, 5, 5, 5]; // Set cell margins
+                cell.fontSize = 10; // Set font size
+                cell.bold = (row === 0); // Make header cells bold
+            }
+        }
+    }
+},
                 exportOptions: {
                     columns: ':visible:not(:last-child)'
                 }
@@ -363,7 +385,7 @@ $(document).ready(function() {
         columnDefs: [
             // Column Definitions for customizations
             {
-                targets: [3, 4, 5], // Indexes of columns to customize (0-based index)
+                targets: [5, 6, 7], // Indexes of columns to customize (0-based index)
             }
         ],
         drawCallback: function(settings) {
@@ -393,32 +415,32 @@ $(document).ready(function() {
                         index + 1, // Index column
                         '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
                         candidate.applicantname.toUpperCase(),
+                        candidate.categories, // Category column
+                        (candidate.ph === '1') ? 'YES' : 'NO', // PH column with 'YES' or 'NO' value
                     ];
 
                     // Check the values of mathsSci and tenthPass to determine column visibility
                     if (candidate.mathsScience === 'Y' && candidate.tenthPass === 'Y') {
                         console.log("mathsScience = Y, tenthPass = Y ")
                        row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
-                        table.column(3).visible(false); // Show %8th column
-                        table.column(4).visible(true); // Show %10th column
-                        table.column(5).visible(true); // Show %mathsSci column
+                        table.column(5).visible(false); // Show %8th column
+                        table.column(6).visible(true); // Show %10th column
+                        table.column(7).visible(true); // Show %mathsSci column
                     } else if (candidate.mathsScience === 'N' && candidate.tenthPass === 'Y') {
                         console.log("mathsScience = N, tenthPass = Y ")
                         row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
-                        table.column(3).visible(false); // Hide %8th column
-                        table.column(4).visible(true); // Show %10th column
-                        table.column(5).visible(false); // Hide %mathSci column
+                        table.column(5).visible(false); // Hide %8th column
+                        table.column(6).visible(true); // Show %10th column
+                        table.column(7).visible(false); // Hide %mathSci column
                     } else {
                         console.log("mathsScience = N, tenthPass = N ")
                         row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
-                        table.column(3).visible(true); // Show %8th column
-                        table.column(4).visible(false); // Hide %10th column
-                        table.column(5).visible(false); // Hide %mathSci column
+                        table.column(5).visible(true); // Show %8th column
+                        table.column(6).visible(false); // Hide %10th column
+                        table.column(7).visible(false); // Hide %mathSci column
                     }
 
-                 // Convert PH value to 'YES' or 'NO'
-                var phValue = (candidate.ph === '1') ? 'YES' : 'NO';
-                row.push(candidate.categories, phValue, '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>');
+                row.push('<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>');
                 table.row.add(row).draw(false);
                 var tableContainer = document.getElementById("tableContainer");
                 tableContainer.style.display = "block";
@@ -514,6 +536,14 @@ $(document).ready(function() {
             }
         });
     }
+
+
+
+
+
+
+
+
 
 
 
