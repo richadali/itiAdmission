@@ -426,6 +426,34 @@ $(document).ready(function() {
             table.columns(6).visible(isMathsScienceY || isMathsScienceN); // %10th column
             table.columns(7).visible(isMathsScienceY); // %mathsSci column
 
+
+           // Redraw the table to apply column visibility changes
+                table.draw();
+
+                // Define the headerCallback function to customize header colors
+                var headerCallback = function(thead, data, start, end, display) {
+                    // Customize column header colors based on conditions
+                    if (isBothN) {
+                        $(thead).find('th:eq(5)').css('background-color', 'red'); // %8th column header
+                        $(thead).find('th:eq(6)').css('background-color', ''); // %10th column header
+                        $(thead).find('th:eq(7)').css('background-color', ''); // %mathsSci column header
+                    } else if (isMathsScienceY) {
+                        $(thead).find('th:eq(5)').css('background-color', ''); // %8th column header
+                        $(thead).find('th:eq(6)').css('background-color', 'red'); // %10th column header
+                        $(thead).find('th:eq(7)').css('background-color', ''); // %mathsSci column header
+                    } else if (isMathsScienceN) {
+                        $(thead).find('th:eq(5)').css('background-color', 'red'); // %8th column header
+                        $(thead).find('th:eq(6)').css('background-color', ''); // %10th column header
+                        $(thead).find('th:eq(7)').css('background-color', ''); // %mathsSci column header
+                    }
+                };
+
+                // Apply the headerCallback function to the DataTable
+                table.on('draw.dt', function() {
+                    var header = table.table().header();
+                    headerCallback(header);
+                });
+
             // Now loop through the candidates to populate the table
             response.forEach(function(candidate, index) {
                 var row = [
@@ -549,6 +577,12 @@ $(document).ready(function() {
             }
         });
     }
+
+
+
+
+
+
 
 
 

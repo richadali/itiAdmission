@@ -382,8 +382,10 @@ $(document).ready(function() {
                         api.column(0).nodes().each(function (cell, i) {
                             cell.innerHTML = startIndex + i + 1;
                         });
-                    }
+                    },
+
         });
+        table.order([1, 'asc']).draw();
 
     function populateCandidateTable(selectedITI, selectedTrade) {
         // Clear the table body
