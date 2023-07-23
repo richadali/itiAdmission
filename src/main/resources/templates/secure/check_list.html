@@ -410,41 +410,54 @@ $(document).ready(function() {
             success: function(response) {
             console.log(response);
 
+            if (response && response.length > 0) {
+           // Check the values of mathsScience and tenthPass for the first candidate in the response
+            var firstCandidate = response[0];
+            var mathsScience = firstCandidate.mathsScience;
+            var tenthPass = firstCandidate.tenthPass;
+
+            // Determine column visibility based on the first candidate's values
+            var isMathsScienceY = (mathsScience === 'Y' && tenthPass === 'Y');
+            var isMathsScienceN = (mathsScience === 'N' && tenthPass === 'Y');
+            var isBothN = (mathsScience === 'N' && tenthPass === 'N');
+
+            // Set column visibility based on the determined conditions
+            table.columns(5).visible(isBothN); // %8th column
+            table.columns(6).visible(isMathsScienceY || isMathsScienceN); // %10th column
+            table.columns(7).visible(isMathsScienceY); // %mathsSci column
+
+            // Now loop through the candidates to populate the table
             response.forEach(function(candidate, index) {
-                    var row = [
-                        index + 1, // Index column
-                        '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
-                        candidate.applicantname.toUpperCase(),
-                        candidate.categories, // Category column
-                        (candidate.ph === '1') ? 'YES' : 'NO', // PH column with 'YES' or 'NO' value
-                    ];
+                var row = [
+                    index + 1, // Index column
+                    '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
+                    candidate.applicantname.toUpperCase(),
+                    candidate.categories, // Category column
+                    (candidate.ph === '1') ? 'YES' : 'NO', // PH column with 'YES' or 'NO' value
+                ];
 
-                    // Check the values of mathsSci and tenthPass to determine column visibility
-                    if (candidate.mathsScience === 'Y' && candidate.tenthPass === 'Y') {
-                        console.log("mathsScience = Y, tenthPass = Y ")
-                       row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
-                        table.column(5).visible(false); // Show %8th column
-                        table.column(6).visible(true); // Show %10th column
-                        table.column(7).visible(true); // Show %mathsSci column
-                    } else if (candidate.mathsScience === 'N' && candidate.tenthPass === 'Y') {
-                        console.log("mathsScience = N, tenthPass = Y ")
-                        row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
-                        table.column(5).visible(false); // Hide %8th column
-                        table.column(6).visible(true); // Show %10th column
-                        table.column(7).visible(false); // Hide %mathSci column
-                    } else {
-                        console.log("mathsScience = N, tenthPass = N ")
-                        row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
-                        table.column(5).visible(true); // Show %8th column
-                        table.column(6).visible(false); // Hide %10th column
-                        table.column(7).visible(false); // Hide %mathSci column
-                    }
-
+                // Add percentage columns based on the determined conditions
+                if (isMathsScienceY) {
+                    row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
+                } else if (isMathsScienceN) {
+                    row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
+                } else {
+                    row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
+                }
                 row.push('<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>');
+
+
+                // Add the row to the table
                 table.row.add(row).draw(false);
                 var tableContainer = document.getElementById("tableContainer");
                 tableContainer.style.display = "block";
             });
+            } else{
+                // Handle the case when the response is empty
+                var tableContainer = document.getElementById("tableContainer");
+                tableContainer.style.display = "none"; // Hide the table container
+                alert("No Applications found for the selected ITI and trade.");
+            }
 
             },
             error: function() {
@@ -536,6 +549,19 @@ $(document).ready(function() {
             }
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
