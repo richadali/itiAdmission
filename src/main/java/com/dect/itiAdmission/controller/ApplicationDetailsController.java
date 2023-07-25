@@ -8,6 +8,7 @@ import com.dect.itiAdmission.repository.ApplicationDetailsRepository;
 import com.dect.itiAdmission.repository.GenderRepository;
 import com.dect.itiAdmission.service.ApplicationDetailsService;
 import com.dect.itiAdmission.service.CenterService;
+import com.dect.itiAdmission.service.WaitingListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,9 @@ public class ApplicationDetailsController {
 
     @Autowired
     private GenderRepository genderRepository;
+
+    @Autowired
+    private WaitingListService waitingListService;
 
     @GetMapping("/secure/application_no")
     public ApplicationDetails getDetailsByApplicationNo(String id, Model model) {
@@ -67,5 +71,15 @@ public class ApplicationDetailsController {
         applicationDetails.setDob(applicationDetailsDTO.getDob());
         applicationDetailsRepository.save(applicationDetails);
         return applicationDetailsDTO;
+    }
+
+
+    //FOR WAITING LIST
+    @GetMapping("secure/getWaitingListByCenterIdAndTradeId/{centerId}/{tradeId}")
+    public List<?> getMeritListByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId) {
+        System.out.println("-----------------------------------------------");
+        List<GetApplicationDetailsDTO> getApplicationDetailsDTO = waitingListService.getWaitingListByCenterIdAndTradeId(centerId, tradeId);
+        getApplicationDetailsDTO.forEach(System.out::println);
+        return getApplicationDetailsDTO;
     }
 }

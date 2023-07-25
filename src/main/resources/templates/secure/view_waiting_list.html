@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-4">
-                        <h4 class="card-title">Generate Check List</h4>
+                        <h4 class="card-title">View Waiting List</h4>
                         <div class="ms-auto">
                             <!--                            <div class="dropdown sub-dropdown">-->
                             <!--                                <button class="btn btn-link text-muted dropdown-toggle" type="button"-->
@@ -51,13 +51,6 @@
                                         <option selected disabled>Select Trade</option>
                                     </select>
                                 </div>
-                                <!--                                <div class="col-md-2">-->
-                                <!--                                    <select id="phaseSelect" class="form-select" disabled>-->
-                                <!--                                        <option selected disabled>Select Phase</option>-->
-                                <!--                                        <option value="1">Phase 1</option>-->
-                                <!--                                        <option value="2">Phase 2</option>-->
-                                <!--                                    </select>-->
-                                <!--                                </div>-->
                                 <div class="col-md-2">
                                     <input type="submit" name="submit" value="Get List" class="btn btn-primary">
                                 </div>
@@ -68,12 +61,6 @@
                     <div class="row mt-5" style="display: none" id="tableContainer">
 
                         <div class="table-responsive">
-                            <div class="mb-3">
-                                <label for="counselingDateInput">Counselling Date: </label>
-                                <input type="date" class="form-control w-25" id="counselingDateInput">
-                            </div>
-
-
                             <table id="zero_config"
                                    class="table border table-striped table-bordered table-hover text-nowrap">
                                 <thead class="bg-info text-white">
@@ -95,9 +82,7 @@
 
                             </table>
                         </div>
-
                     </div>
-                    <!--                    <button id="add-to-merit-list-btn"> Add to meritlist</button>-->
                 </div>
             </div>
         </div>
@@ -288,7 +273,7 @@
         });
 
         // Add an event listener to the trade select box
-        tradeSelect.on('change', function() {
+    tradeSelect.on('change', function() {
         var selectedTrade = tradeSelect.val();
     });
 
@@ -331,14 +316,6 @@ $(document).ready(function() {
             {
                 extend: 'pdfHtml5',
                 customize: function(doc) {
-                    var counselingDate = document.getElementById('counselingDateInput').value;
-
-                    // Check if counseling date is not empty
-                    if (!counselingDate) {
-                        alert('Please enter a counseling date.');
-                        this.disable();
-                        return false; // Prevent PDF generation
-                    }
 
                     // Set page size to A4 landscape
                     doc.pageSize = 'A4';
@@ -350,7 +327,7 @@ $(document).ready(function() {
     // Add selected ITI and Trade as headings
     var selectedITI = $('#itiSelect option:selected').text();
     var selectedTrade = $('#tradeSelect option:selected').text();
-    var headings = 'Candidates Selected for Counselling \n\n' + selectedITI + '\nTrade: ' + selectedTrade + '\nCounseling Date: ' + counselingDate;
+    var headings = 'Waiting List \n\n' + selectedITI + '\nTrade: ' + selectedTrade;
     doc.content.splice(0, 0, { text: headings, fontSize: 14, bold: true, margin: [0, 0, 0, 10] });
 
     // Update the serial number (slno) in the exported PDF
@@ -404,16 +381,17 @@ $(document).ready(function() {
         }
     });
 
-
     function populateCandidateTable(selectedITI, selectedTrade) {
         // Clear the table body
         table.clear().draw();
 
-        // Make an AJAX request to fetch the candidates with the selected ITI and trade
-        $.ajax({
-            url: '/secure/getApplicationByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
-            method: 'GET',
+        console.log("Selected ITI : "+selectedITI);
+        console.log("Selected Trade : "+selectedTrade);
 
+        // Make an AJAX request to fetch the candidates from merit list with the selected ITI and trade
+        $.ajax({
+            url: '/secure/getWaitingListByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
+            method: 'GET',
             success: function(response) {
             console.log(response);
 
@@ -468,7 +446,7 @@ $(document).ready(function() {
                     '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
                     candidate.applicantname.toUpperCase(),
                     candidate.categories, // Category column
-                    (candidate.ph === '1') ? 'YES' : 'NO', // PH column with 'YES' or 'NO' value
+                    candidate.ph
                 ];
 
                 // Add percentage columns based on the determined conditions
@@ -500,6 +478,7 @@ $(document).ready(function() {
             }
         });
     }
+
 
     // Add an event listener to the form submission
     $('form').on('submit', function(event) {
@@ -584,67 +563,6 @@ $(document).ready(function() {
             }
         });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

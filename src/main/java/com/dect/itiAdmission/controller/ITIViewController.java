@@ -98,6 +98,13 @@ public class ITIViewController {
         return "secure/view_merit_list";
     }
 
+    @GetMapping("/secure/view_waiting_list")
+    public String viewWaitinglist(Model model) {
+        model.addAttribute("getCenters", centerService.getCenters());
+        model.addAttribute("getTrades", tradesService.getTrades());
+        return "secure/view_waiting_list";
+    }
+
 //
 ////    @PostMapping("/secure/registration")
 ////

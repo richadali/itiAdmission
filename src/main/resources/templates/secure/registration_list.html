@@ -372,9 +372,46 @@ $(document).ready(function() {
         var table = $('#zero_config').DataTable({
         dom: 'Bfrtip',
             buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'pdfHtml5'
+            {
+                extend: 'pdfHtml5',
+                customize: function(doc) {
+                    // Set page size to A4 landscape
+                    doc.pageSize = 'A4';
+                    doc.pageOrientation = 'landscape';
+
+                    // Remove the "exported data" heading
+                    doc.content.splice(0, 1);
+
+                    // Add selected ITI and Trade as headings
+                    var selectedITI = $('#itiSelect option:selected').text();
+                    var selectedTrade = $('#tradeSelect option:selected').text();
+                    var headings = 'All Registered Applicants in ' + selectedITI + ' for Trade - ' + selectedTrade;
+                     doc.content.splice(0, 0, { text: headings, fontSize: 14, bold: true, margin: [0, 0, 0, 10] });
+
+                     // Update the serial number (slno) in the exported PDF
+                    var rowCount = doc.content[1].table.body.length;
+                    for (var row = 1; row < rowCount; row++) { // Start from row 1 to skip the heading row
+                        doc.content[1].table.body[row][0].text = row;
+                    }
+
+
+                    // Add custom styling (margin) to the table cells in the exported PDF
+                    var rowCount = doc.content[1].table.body.length;
+                    for (var row = 0; row < rowCount; row++) {
+                        var columnCount = doc.content[1].table.body[row].length;
+                        for (var col = 0; col < columnCount; col++) {
+                            var cell = doc.content[1].table.body[row][col];
+                            if (cell) {
+                                cell.margin = [5, 5, 5, 5]; // Set margin for each cell [top, right, bottom, left]
+                            }
+                        }
+                    }
+                },
+                exportOptions: {
+                    columns: ':visible:not(:nth-last-child(2)):not(:last-child)'
+
+                }
+            }
             ],
                     "drawCallback": function (settings) {
                         var api = this.api();
@@ -396,15 +433,17 @@ $(document).ready(function() {
             url: '/secure/getApplicationByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
             method: 'GET',
             success: function(response) {
+            console.log(response);
+            if (response && response.length > 0) {
                 // Process the response and populate the candidate table
                 response.forEach(function(candidate, index) {
                     var row = [
                         index + 1, // Index column
                         '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
-                        candidate.applicantname,
+                        candidate.applicantname.toUpperCase(),
                         candidate.dob,
-                        candidate.gender.genderName,
-                         candidate.districts + '<br>' + candidate.townperm + '<br>' +candidate.addressperm+ '<br>' + candidate.pincodeperm,
+                        candidate.gender.genderName.toUpperCase(),
+                        candidate.addressperm.toUpperCase() + '<br>Town: ' + candidate.townperm.toUpperCase() + '<br>Pin: ' +candidate.pincodeperm + '<br>' + candidate.districts.toUpperCase()+ ', '+candidate.states,
                         '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>',
                         '<button onclick="editApplicant(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>'
                     ];
@@ -412,6 +451,12 @@ $(document).ready(function() {
                     var tableContainer = document.getElementById("tableContainer");
                     tableContainer.style.display = "block";
                 });
+                } else{
+                // Handle the case when the response is empty
+                var tableContainer = document.getElementById("tableContainer");
+                tableContainer.style.display = "none"; // Hide the table container
+                alert("No Applications found for the selected ITI and trade.");
+            }
             },
             error: function() {
                 console.error('Error fetching candidates.');

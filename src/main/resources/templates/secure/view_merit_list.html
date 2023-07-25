@@ -65,14 +65,14 @@
                                    class="table border table-striped table-bordered table-hover text-nowrap">
                                 <thead class="bg-info text-white">
                                 <tr>
-                                    <th>#</th>
-                                    <th>AppNo</th>
+                                    <th>Slno</th>
+                                    <th>App No</th>
                                     <th>Name</th>
-                                    <th>% 8th</th>
-                                    <th>% 10th</th>
-                                    <th>% MathSci</th>
                                     <th>Reservation</th>
                                     <th>Ph</th>
+                                    <th>Class Eight(%)</th>
+                                    <th>Class Ten(%)</th>
+                                    <th>Maths-Sci(%)</th>
                                     <th>View</th>
                                     <th>Action</th>
                                 </tr>
@@ -311,21 +311,76 @@
 
 
 $(document).ready(function() {
-        var table = $('#zero_config').DataTable({
+    var table = $('#zero_config').DataTable({
         dom: 'Bfrtip',
-            buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'pdfHtml5'
-            ],
-                    "drawCallback": function (settings) {
-                        var api = this.api();
-                        var startIndex = api.context[0]._iDisplayStart;
-                        api.column(0).nodes().each(function (cell, i) {
-                            cell.innerHTML = startIndex + i + 1;
-                        });
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                customize: function(doc) {
+
+                    // Set page size to A4 landscape
+                    doc.pageSize = 'A4';
+                    doc.pageOrientation = 'portrait';
+
+                    // Remove the "exported data" heading
+    doc.content.splice(0, 1);
+
+    // Add selected ITI and Trade as headings
+    var selectedITI = $('#itiSelect option:selected').text();
+    var selectedTrade = $('#tradeSelect option:selected').text();
+    var headings = 'Merit List \n\n' + selectedITI + '\nTrade: ' + selectedTrade;
+    doc.content.splice(0, 0, { text: headings, fontSize: 14, bold: true, margin: [0, 0, 0, 10] });
+
+    // Update the serial number (slno) in the exported PDF
+                    var rowCount = doc.content[1].table.body.length;
+                    for (var row = 1; row < rowCount; row++) { // Start from row 1 to skip the heading row
+                        doc.content[1].table.body[row][0].text = row;
                     }
-        });
+
+
+    // Get the table body
+    var tableBody = doc.content[1].table.body;
+    var rowCount = tableBody.length;
+
+    // Customize table design for visible columns only
+    for (var row = 0; row < rowCount; row++) {
+        var rowData = tableBody[row];
+
+        // Loop through each column and apply simple formatting
+        for (var col = 0; col < rowData.length; col++) {
+            var cell = rowData[col];
+
+            // Check if the cell is defined before setting its properties
+            if (cell) {
+                cell.alignment = 'center'; // Set cell alignment
+                cell.margin = [5, 5, 5, 5]; // Set cell margins
+                cell.fontSize = 10; // Set font size
+                cell.bold = (row === 0); // Make header cells bold
+            }
+        }
+    }
+},
+                exportOptions: {
+                    columns: ':visible:not(:nth-last-child(2)):not(:last-child)'
+                }
+            },
+            'copyHtml5',
+            'excelHtml5'
+        ],
+        columnDefs: [
+            // Column Definitions for customizations
+            {
+                targets: [5, 6, 7], // Indexes of columns to customize (0-based index)
+            }
+        ],
+        drawCallback: function(settings) {
+            var api = this.api();
+            var startIndex = api.context[0]._iDisplayStart;
+            api.column(0).nodes().each(function(cell, i) {
+                cell.innerHTML = startIndex + i + 1;
+            });
+        }
+    });
 
     function populateCandidateTable(selectedITI, selectedTrade) {
         // Clear the table body
@@ -339,29 +394,84 @@ $(document).ready(function() {
             url: '/secure/getMeritListByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
             method: 'GET',
             success: function(response) {
-                console.log(response);
-                // Process the response and populate the candidate table
-                response.forEach(function(candidate, index) {
+            console.log(response);
 
-                    var totalMarks = parseFloat(candidate.applicationDetails.marksmaths || 0) + parseFloat(candidate.applicationDetails.marksscience || 0);
-                    var totalPercentageMathSci = (totalMarks / 200) * 100;
+            if (response && response.length > 0) {
+           // Check the values of mathsScience and tenthPass for the first candidate in the response
+            var firstCandidate = response[0];
+            var mathsScience = firstCandidate.mathsScience;
+            var tenthPass = firstCandidate.tenthPass;
 
-                    var row = [
-                        index + 1, // Index column
-                        '<button onclick="abc(\'' + candidate.applicationDetails.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationDetails.applicationnumber + '</button>', // App No column with button
-                        candidate.applicationDetails.applicantname,
-                        candidate.applicationDetails.percentageeight,
-                        candidate.applicationDetails.percentagetenth,
-                        totalPercentageMathSci.toFixed(2),
-                        candidate.categories.categoryName,
-                        candidate.ph,
-                        '<button onclick="abc(\'' + candidate.applicationDetails.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>',
-                        '<button onclick="removeApplicant(\'' + candidate.applicationDetails.applicationnumber + '\')" class="btn btn-primary btn-sm">Remove</button>',
-                    ];
-                    table.row.add(row).draw(false);
-                    var tableContainer = document.getElementById("tableContainer");
-                    tableContainer.style.display = "block";
+            // Determine column visibility based on the first candidate's values
+            var isMathsScienceY = (mathsScience === 'Y' && tenthPass === 'Y');
+            var isMathsScienceN = (mathsScience === 'N' && tenthPass === 'Y');
+            var isBothN = (mathsScience === 'N' && tenthPass === 'N');
+
+            // Set column visibility based on the determined conditions
+            table.columns(5).visible(isBothN); // %8th column
+            table.columns(6).visible(isMathsScienceY || isMathsScienceN); // %10th column
+            table.columns(7).visible(isMathsScienceY); // %mathsSci column
+
+
+           // Redraw the table to apply column visibility changes
+                table.draw();
+
+                // Define the headerCallback function to customize header colors
+                var headerCallback = function(thead, data, start, end, display) {
+                    // Customize column header colors based on conditions
+                    if (isBothN) {
+                        $(thead).find('th:eq(5)').css('background-color', '#3f4f9b'); // %8th column header
+                        $(thead).find('th:eq(6)').css('background-color', ''); // %10th column header
+                        $(thead).find('th:eq(7)').css('background-color', ''); // %mathsSci column header
+                    } else if (isMathsScienceY) {
+                        $(thead).find('th:eq(5)').css('background-color', ''); // %8th column header
+                        $(thead).find('th:eq(6)').css('background-color', '#3f4f9b'); // %10th column header
+                        $(thead).find('th:eq(7)').css('background-color', ''); // %mathsSci column header
+                    } else if (isMathsScienceN) {
+                        $(thead).find('th:eq(5)').css('background-color', '#3f4f9b'); // %8th column header
+                        $(thead).find('th:eq(6)').css('background-color', ''); // %10th column header
+                        $(thead).find('th:eq(7)').css('background-color', ''); // %mathsSci column header
+                    }
+                };
+
+                // Apply the headerCallback function to the DataTable
+                table.on('draw.dt', function() {
+                    var header = table.table().header();
+                    headerCallback(header);
                 });
+
+            // Now loop through the candidates to populate the table
+            response.forEach(function(candidate, index) {
+                var row = [
+                    index + 1, // Index column
+                    '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
+                    candidate.applicantname.toUpperCase(),
+                    candidate.categories, // Category column
+                    candidate.ph
+                ];
+
+                // Add percentage columns based on the determined conditions
+                if (isMathsScienceY) {
+                    row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
+                } else if (isMathsScienceN) {
+                    row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
+                } else {
+                    row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
+                }
+                row.push('<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>');
+                row.push('<button onclick="removeApplicant(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm">Remove</button>');
+
+                // Add the row to the table
+                table.row.add(row).draw(false);
+                var tableContainer = document.getElementById("tableContainer");
+                tableContainer.style.display = "block";
+            });
+            } else{
+                // Handle the case when the response is empty
+                var tableContainer = document.getElementById("tableContainer");
+                tableContainer.style.display = "none"; // Hide the table container
+                alert("No Applications found for the selected ITI and trade.");
+            }
 
             },
             error: function() {
@@ -369,6 +479,7 @@ $(document).ready(function() {
             }
         });
     }
+
 
     // Add an event listener to the form submission
     $('form').on('submit', function(event) {
@@ -457,6 +568,11 @@ $(document).ready(function() {
 
     function removeApplicant(id) {
         console.log("inside removeApplicant");
+
+        var confirmed = confirm("Do you really wish to delete the applicant with application no: " + id + "?");
+
+
+    if (confirmed) {
         $.ajax({
             type: "DELETE",
             url: "/secure/removeFromMeritList",
@@ -471,7 +587,25 @@ $(document).ready(function() {
             console.error('Error removing applicant:', error);
         }
     });
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
