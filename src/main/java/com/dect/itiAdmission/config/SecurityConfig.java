@@ -32,7 +32,7 @@ public class SecurityConfig {
                     .permitAll()
                     .and()
 
-                    .formLogin().defaultSuccessUrl("/secure/dashboard", true)
+                    .formLogin().defaultSuccessUrl("/itiadmission/secure/dashboard", true)
                     .loginPage("/login")
                     .permitAll()
                     .and()
@@ -58,7 +58,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

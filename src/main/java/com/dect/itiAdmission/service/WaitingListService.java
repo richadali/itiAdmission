@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -41,17 +42,17 @@ public class WaitingListService {
                 return applicationDetailsRepository.findAllNotInMeritList(centerId, tradeId).stream()
                         .map(applicationDetails1 -> applicationDetailsService.convertToGetApplicationDetailsDTO(applicationDetails1, tradeId))
                         .sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentage).reversed())
-                        .toList();
+                        .collect(Collectors.toList());
             } else if (trades.getTenthPass() == 'Y') {
                 return applicationDetailsRepository.findAllNotInMeritList(centerId, tradeId).stream()
                         .map(applicationDetails1 -> applicationDetailsService.convertToGetApplicationDetailsDTO(applicationDetails1, tradeId))
                         .sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentagetenth).reversed())
-                        .toList();
+                        .collect(Collectors.toList());
             } else {
                 return applicationDetailsRepository.findAllNotInMeritList(centerId, tradeId).stream()
                         .map(applicationDetails1 -> applicationDetailsService.convertToGetApplicationDetailsDTO(applicationDetails1, tradeId))
                         .sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentageeight).reversed())
-                        .toList();
+                        .collect(Collectors.toList());
             }
         }
         return null;

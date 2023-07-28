@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
+@RequestMapping("secure")
 public class ApplicationDetailsController {
 
     @Autowired
@@ -35,7 +36,7 @@ public class ApplicationDetailsController {
     @Autowired
     private WaitingListService waitingListService;
 
-    @GetMapping("/secure/application_no")
+    @GetMapping("application_no")
     public ApplicationDetails getDetailsByApplicationNo(String id, Model model) {
         ApplicationDetails applicationDetails = applicationDetailsService.applicationDetails(id);
         model.addAttribute("applicationDetails", applicationDetails);
@@ -43,7 +44,7 @@ public class ApplicationDetailsController {
     }
 
     ///secure
-    @GetMapping("secure/getApplicationByCenterIdAndTradeId/{centerId}/{tradeId}")
+    @GetMapping("getApplicationByCenterIdAndTradeId/{centerId}/{tradeId}")
     public List<?> getApplicationByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId) {
 //        ApplicationDetails applicationDetails = applicationnumber.applicationDetails(id);
 //        System.out.println(applicationDetails);
@@ -54,12 +55,8 @@ public class ApplicationDetailsController {
         return getApplicationDetailsDTO;
     }
 
-//    @PutMapping("/editApplicationDetails")
-//    public String editApplicationDetails(@RequestBody ApplicationDetailsDTO applicationDetailsDTO){
-//        return applicationDetailsService.editApplicationDetails(applicationDetailsDTO);
-//    }
 
-    @PutMapping("/editApplicationDetails")
+    @PutMapping("editApplicationDetails")
     public ApplicationDetailsDTO edit(@RequestBody ApplicationDetailsDTO applicationDetailsDTO) {
         ApplicationDetails applicationDetails = applicationDetailsRepository.findById(applicationDetailsDTO.getApplicationnumber()).orElseThrow();
         Gender gender = genderRepository.findById(applicationDetailsDTO.getGender()).orElseThrow();
@@ -75,7 +72,7 @@ public class ApplicationDetailsController {
 
 
     //FOR WAITING LIST
-    @GetMapping("secure/getWaitingListByCenterIdAndTradeId/{centerId}/{tradeId}")
+    @GetMapping("getWaitingListByCenterIdAndTradeId/{centerId}/{tradeId}")
     public List<?> getMeritListByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId) {
         System.out.println("-----------------------------------------------");
         List<GetApplicationDetailsDTO> getApplicationDetailsDTO = waitingListService.getWaitingListByCenterIdAndTradeId(centerId, tradeId);

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationDetailsService {
@@ -48,7 +49,7 @@ public class ApplicationDetailsService {
                     getApplicationDetailsDTO.add(convertToGetApplicationDetailsDTO(applicationDetails, tradeId));
                 }
                 assert false;
-                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentage).reversed()).toList();
+                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentage).reversed()).collect(Collectors.toList());
             } else if (trades.getTenthPass() == 'Y') {
                 List<ApplicationDetails> applicationDetailsList = applicationDetailsRepository.findByCentersCenterIdAndTrades1TradeCodeOrCentersCenterIdAndTrades2TradeCodeOrCentersCenterIdAndTrades3TradeCode(centerId, tradeId, centerId, tradeId, centerId, tradeId);
                 if (applicationDetailsList != null) {
@@ -57,7 +58,7 @@ public class ApplicationDetailsService {
                     }
                 }
                 assert false;
-                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentagetenth).reversed()).toList();
+                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentagetenth).reversed()).collect(Collectors.toList());
             } else {
                 List<ApplicationDetails> applicationDetailsList = applicationDetailsRepository.findByCentersCenterIdAndTrades1TradeCodeOrCentersCenterIdAndTrades2TradeCodeOrCentersCenterIdAndTrades3TradeCode(centerId, tradeId, centerId, tradeId, centerId, tradeId);
                 if (applicationDetailsList != null) {
@@ -67,7 +68,7 @@ public class ApplicationDetailsService {
                     }
                 }
                 assert false;
-                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentageeight).reversed()).toList();
+                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentageeight).reversed()).collect(Collectors.toList());
             }
         }
         return null;
@@ -185,24 +186,4 @@ public class ApplicationDetailsService {
                     .build();
         }
     }
-
-//           }
-
-//    public String editApplicationDetails(ApplicationDetailsDTO applicationDetailsDTO) {
-//        return applicationDetailsRepository.findById(applicationDetailsDTO.getApplicationnumber()).stream().map(
-//                applicationDetails1 -> {
-//                    try{
-//                        applicationDetails1.setApplicantname(applicationDetailsDTO.getApplicantname());
-//                        applicationDetails1.setFathername(applicationDetailsDTO.getFathername());
-//                        applicationDetails1.setMothername(applicationDetailsDTO.getMothername());
-//                        applicationDetails1.setGender(genderRepository.getReferenceById(applicationDetailsDTO.getGender()));
-//                        applicationDetails1.setDob(applicationDetailsDTO.getDob());
-//                        applicationDetailsRepository.save(applicationDetails1);
-//                        return "updated";
-//                    }catch (Exception e){
-//                        return e.getMessage();
-//                    }
-//                }
-//        ).findFirst().orElseThrow(()->new RuntimeException("Applicant is not present"));
-//    }
 }

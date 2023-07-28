@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MeritListService {
@@ -33,9 +34,13 @@ public class MeritListService {
     @Autowired
     private CenterRepository centerRepository;
 
+
     public String addMeritList(MeritListDTO meritListDTO) {
+        String tradeName = null;
         try {
-            if (!meritListRepository.existsByApplicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO.getApplicationNumber()))) {
+            MeritList meritList = meritListRepository.findByApplicationDetailsApplicationnumber(meritListDTO.getApplicationNumber());
+            //            !meritListRepository.existsByApplicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO.getApplicationNumber()))
+            if (meritList == null) {
                 MeritList meritLists = MeritList.builder()
                         .applicationDetails(applicationDetailsRepository.getReferenceById(meritListDTO.getApplicationNumber()))
                         .categories(categoriesRepository.getReferenceById(meritListDTO.getSelectedReservation()))
@@ -46,10 +51,11 @@ public class MeritListService {
                 meritListRepository.save(meritLists);
                 return "Applicant successfully added to MeritList";
             } else {
-                throw new DataIntegrityViolationException("Applicant already present");
+                tradeName = meritList.getTrades().getTradeName();
+                throw new DataIntegrityViolationException("Applicant already present for Trade: " + tradeName);
             }
         } catch (DataIntegrityViolationException e) {
-            throw new ApplicantAlreadyExists("Applicant already present");
+            throw new ApplicantAlreadyExists("Applicant already present for Trade: " + tradeName);
         } catch (Exception e) {
             e.printStackTrace();
             throw new DataInsertionException("Could not add to merit list, Please try again!");
@@ -68,7 +74,7 @@ public class MeritListService {
                     getApplicationDetailsDTO.add(convertToGetApplicationDetailsDTO(meritList, tradeId));
                 }
                 assert false;
-                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentage).reversed()).toList();
+                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentage).reversed()).collect(Collectors.toList());
             } else if (trades.getTenthPass() == 'Y') {
                 List<MeritList> meritListList = meritListRepository.findByCentersCenterIdAndTradesTradeCode(centerId, tradeId);
                 meritListList.forEach(System.out::println);
@@ -76,7 +82,7 @@ public class MeritListService {
                     getApplicationDetailsDTO.add(convertToGetApplicationDetailsDTO(meritList, tradeId));
                 }
                 assert false;
-                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentagetenth).reversed()).toList();
+                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentagetenth).reversed()).collect(Collectors.toList());
             } else {
                 List<MeritList> meritListList = meritListRepository.findByCentersCenterIdAndTradesTradeCode(centerId, tradeId);
                 meritListList.forEach(System.out::println);
@@ -84,7 +90,7 @@ public class MeritListService {
                     getApplicationDetailsDTO.add(convertToGetApplicationDetailsDTO(meritList, tradeId));
                 }
                 assert false;
-                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentageeight).reversed()).toList();
+                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentageeight).reversed()).collect(Collectors.toList());
             }
         }
         return null;
@@ -211,5 +217,9 @@ public class MeritListService {
             e.printStackTrace();
             throw new RuntimeException("Something went wrong!!");
         }
+    }
+
+    public MeritList getApplicantById(String id) {
+        return meritListRepository.findByApplicationDetailsApplicationnumber(id);
     }
 }

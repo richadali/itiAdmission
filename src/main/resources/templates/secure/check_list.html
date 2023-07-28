@@ -10,7 +10,7 @@
 <!-- Container fluid  -->
 <!-- ============================================================== -->
 
-<div class="container-fluid" th:fragment="content">
+<div class="container" th:fragment="content">
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
@@ -301,9 +301,8 @@
 
     // Make an AJAX request to fetch the trades based on the selected ITI
     $.ajax({
-        url: '/api/getCenterTradesByCenterId/' + selectedITI,
+        url: 'api/getCenterTradesByCenterId/' + selectedITI,
         method: 'GET',
-        data: { centerId: selectedITI },
         success: function(response) {
                     // Process the response and populate the trade select box
                     response.forEach(function(trade) {
@@ -411,7 +410,7 @@ $(document).ready(function() {
 
         // Make an AJAX request to fetch the candidates with the selected ITI and trade
         $.ajax({
-            url: '/secure/getApplicationByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
+            url: 'getApplicationByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
             method: 'GET',
 
             success: function(response) {
@@ -516,7 +515,7 @@ $(document).ready(function() {
         console.log("inside abc");
         $.ajax({
             type: "GET",
-            url: "/secure/application_no",
+            url: "application_no",
             data: "id="+id,
             success: function (data) {
                 $("#applicationNumber").val(data.applicationnumber);
@@ -584,6 +583,9 @@ $(document).ready(function() {
             }
         });
     }
+
+
+
 
 
 

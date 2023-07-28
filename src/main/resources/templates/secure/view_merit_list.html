@@ -10,7 +10,7 @@
 <!-- Container fluid  -->
 <!-- ============================================================== -->
 
-<div class="container-fluid" th:fragment="content">
+<div class="container" th:fragment="content">
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
@@ -287,7 +287,7 @@
 
     // Make an AJAX request to fetch the trades based on the selected ITI
     $.ajax({
-        url: '/api/getCenterTradesByCenterId/' + selectedITI,
+        url: 'api/getCenterTradesByCenterId/' + selectedITI,
         method: 'GET',
         data: { centerId: selectedITI },
         success: function(response) {
@@ -391,7 +391,7 @@ $(document).ready(function() {
 
         // Make an AJAX request to fetch the candidates from merit list with the selected ITI and trade
         $.ajax({
-            url: '/secure/getMeritListByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
+            url: 'getMeritListByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
             method: 'GET',
             success: function(response) {
             console.log(response);
@@ -496,7 +496,7 @@ $(document).ready(function() {
         console.log("inside abc");
         $.ajax({
             type: "GET",
-            url: "/secure/application_no",
+            url: "application_no",
             data: "id="+id,
             success: function (data) {
                 $("#applicationNumber").val(data.applicationnumber);
@@ -575,7 +575,7 @@ $(document).ready(function() {
     if (confirmed) {
         $.ajax({
             type: "DELETE",
-            url: "/secure/removeFromMeritList",
+            url: "removeFromMeritList",
             data: "id="+id,
             success: function(response) {
             console.log('Applicant removed successfully:', response);
@@ -589,6 +589,9 @@ $(document).ready(function() {
     });
     }
 }
+
+
+
 
 
 

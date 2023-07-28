@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr"  xmlns:th="http://www.thymeleaf.org">
+<html dir="ltr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -12,100 +12,108 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
     <title>ITI Admission</title>
     <!-- Custom CSS -->
-    <link  th:href="@{/admin/dist/css/style.min.css}" rel="stylesheet">
+    <link th:href="@{admin/dist/css/style.min.css}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+    <![endif]-->
 </head>
 
 <body>
-    <div class="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
-        <div class="preloader">
-            <div class="lds-ripple">
-                <div class="lds-pos"></div>
-                <div class="lds-pos"></div>
-            </div>
+<div class="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
         </div>
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Login box.scss -->
-        <!-- ============================================================== -->
-        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
-            style="background:url(/admin/assets/images/big/auth-bg.jpg) no-repeat center center;">
-            <div class="auth-box row">
-                <div class="col-lg-7 col-md-5 modal-bg-img p-5 bg-white">
-
-                    <img class="img-fluid" src="/admin/assets/images/big/login.jpg"/>
-
-                </div>
-                <div class="col-lg-5 col-md-7 bg-white">
-                    <div class="p-3">
-                        <div class="text-center py-3">
-<!--                            ITI ADMISSION 2023-25 BACKOFFICE APPLICATION-->
-<!--                            <img src="/admin/assets/images/big/Logo.svg" alt="wrapkit">-->
-                        </div>
-                        <h2 class="mt-3 text-center">Sign In</h2>
-                        <form class="mb-4 mt-1"  th:action="@{/login}" method="post">
-                            <!-- error message -->
-                            <div th:if="${param.error}">
-                                <div class="alert alert-danger">Invalid username or
-                                    password.</div>
-                            </div>
-
-                            <!-- logout message -->
-                            <div th:if="${param.logout}">
-                                <div class="alert alert-info">You have been logged out.</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-3">
-                                        <label class="form-label text-dark" for="uname">Username</label>
-                                        <input class="form-control" id="uname"  name="username" type="text"
-                                            placeholder="enter your username"  required="required">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-3">
-                                        <label class="form-label text-dark" for="pwd">Password</label>
-                                        <input class="form-control" id="pwd"  name="password" type="password"
-                                            placeholder="enter your password" required="required">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 text-center">
-                                    <button type="submit" class="btn w-100 btn-dark">Sign In</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- Login box.scss -->
-        <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- All Required js -->
+    <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
-    <script  th:src="@{/admin/assets/libs/jquery/dist/jquery.min.js}"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script th:src="@{/admin/assets/libs/popper.js/dist/umd/popper.min.js}"></script>
-    <script th:src="@{/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js}"></script>
     <!-- ============================================================== -->
-    <!-- This page plugin js -->
+    <!-- Login box.scss -->
     <!-- ============================================================== -->
-    <script>
+    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
+         style="background:url(admin/assets/images/big/auth-bg.jpg) no-repeat center center;">
+        <div class="auth-box row">
+            <div class="col-lg-7 col-md-5 modal-bg-img p-5 bg-white">
+
+                <img class="img-fluid" src="admin/assets/images/big/login.jpg"/>
+
+            </div>
+            <div class="col-lg-5 col-md-7 bg-white">
+                <div class="p-3">
+                    <div class="text-center py-3">
+                    </div>
+                    <h2 class="mt-3 text-center">Sign In</h2>
+                    <form class="mb-4 mt-1" th:action="@{login}" method="post">
+                        <!-- error message -->
+                        <div th:if="${param.error}">
+                            <div class="alert alert-danger">Invalid username or
+                                password.
+                            </div>
+                        </div>
+
+                        <!-- logout message -->
+                        <div th:if="${param.logout}">
+                            <div class="alert alert-info">You have been logged out.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-dark" for="uname">Username</label>
+                                    <input class="form-control" id="uname" name="username" type="text"
+                                           placeholder="enter your username" required="required">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group mb-3">
+                                    <label class="form-label text-dark" for="pwd">Password</label>
+                                    <input class="form-control" id="pwd" name="password" type="password"
+                                           placeholder="enter your password" required="required">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 text-center">
+                                <button type="submit" class="btn w-100 btn-dark">Sign In</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Login box.scss -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- All Required js -->
+<!-- ============================================================== -->
+<script th:src="@{admin/assets/libs/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script th:src="@{admin/assets/libs/popper.js/dist/umd/popper.min.js}"></script>
+<script th:src="@{admin/assets/libs/bootstrap/dist/js/bootstrap.min.js}"></script>
+<!-- ============================================================== -->
+<!-- This page plugin js -->
+<!-- ============================================================== -->
+<script>
         $(".preloader ").fadeOut();
-    </script>
+
+
+
+
+
+
+
+
+
+</script>
 </body>
 
 </html>

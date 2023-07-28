@@ -1,32 +1,39 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top px-vw-5 bg-white sticked shadow" id="nav"
      data-scrollto-offset="0" xmlns:th="http://www.w3.org/1999/xhtml">
-  <div class="container">
-    <a class="navbar-brand" href="/"><span class="fw-bold lh-1 text-primary">IVCS</span>LTD</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav ms-auto mb-2 mb-md-0 text-center">
-        <li class="nav-item">
-          <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/about' ? 'active':''}" href="/about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/members' ? 'active':''}" href="/members">Members</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/services' ? 'active':''}" href="/services">Services</a>
-        </li>
-        <!-- <li class="nav-item">
-            <a class="nav-link"  href="#contacts">Contacts</a>
-        </li> -->
-        <li class="nav-item">
-          <a class="nav-link bg-primary text-white rounded-pill" href="/login">Sign In</a>
-        </li>
+    <div class="container">
+        <a class="navbar-brand" href="/"><span class="fw-bold lh-1 text-primary">ITI</span> Admission</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ms-auto mb-2 mb-md-0 text-center">
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"
+                       href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:classappend="${#httpServletRequest.getRequestURI() == '/about' ? 'active':''}" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:classappend="${#httpServletRequest.getRequestURI() == '/members' ? 'active':''}"
+                       href="/members">Members</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:classappend="${#httpServletRequest.getRequestURI() == '/services' ? 'active':''}"
+                       href="/services">Services</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link"  href="#contacts">Contacts</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link bg-primary text-white rounded-pill" href="login">Sign In</a>
+                </li>
 
-      </ul>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>

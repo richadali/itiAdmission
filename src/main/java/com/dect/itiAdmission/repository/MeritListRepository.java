@@ -15,5 +15,7 @@ public interface MeritListRepository extends JpaRepository<MeritList, Integer> {
 
     @Transactional
     void deleteByApplicationDetailsApplicationnumber(String applicationNumber);
+
+    MeritList findByApplicationDetailsApplicationnumber(String id);
 //    List<MeritList> findByCentersCenterIdAndTrades1TradeCodeOrCentersCenterIdAndTrades2TradeCodeOrCentersCenterIdAndTrades3TradeCode(Integer centerId, Integer tradeId, Integer centerId1, Integer tradeId1, Integer centerId2, Integer tradeId2);
 }
