@@ -31,6 +31,7 @@ public class ITIViewController {
         model.addAttribute("registeredApplicants", applicationDetailsService.applicationsCount());
         model.addAttribute("itis", centerService.centerCount());
         model.addAttribute("trades", tradesService.tradeCount());
+
         return "secure/dashboard";
     }
 
@@ -78,4 +79,12 @@ public class ITIViewController {
         model.addAttribute("getTrades", tradesService.getTrades());
         return "secure/remove_from_merit_list";
     }
+
+    @GetMapping("secure/edit_application")
+    public String editApplication(Model model) {
+        model.addAttribute("getCenters", centerService.getCenters());
+        model.addAttribute("getTrades", tradesService.getTrades());
+        return "secure/edit_application";
+    }
+
 }

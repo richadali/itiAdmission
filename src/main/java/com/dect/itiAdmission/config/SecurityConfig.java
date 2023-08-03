@@ -34,13 +34,14 @@ public class SecurityConfig {
 
                     .formLogin().defaultSuccessUrl("/itiadmission/secure/dashboard", true)
                     .loginPage("/login")
+                    .failureUrl("/itiadmission/login?error")
                     .permitAll()
                     .and()
                     .logout()
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login?logout")
+                    .logoutSuccessUrl("/itiadmission/login?logout")
                     .permitAll();
 
             return http.build();

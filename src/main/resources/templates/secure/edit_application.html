@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:include="layouts/adminlayout.html">
+<head>
+    <!-- Include required CSS and JS files -->
+
+</head>
+<body>
+
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+
+<div class="container-fluid" th:fragment="content">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- basic table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <h4 class="card-title">Edit Applicant Details</h4>
+                    </div>
+                    <div class="container text-center">
+                        <div class="row justify-content-center">
+
+                            <form>
+                                <div class="col-md-6">
+                                    <div class="mb-3 row">
+                                        <label for="applicationNumberInput" id="applicationNumber"
+                                               class="col-sm-4 col-form-label">Application
+                                            Number</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="applicationNumberInput"
+                                                       placeholder="Enter Application Number">
+                                                <button type="button" class="btn btn-primary" id="getNameButton"
+                                                        onclick="onClickGetName()">Get Details
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="applicantDetails container mt-5" style="display:none">
+                                    <h4>Personal Details:</h4>
+                                    <div class="row container mt-3 pb-5">
+                                        <div class="col-md-6">
+                                            <div class="form-group pb-3">
+                                                <label for="applicantName">Applicant Name</label>
+                                                <input id="applicantName" class="form-control">
+                                            </div>
+
+                                            <div class="form-group pb-3">
+                                                <label for="fatherName">Father's Name</label>
+                                                <input id="fatherName" class="form-control">
+                                            </div>
+
+                                            <div class="form-group pb-3">
+                                                <label for="gender">Gender</label>
+                                                <select id="gender" class="form-control">
+                                                    <option value="M">Male</option>
+                                                    <option value="F">Female</option>
+                                                    <option value="T">Transgender</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="category">Category</label>
+                                                <select id="category" class="form-control">
+                                                    <option value="GEN">General</option>
+                                                    <option value="ST">ST</option>
+                                                    <option value="SC">SC</option>
+                                                    <option value="OBC">OBC</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="maritalStatus">Marital Status</label>
+                                                <select id="maritalStatus" class="form-control">
+                                                    <option value="M">Married</option>
+                                                    <option value="D">Divorced/Seperated</option>
+                                                    <option value="W">Widowed/Widower</option>
+                                                    <option value="S">Single</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="email">Email</label>
+                                                <input id="email" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="mobileNumber">Mobile Number</label>
+                                                <input id="mobileNumber" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group pb-3">
+                                                <label for="centerName">Center Name</label>
+                                                <input id="centerName" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="motherName">Mother's Name</label>
+                                                <input id="motherName" class="form-control">
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="dob">Date of Birth</label>
+                                                <input type="date" id="dob" class="form-control">
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="tribe">Tribe</label>
+                                                <select id="tribe" class="form-control">
+                                                    <option value="1">KHASI</option>
+                                                    <option value="2">GARO</option>
+                                                    <option value="3">JAINTIA</option>
+                                                    <option value="4">OTHER</option>
+                                                    <option value="0">N/A</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="religion">Religion</label>
+                                                <select id="religion" class="form-control">
+                                                    <option value="2">Christianity</option>
+                                                    <option value="1">Buddhism</option>
+                                                    <option value="3">Hinduism</option>
+                                                    <option value="4">Islam</option>
+                                                    <option value="5">Jainism</option>
+                                                    <option value="6">Sikhism</option>
+                                                    <option value="99">Other</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="motherTongue">Mother Tongue</label>
+                                                <input id="motherTongue" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4>Address (Permanent):</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group pb-3">
+                                                <label for="statePerm">State</label>
+                                                <input id="statePerm" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="townPerm">Town</label>
+                                                <input id="townPerm" class="form-control">
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="addressPerm">Address</label>
+                                                <textarea id="addressPerm" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group pb-3">
+                                                <label for="districtPerm">District</label>
+                                                <select id="districtPerm" class="form-control"></select>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="pincodePerm">Pincode</label>
+                                                <input id="pincodePerm" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4>Address (Correspondence):</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group pb-3">
+                                                <label for="stateCorr">State</label>
+                                                <input id="stateCorr" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="townCorr">Town</label>
+                                                <input id="townCorr" class="form-control">
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="addressCorr">Address</label>
+                                                <textarea id="addressCorr" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group pb-3">
+                                                <label for="districtCorr">District</label>
+                                                <select id="districtCorr" class="form-control"></select>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="pincodeCorr">Pincode</label>
+                                                <input id="pincodeCorr" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4>Bank Details:</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group pb-3">
+                                                <label for="accountNumber">Account Number</label>
+                                                <input id="accountNumber" class="form-control">
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="ifscCode">IFSC Code</label>
+                                                <input id="ifscCode" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group pb-3">
+                                                <label for="bankName">Bank Name</label>
+                                                <input id="bankName" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4>Trades Selected:</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group pb-3">
+                                                <label for="preferenceOne">First preference</label>
+                                                <input id="preferenceOne" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group pb-3">
+                                                <label for="preferenceTwo">Second Preference</label>
+                                                <input id="preferenceTwo" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group pb-3">
+                                                <label for="preferenceThree">Third Preference</label>
+                                                <input id="preferenceThree" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container mt-3">
+                                        <button type="button" class="btn btn-primary" id="saveButton">Save Changes
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+
+    function populateDistricts(selectedDistrictId, selectedDistrictCorrId) {
+        console.log("inside getDistricts");
+        $.ajax({
+            method: "GET",
+            url: "getDistricts",
+            success: function (data) {
+                // Assuming the API returns an array of district objects,
+                // you can loop through the data and create options for the dropdown
+                var districtSelect = $("#districtPerm");
+            var districtCorrSelect = $("#districtCorr");
+
+            // Clear existing options from the dropdowns
+            districtSelect.empty();
+            districtCorrSelect.empty();
+
+            // Add an initial "Select District" option to both dropdowns
+            districtSelect.append($('<option>').val('').text('Select District'));
+            districtCorrSelect.append($('<option>').val('').text('Select District'));
+
+            // Loop through the data and add options to both dropdowns
+            data.forEach(function (district) {
+                var option = $("<option>").attr("value", district.id).text(district.name);
+                districtSelect.append(option);
+                districtCorrSelect.append(option.clone()); // Clone the option for the districtCorr dropdown
+            });
+
+            // Set the selected districts as the default selected options in the dropdowns
+            if (selectedDistrictId) {
+                districtSelect.val(selectedDistrictId);
+            }
+            if (selectedDistrictCorrId) {
+                districtCorrSelect.val(selectedDistrictCorrId);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Error fetching districts:", xhr.responseText);
+        }
+    });
+}
+
+    function getDetails(id) {
+        console.log("inside getDetails");
+        $.ajax({
+            type: "GET",
+            url: "application_no",
+            data: "id="+id,
+            success: function (data) {
+                console.log(data);
+
+                $("#applicationNumber").val(data.applicationnumber);
+                $("#centerName").val(data.centers.centerName);
+                $("#centerId").val(data.centers.centerId);
+                $("#applicantName").val(data.applicantname);
+                $("#fatherName").val(data.fathername);
+                $("#motherName").val(data.mothername);
+                $("#gender").val(data.gender.genderId);
+                $("#dob").val(data.dob);
+                $("#category").val(data.categories.categoryId);
+                $("#religion").val(data.religions.religionId);
+
+                // Check if tribes object exists before accessing properties
+                if (data.tribes) {
+                    $("#tribe").val(data.tribes.tribeId);
+                } else {
+                    $("#tribe").val("0");
+                }
+
+                $("#maritalStatus").val(data.maritalStatus.maritalStatusId);
+                $("#motherTongue").val(data.mothertongue);
+                $("#mobileNumber").val(data.mobilenumber);
+                $("#photograph").val(data.photograph);
+                $("#highestQualification").val(data.highestQualification.qualificationName);
+                $("#email").val(data.email);
+                $("#statePerm").val(data.states.name);
+                $("#townPerm").val(data.townperm);
+                $("#addressPerm").val(data.addressperm);
+                $("#pincodePerm").val(data.pincodeperm);
+                $("#stateCorr").val(data.statescorr.name);
+                $("#townCorr").val(data.towncorr);
+                $("#addressCorr").val(data.addresscorr);
+                $("#pincodeCorr").val(data.pincodecorr);
+                $("#accountNumber").val(data.accountnumber);
+                $("#ifscCode").val(data.ifsccode);
+                $("#bankName").val(data.bankname);
+                $("#instituteTenth").val(data.institutetenth);
+                $("#boardTenth").val(data.boardtenth);
+                $("#yearPassingTenth").val(data.yearpassingtenth);
+                $("#percentageTenth").val(data.percentagetenth);
+                $("#divisionTenth").val(data.divisiontenth);
+                $("#subjectsTenth").val(data.subjectstenth);
+                $("#havePassedBoth").val(data.haveyoupassedboth);
+                $("#marksMaths").val(data.marksmaths);
+                $("#marksScience").val(data.marksscience);
+                $("#instituteEight").val(data.instituteeight);
+                $("#boardEight").val(data.boardeight);
+                $("#yearPassingEight").val(data.yearpassingeight);
+                $("#percentageEight").val(data.percentageeight);
+                $("#divisionEight").val(data.divisioneight);
+                $("#subjectsEight").val(data.subjectseight);
+                $("#preferenceOne").val(data.trades1.tradeName);
+                $("#preferenceTwo").val(data.trades2.tradeName);
+                $("#preferenceThree").val(data.trades3.tradeName);
+                $("#submissionDate").val(data.submissiondatte);
+                $("#ph").val(data.ph);
+
+                var selectedDistrictId = data.districts.id;
+                var selectedDistrictCorrId = data.districtscorr.id;
+                populateDistricts(selectedDistrictId, selectedDistrictCorrId);
+
+
+                $(".applicantDetails").show();
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                    alert(xhr.responseText);
+                    $(".applicantDetails").hide();
+                 }
+            });
+
+         }
+
+         function onClickGetName() {
+                var id = $("#applicationNumberInput").val();
+                console.log("ApplicantionNumber:" + id)
+                getDetails(id);
+         }
+
+
+$("#saveButton").on("click", function() {
+    // Get the updated values from the input fields
+    var applicationNumber = $("#applicationNumber").val();
+    var applicantName = $("#applicantName").val();
+    var fatherName = $("#fatherName").val();
+    var motherName = $("#motherName").val();
+    var gender = $("#gender").val();
+    var dob = $("#dob").val();
+    var category = $("#category").val();
+    var religion = $("#religion").val();
+    var tribe = $("#tribe").val();
+    var maritalStatus = $("#maritalStatus").val();
+    var motherTongue = $("#motherTongue").val();
+    var districtPerm = $("#districtPerm").val();
+    var townPerm = $("#townPerm").val();
+    var addressPerm = $("#addressPerm").val();
+    var pincodePerm = $("#pincodePerm").val();
+    var districtCorr = $("#districtCorr").val();
+    var townCorr = $("#townCorr").val();
+    var addressCorr = $("#addressCorr").val();
+    var pincodeCorr = $("#pincodeCorr").val();
+    var accountNumber = $("#accountNumber").val();
+    var ifscCode = $("#ifscCode").val();
+    var bankName = $("#bankName").val();
+
+
+    // Create the data object
+    var data = {
+        applicationnumber: applicationNumber,
+        applicantname: applicantName,
+        fathername: fatherName,
+        mothername: motherName,
+        gender: gender,
+        dob: dob,
+         categories: category,
+         religions: religion,
+         tribes: tribe,
+         maritalStatus: maritalStatus,
+         mothertongue: motherTongue,
+         districts: districtPerm,
+         townperm: townPerm,
+         addressperm: addressPerm,
+         pincodeperm: pincodePerm,
+         districtscorr: districtCorr,
+         towncorr: townCorr,
+         addresscorr: addressCorr,
+         pincodecorr: pincodeCorr,
+         accountnumber: accountNumber,
+         ifsccode: ifscCode,
+         bankname: bankName,
+
+    };
+
+    var jsonData = JSON.stringify(data);
+    console.log("Data to be updated:", jsonData);
+
+    // Perform the AJAX request
+    $.ajax({
+        method: "PUT",
+        url: "editApplicationDetails",
+        data: jsonData,
+        contentType: "application/json",
+        success: function(response) {
+            // Handle the success response
+            console.log(data);
+            console.log("Details updated successfully");
+            // Close the Edit modal
+<!--            $("#editModal").hide();-->
+            alert("Application updated successfully");
+            getDetails(applicationNumber);
+
+        },
+        error: function() {
+            // Handle the error response
+            console.log("Error updating details");
+        }
+    });
+});
+
+
+
+
+
+$(document).ready(function () {
+        populateDistricts();
+    });
+
+
+
+    </script>
+
+
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+</body>
+</html>

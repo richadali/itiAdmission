@@ -4,9 +4,7 @@ import com.dect.itiAdmission.domain.*;
 import com.dect.itiAdmission.dtos.ApplicationDetailsDTO;
 import com.dect.itiAdmission.dtos.GetApplicationDetailsDTO;
 import com.dect.itiAdmission.exception.ApplicantNotPresent;
-import com.dect.itiAdmission.repository.ApplicationDetailsRepository;
-import com.dect.itiAdmission.repository.GenderRepository;
-import com.dect.itiAdmission.repository.TradesRepository;
+import com.dect.itiAdmission.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +22,22 @@ public class ApplicationDetailsService {
 
     @Autowired
     private TradesRepository tradesRepository;
+
+    @Autowired
+    private MaritalStatusRepository maritalStatusRepository;
+
+    @Autowired
+    private CategoriesRepository categoriesRepository;
+
+    @Autowired
+    private ReligionRepository religionRepository;
+
+    @Autowired
+    private TribesRepository tribesRepository;
+
+    @Autowired
+    private DistrictRepository districtRepository;
+
 
     public Long applicationsCount() {
         return applicationDetailsRepository.count();
@@ -186,4 +200,42 @@ public class ApplicationDetailsService {
                     .build();
         }
     }
+
+    public ApplicationDetailsDTO editApplicationDetails(ApplicationDetailsDTO applicationDetailsDTO) {
+        System.out.println(applicationDetailsDTO);
+        MaritalStatus maritalStatus = maritalStatusRepository.findById(applicationDetailsDTO.getMaritalStatus()).orElseThrow();
+        Categories categories = categoriesRepository.findById(applicationDetailsDTO.getCategories()).orElseThrow();
+        Religions religions = religionRepository.findById(applicationDetailsDTO.getReligions()).orElseThrow();
+        Tribes tribes = tribesRepository.findById(applicationDetailsDTO.getTribes()).orElseThrow();
+        Districts districts = districtRepository.findById(applicationDetailsDTO.getDistricts()).orElseThrow();
+        Districts districtscorr = districtRepository.findById(applicationDetailsDTO.getDistrictscorr()).orElseThrow();
+
+        ApplicationDetails applicationDetails = applicationDetailsRepository.findById(applicationDetailsDTO.getApplicationnumber()).orElseThrow();
+        Gender gender = genderRepository.findById(applicationDetailsDTO.getGender()).orElseThrow();
+        applicationDetails.setApplicationnumber(applicationDetailsDTO.getApplicationnumber());
+        applicationDetails.setApplicantname(applicationDetailsDTO.getApplicantname());
+        applicationDetails.setFathername(applicationDetailsDTO.getFathername());
+        applicationDetails.setMothername(applicationDetailsDTO.getMothername());
+        applicationDetails.setGender(gender);
+        applicationDetails.setDob(applicationDetailsDTO.getDob());
+        applicationDetails.setCategories(categories);
+        applicationDetails.setReligions(religions);
+        applicationDetails.setTribes(tribes);
+        applicationDetails.setMaritalStatus(maritalStatus);
+        applicationDetails.setMothertongue(applicationDetailsDTO.getMothertongue());
+        applicationDetails.setDistricts(districts);
+        applicationDetails.setTownperm(applicationDetailsDTO.getTownperm());
+        applicationDetails.setAddressperm(applicationDetailsDTO.getAddressperm());
+        applicationDetails.setPincodeperm(applicationDetailsDTO.getPincodeperm());
+        applicationDetails.setDistrictscorr(districtscorr);
+        applicationDetails.setTowncorr(applicationDetailsDTO.getTowncorr());
+        applicationDetails.setAddresscorr(applicationDetailsDTO.getAddresscorr());
+        applicationDetails.setPincodecorr(applicationDetailsDTO.getPincodecorr());
+        applicationDetails.setAccountnumber(applicationDetailsDTO.getAccountnumber());
+        applicationDetails.setIfsccode(applicationDetailsDTO.getIfsccode());
+        applicationDetails.setBankname(applicationDetailsDTO.getBankname());
+        applicationDetailsRepository.save(applicationDetails);
+        return applicationDetailsDTO;
+    }
+
 }
