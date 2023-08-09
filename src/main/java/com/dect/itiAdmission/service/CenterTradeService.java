@@ -20,6 +20,6 @@ public class CenterTradeService {
     }
 
     public List<CenterTrades> findByCenterIdCenterIdAndIsActive(Integer centerId, char y) {
-        return centerTradeRepository.findByCenterIdCenterIdAndIsActive(centerId, 'Y');
+        return centerTradeRepository.findByCenterIdCenterIdAndIsActiveOrderByTradeIdAsc(centerId, 'Y');
     }
 }

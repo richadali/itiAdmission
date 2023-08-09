@@ -88,7 +88,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body container">
-                    <h4 class="text-dark">Personal Details:</h4>
+                    <img class="img-thumbnail border border-dark" id="photoImage" src="" alt="Photograph" width="15%">
+                    <h4 class="text-dark mt-3">Personal Details:</h4>
                     <div class="row container mt-3 pb-5">
                         <div class="col-md-6">
                             <div class="form-group pb-3">
@@ -557,14 +558,15 @@ $(document).ready(function() {
                 }
             }
             ],
-                    "drawCallback": function (settings) {
+                    "rowCallback": function (row, data, index) {
                         var api = this.api();
                         var startIndex = api.context[0]._iDisplayStart;
-                        api.column(0).nodes().each(function (cell, i) {
-                            cell.innerHTML = startIndex + i + 1;
-                        });
-                    },
+                        var pageSize = api.context[0]._iDisplayLength;
+                        var currentPage = Math.floor(startIndex / pageSize);
+                        var rowNumber = index + 1 + currentPage * pageSize;
 
+                        $('td:eq(0)', row).html(rowNumber);
+                    }
         });
         table.order([1, 'asc']).draw();
 
@@ -582,8 +584,9 @@ $(document).ready(function() {
             if (response && response.length > 0) {
                 // Process the response and populate the candidate table
                 response.forEach(function(candidate, index) {
+                console.log(index);
                     var row = [
-                        index + 1, // Index column
+                        index,
                         '<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-details" data-bs-toggle="modal" data-bs-target="#exampleModal">' + candidate.applicationnumber + '</button>', // App No column with button
                         candidate.applicantname.toUpperCase(),
                         candidate.dob,
@@ -650,7 +653,11 @@ $(document).ready(function() {
                 $("#maritalStatus").val(data.maritalStatus.maritalStatus);
                 $("#motherTongue").val(data.mothertongue);
                 $("#mobileNumber").val(data.mobilenumber);
-                $("#photograph").val(data.photograph);
+                if (data.photograph) {
+                    var photoImg = document.getElementById("photoImage");
+                    photoImg.src = "data:image/png;base64," + data.photograph;
+                    photoImg.alt = "Photograph"; // Add alt text for accessibility
+                }
                 $("#highestQualification").val(data.highestQualification.qualificationName);
                 $("#email").val(data.email);
                 $("#statePerm").val(data.states.name);

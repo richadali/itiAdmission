@@ -31,6 +31,7 @@ public class ITIViewController {
         model.addAttribute("registeredApplicants", applicationDetailsService.applicationsCount());
         model.addAttribute("itis", centerService.centerCount());
         model.addAttribute("trades", tradesService.tradeCount());
+        model.addAttribute("centers", centerService.getCenters());
 
         return "secure/dashboard";
     }

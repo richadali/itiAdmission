@@ -238,4 +238,7 @@ public class ApplicationDetailsService {
         return applicationDetailsDTO;
     }
 
+    public long getApplicationCountByCenterIdAndTradeId(Integer centerId, Integer tradeId) {
+        return applicationDetailsRepository.countByCentersCenterIdAndTrades1TradeCodeOrCentersCenterIdAndTrades2TradeCodeOrCentersCenterIdAndTrades3TradeCode(centerId, tradeId, centerId, tradeId, centerId, tradeId);
+    }
 }

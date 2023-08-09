@@ -61,6 +61,11 @@ public class ApplicationDetailsController {
         return getApplicationDetailsDTO;
     }
 
+    @GetMapping("getApplicationCountByCenterIdAndTradeId/{centerId}/{tradeId}")
+    public long getApplicationCountByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId) {
+        return applicationDetailsService.getApplicationCountByCenterIdAndTradeId(centerId, tradeId);
+    }
+
 
     @PutMapping("editApplicationDetails")
     public ResponseEntity<?> edit(@RequestBody ApplicationDetailsDTO applicationDetailsDTO) {

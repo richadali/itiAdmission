@@ -1,1076 +1,203 @@
 <!DOCTYPE html>
 <html
-  lang="en"
-  xmlns:th="http://www.thymeleaf.org"
-  th:include="layouts/adminlayout.html"
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        th:include="layouts/adminlayout.html"
 >
-  <body>
-    <!-- ============================================================== -->
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
-    <div class="container-fluid" th:fragment="content">
-      <!-- *************************************************************** -->
-      <!-- Start First Cards -->
-      <!-- *************************************************************** -->
-      <div class="row">
-        <div class="col-sm-6 col-lg-3">
-          <div class="card border-end">
-            <div class="card-body">
-              <div class="d-flex align-items-center">
-                <div>
-                  <div class="d-inline-flex align-items-center">
-                    <h2
-                      class="text-dark mb-1 font-weight-medium"
-                      th:text="${registeredApplicants}"
-                    >
-                      236
-                    </h2>
-                  </div>
-                  <h6
-                    class="text-muted font-weight-normal mb-0 w-100 text-truncate"
-                  >
-                    Applications
-                  </h6>
-                </div>
-                <div class="ms-auto mt-md-3 mt-lg-0">
+<body>
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid" th:fragment="content">
+    <!-- *************************************************************** -->
+    <!-- Start First Cards -->
+    <!-- *************************************************************** -->
+    <div class="row">
+        <div class="col-sm-6 col-lg-4">
+            <div class="card border-end">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <div class="d-inline-flex align-items-center">
+                                <h2
+                                        class="text-dark mb-1 font-weight-medium"
+                                        th:text="${registeredApplicants}"
+                                >
+                                    236
+                                </h2>
+                            </div>
+                            <h6
+                                    class="text-muted font-weight-normal mb-0 w-100 text-truncate"
+                            >
+                                Applications Received
+                            </h6>
+                        </div>
+                        <div class="ms-auto mt-md-3 mt-lg-0">
                   <span class="opacity-7 text-muted"
-                    ><i data-feather="users"></i
+                  ><i data-feather="users"></i
                   ></span>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="card border-end">
-            <div class="card-body">
-              <div class="d-flex align-items-center">
-                <div>
-                  <h2
-                    class="text-dark mb-1 w-100 text-truncate font-weight-medium"
-                    th:text="${itis}"
-                  >
-                    <sup class="set-doller"></sup>
-                  </h2>
-                  <h6
-                    class="text-muted font-weight-normal mb-0 w-100 text-truncate"
-                  >
-                    ITIs
-                  </h6>
-                </div>
-                <div class="ms-auto mt-md-3 mt-lg-0">
+        <div class="col-sm-6 col-lg-4">
+            <div class="card border-end">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h2
+                                    class="text-dark mb-1 w-100 text-truncate font-weight-medium"
+                                    th:text="${itis}"
+                            >
+                                <sup class="set-doller"></sup>
+                            </h2>
+                            <h6
+                                    class="text-muted font-weight-normal mb-0 w-100 text-truncate"
+                            >
+                                ITI Centers
+                            </h6>
+                        </div>
+                        <div class="ms-auto mt-md-3 mt-lg-0">
                   <span class="opacity-7 text-muted"
-                    ><i data-feather="home"></i
+                  ><i data-feather="home"></i
                   ></span>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="card border-end">
-            <div class="card-body">
-              <div class="d-flex align-items-center">
-                <div>
-                  <div class="d-inline-flex align-items-center">
-                    <h2
-                      class="text-dark mb-1 font-weight-medium"
-                      th:text="${trades}"
-                    >
-                      <sup class="set-doller"></sup>
-                    </h2>
-                  </div>
-                  <h6
-                    class="text-muted font-weight-normal mb-0 w-100 text-truncate"
-                  >
-                    Trades
-                  </h6>
-                </div>
-                <div class="ms-auto mt-md-3 mt-lg-0">
+        <div class="col-sm-6 col-lg-4">
+            <div class="card border-end">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <div class="d-inline-flex align-items-center">
+                                <h2
+                                        class="text-dark mb-1 font-weight-medium"
+                                        th:text="${trades}"
+                                >
+                                    <sup class="set-doller"></sup>
+                                </h2>
+                            </div>
+                            <h6
+                                    class="text-muted font-weight-normal mb-0 w-100 text-truncate"
+                            >
+                                Distinct Trades
+                            </h6>
+                        </div>
+                        <div class="ms-auto mt-md-3 mt-lg-0">
                   <span class="opacity-7 text-muted"
-                    ><i data-feather="file-plus"></i
+                  ><i data-feather="file-plus"></i
                   ></span>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex align-items-center">
-                <div>
-                  <h2
-                    class="text-dark mb-1 font-weight-medium"
-                    th:text="${totalBeneficieries}"
-                  >
-                    112
-                  </h2>
-                  <h6
-                    class="text-muted font-weight-normal mb-0 w-100 text-truncate"
-                  >
-                    Active Trades
-                  </h6>
-                </div>
-                <div class="ms-auto mt-md-3 mt-lg-0">
-                  <span class="opacity-7 text-muted"
-                    ><i data-feather="globe"></i
-                  ></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- *************************************************************** -->
-      <!-- End First Cards -->
-      <!-- *************************************************************** -->
-
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header bg-primary">
-              <h4 class="card-title text-white text-center">Applications</h4>
-            </div>
-            <div class="card-body">
-              <div>
-                <canvas id="districtWiseCountIVCS" height="300"></canvas>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header bg-primary">
-              <h4 class="card-title text-white text-center">
-                Merit List
-              </h4>
-            </div>
-            <div class="card-body">
-              <div>
-                <canvas id="districtHHCoverage%" height="300"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-
-<!--        <div class="col-md-6">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                Meritlist-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="districtHHCoverage" height="300"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-6">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                District Loan Disbursed-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="districtLoanDisbursed" height="300"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-6">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                District Outstanding Loan-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="districtOutstandingLoan" height="300"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-6">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                District Count of Saving Account-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="districtCountofSavingAcc" height="300"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-6">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                District Count of Fixed Account-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="districtFixedAccCount" height="300"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-6">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                District Count of Recurring Account-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="districtRecurringAccCount" height="300"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div class="row">-->
-<!--        <div class="col-md-12">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">Block Count</h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="blockWiseCountIVCS" height="100"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="col-md-12">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                Block Household Coverage(%)-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="blockHHCoverage%" height="100"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-12">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                Block Household Coverage-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="blockHHCoverage" height="100"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-12">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                Block Loan Disbursed-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="blockLoanDisbursed" height="100"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-12">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                Block Outstanding Loan-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="blockOutstandingLoan" height="100"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-12">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                Block Count of Saving Account-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="blockCountofSavingAcc" height="100"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-12">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                Block Count of Fixed Account-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="blockFixedAccCount" height="100"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-12">-->
-<!--          <div class="card">-->
-<!--            <div class="card-header bg-primary">-->
-<!--              <h4 class="card-title text-white text-center">-->
-<!--                Block Count of Recurring Account-->
-<!--              </h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--              <div>-->
-<!--                <canvas id="blockRecurringAccCount" height="100"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-      <script th:inline="javascript">
-        document.addEventListener("DOMContentLoaded", () => {
-            "use strict";
-            
-            var districtWiseCountIVCS=[[${districtWiseCountIVCS}]];
-
-                    new Chart(document.getElementById("districtWiseCountIVCS"), {
-                        type: 'pie',
-                        data: {
-                          labels: districtWiseCountIVCS.map(c => c.name),
-                          datasets: [
-                            {
-                              label: "Registered IVCS",
-                              backgroundColor: districtWiseCountIVCS.map( item => getRandomColor()),
-                              data: districtWiseCountIVCS.map(c => c.count)
-                            }
-                          ]
-                        },
-                        options: {
-                          legend: { display: false },
-                          title: {
-                            display: true,
-                            text: 'District Wise IVCS Resgistration Count'
-                          }
-                        }
-                    });
-
-
-
-                    var blockWiseCountIVCS=[[${blockWiseCountIVCS}]];
-                    // Bar chart
-                    new Chart(document.getElementById("blockWiseCountIVCS"), {
-                        type: 'pie',
-                        data: {
-                          labels: blockWiseCountIVCS.map(c => c.name),
-                          datasets: [
-                            {
-                              label: "Registered IVCS",
-                              backgroundColor: blockWiseCountIVCS.map( item => getRandomColor()),
-                              data: blockWiseCountIVCS.map(c => c.count),
-                              stepped: true,
-                            }
-                          ]
-                        },
-                        options: {
-                          legend: { display: false },
-                          title: {
-                            display: true,
-                            text: 'Block Wise IVCS Resgistration Count'
-                          }
-                        }
-                    });
-
-
-
-                    var districtHHCoverage=[[${districtHHCoverage}]];
-
-                    new Chart(document.getElementById("districtHHCoverage%"), {
-                        type: 'bar',
-                        data: {
-                          labels: districtHHCoverage.map(c => c.name),
-                          datasets: [
-                            {
-                              backgroundColor: districtHHCoverage.map( item => getRandomColor()),
-                              data: districtHHCoverage.map(c => c.total_household==0?0:(c.covered/c.total_household) *100)
-                            }
-                          ]
-                        },
-                        options: {
-                            tooltips: {
-                                enabled: true,
-                                mode: 'single',
-                                callbacks: {
-                                    label: function (tooltipItems, data) {
-                                        var i = tooltipItems.index;
-                                        return data.datasets[0].data[i] + " %";
-                                    }
-                                }
-                            },
-                          legend: { display: false },
-                          title: {
-                            display: true,
-                            text: 'District Wise Household Coverage'
-                          },
-                          scales: {
-                                xAxes: [{
-                                    gridLines: {
-                                        display:false
-                                    }
-                                }],
-                                yAxes: [{
-                                    gridLines: {
-                                        display:false
-                                    }
-                                }]
-                            }
-                        }
-                    });
-
-                    new Chart(document.getElementById("districtHHCoverage"), {
-                        type: 'bar',
-                        data: {
-                          labels: districtHHCoverage.map(c => c.name),
-                          datasets: [
-                            {
-                              backgroundColor: districtHHCoverage.map( item => getRandomColor()),
-                              data: districtHHCoverage.map(c => c.covered)
-                            }
-                          ]
-                        },
-                        options: {
-                          legend: { display: false },
-                          title: {
-                            display: true,
-                            text: 'District Wise Household Coverage'
-                          },
-                          scales: {
-                                xAxes: [{
-                                    gridLines: {
-                                        display:false
-                                    }
-                                }],
-                                yAxes: [{
-                                    gridLines: {
-                                        display:false
-                                    }
-                                }]
-                            }
-                        }
-                    });
-
-
-                    var blockHHCoverage=[[${blockHHCoverage}]];
-
-                    new Chart(document.getElementById("blockHHCoverage%"), {
-                        type: 'bar',
-                        data: {
-                          labels: blockHHCoverage.map(c => c.name),
-                          datasets: [
-                            {
-                              backgroundColor: blockHHCoverage.map( item => getRandomColor()),
-                              data: blockHHCoverage.map(c => c.total_household==0?0:(c.covered/c.total_household) *100)
-                            }
-                          ]
-                        },
-                        options: {
-                            tooltips: {
-                                enabled: true,
-                                mode: 'single',
-                                callbacks: {
-                                    label: function (tooltipItems, data) {
-                                        var i = tooltipItems.index;
-                                        return data.datasets[0].data[i] + " %";
-                                    }
-                                }
-                            },
-                          legend: { display: false },
-                          title: {
-                            display: true,
-                            text: 'Block Wise Household Coverage'
-                          },
-                          scales: {
-                                xAxes: [{
-                                    gridLines: {
-                                        display:false
-                                    }
-                                }],
-                                yAxes: [{
-                                    gridLines: {
-                                        display:false
-                                    }
-                                }]
-                            }
-                        }
-                    });
-
-                    new Chart(document.getElementById("blockHHCoverage"), {
-                        type: 'bar',
-                        data: {
-                          labels: blockHHCoverage.map(c => c.name),
-                          datasets: [
-                            {
-                              backgroundColor: blockHHCoverage.map( item => getRandomColor()),
-                              data: blockHHCoverage.map(c => c.covered)
-                            }
-                          ]
-                        },
-                        options: {
-                          legend: { display: false },
-                          title: {
-                            display: true,
-                            text: 'Block Wise Household Coverage'
-                          },
-                          scales: {
-                                xAxes: [{
-                                    gridLines: {
-                                        display:false
-                                    }
-                                }],
-                                yAxes: [{
-                                    gridLines: {
-                                        display:false
-                                    }
-                                }]
-                            }
-                        }
-                    });
-
-
-
-                var districtLoanDisbursed=[[${districtLoanDisbursed}]];
-
-                new Chart(document.getElementById("districtLoanDisbursed"), {
-                    type: 'bar',
-                    data: {
-                    labels: districtLoanDisbursed.map(c => c.name),
-                    datasets: [
-                        {
-                        label: 'Male',
-                        backgroundColor: getRandomColor(),
-                        data: districtLoanDisbursed.map(c => c.malecount)
-                        },
-                        {
-                        label: 'Female',
-                        backgroundColor: getRandomColor(),
-                        data: districtLoanDisbursed.map(c => c.femaleCount)
-                        },
-                        {
-                        label: 'Self Help Group',
-                        backgroundColor: getRandomColor(),
-                        data: districtLoanDisbursed.map(c => c.shgcount)
-                        }
-                    ]
-                    },
-                    options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: 'District Wise Loan Disbursed'
-                    },
-                    scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }]
-                        }
-                    }
-                });
-
-
-                var blockLoanDisbursed=[[${blockLoanDisbursed}]];
-
-                new Chart(document.getElementById("blockLoanDisbursed"), {
-                    type: 'bar',
-                    data: {
-                    labels: blockLoanDisbursed.map(c => c.name),
-                    datasets: [
-                        {
-                        label: 'Male',
-                        backgroundColor: getRandomColor(),
-                        data: blockLoanDisbursed.map(c => c.malecount)
-                        },
-                        {
-                        label: 'Female',
-                        backgroundColor: getRandomColor(),
-                        data: blockLoanDisbursed.map(c => c.femaleCount)
-                        },
-                        {
-                        label: 'Self Help Group',
-                        backgroundColor: getRandomColor(),
-                        data: blockLoanDisbursed.map(c => c.shgcount)
-                        }
-                    ]
-                    },
-                    options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: 'Block Wise Loan Disbursed'
-                    },
-                    scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }]
-                        }
-                    }
-                });
-
-
-                var districtOutstandingLoan=[[${districtOutstandingLoan}]];
-
-                new Chart(document.getElementById("districtOutstandingLoan"), {
-                    type: 'bar',
-                    data: {
-                    labels: districtOutstandingLoan.map(c => c.name),
-                    datasets: [
-                        {
-                        label: 'Amout Due',
-                        backgroundColor: getRandomColor(),
-                        data: districtOutstandingLoan.map(c => c.amountdue)
-                        },
-                        {
-                        label: 'Loan Disbursed',
-                        backgroundColor: getRandomColor(),
-                        data: districtOutstandingLoan.map(c => c.loandisbursed)
-                        },
-                        {
-                        label: 'Repaid Amount',
-                        backgroundColor: getRandomColor(),
-                        data: districtOutstandingLoan.map(c => c.repaidamount)
-                        }
-                    ]
-                    },
-                    options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: 'District Wise Outstanding Loan'
-                    },
-                    scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }]
-                        }
-                    }
-                });
-
-
-                var blockOutstandingLoan=[[${blockOutstandingLoan}]];
-
-                new Chart(document.getElementById("blockOutstandingLoan"), {
-                    type: 'bar',
-                    data: {
-                    labels: blockOutstandingLoan.map(c => c.name),
-                    datasets: [
-                        {
-                        label: 'Amout Due',
-                        backgroundColor: getRandomColor(),
-                        data: districtOutstandingLoan.map(c => c.amountdue)
-                        },
-                        {
-                        label: 'Loan Disbursed',
-                        backgroundColor: getRandomColor(),
-                        data: districtOutstandingLoan.map(c => c.loandisbursed)
-                        },
-                        {
-                        label: 'Repaid Amount',
-                        backgroundColor: getRandomColor(),
-                        data: districtOutstandingLoan.map(c => c.repaidamount)
-                        }
-                    ]
-                    },
-                    options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: 'Block Wise Outstanding Loan'
-                    },
-                    scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }]
-                        }
-                    }
-                });
-
-                var districtCountofSavingAcc=[[${districtCountofSavingAcc}]];
-
-                new Chart(document.getElementById("districtCountofSavingAcc"), {
-                    type: 'bar',
-                    data: {
-                    labels: districtCountofSavingAcc.map(c => c.name),
-                    datasets: [
-                        {
-                        label: 'Male',
-                        backgroundColor: getRandomColor(),
-                        data: districtCountofSavingAcc.map(c => c.malecount)
-                        },
-                        {
-                        label: 'Female',
-                        backgroundColor: getRandomColor(),
-                        data: districtCountofSavingAcc.map(c => c.femalecount)
-                        },
-                        {
-                        label: 'Joint',
-                        backgroundColor: getRandomColor(),
-                        data: districtCountofSavingAcc.map(c => c.jointCount)
-                        },
-                        {
-                        label: 'Self Help Group',
-                        backgroundColor: getRandomColor(),
-                        data: districtCountofSavingAcc.map(c => c.shgcount)
-                        }
-                    ]
-                    },
-                    options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: 'District Wise Outstanding Loan'
-                    },
-                    scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }]
-                        }
-                    }
-                });
-
-
-                var blockCountofSavingAcc=[[${blockCountofSavingAcc}]];
-
-                new Chart(document.getElementById("blockCountofSavingAcc"), {
-                    type: 'bar',
-                    data: {
-                    labels: blockCountofSavingAcc.map(c => c.name),
-                    datasets: [
-                        {
-                        label: 'Male',
-                        backgroundColor: getRandomColor(),
-                        data: districtCountofSavingAcc.map(c => c.malecount)
-                        },
-                        {
-                        label: 'Female',
-                        backgroundColor: getRandomColor(),
-                        data: districtCountofSavingAcc.map(c => c.femalecount)
-                        },
-                        {
-                        label: 'Joint',
-                        backgroundColor: getRandomColor(),
-                        data: districtCountofSavingAcc.map(c => c.jointCount)
-                        },
-                        {
-                        label: 'Self Help Group',
-                        backgroundColor: getRandomColor(),
-                        data: districtCountofSavingAcc.map(c => c.shgcount)
-                        }
-                    ]
-                    },
-                    options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: 'Block Wise Outstanding Loan'
-                    },
-                    scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }]
-                        }
-                    }
-                });
-
-
-                var districtFixedAccCount=[[${districtFixedAccCount}]];
-
-                new Chart(document.getElementById("districtFixedAccCount"), {
-                    type: 'bar',
-                    data: {
-                    labels: districtFixedAccCount.map(c => c.name),
-                    datasets: [
-                        {
-                        label: 'Male',
-                        backgroundColor: getRandomColor(),
-                        data: districtFixedAccCount.map(c => c.malecount)
-                        },
-                        {
-                        label: 'Female',
-                        backgroundColor: getRandomColor(),
-                        data: districtFixedAccCount.map(c => c.femalecount)
-                        },
-                        {
-                        label: 'Joint',
-                        backgroundColor: getRandomColor(),
-                        data: districtFixedAccCount.map(c => c.jointaccountcount)
-                        },
-                        {
-                        label: 'Self Help Group',
-                        backgroundColor: getRandomColor(),
-                        data: districtFixedAccCount.map(c => c.shgcount)
-                        }
-                    ]
-                    },
-                    options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: 'District Wise Fixed Account'
-                    },
-                    scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }]
-                        }
-                    }
-                });
-
-
-                var blockFixedAccCount=[[${blockFixedAccCount}]];
-
-                new Chart(document.getElementById("blockFixedAccCount"), {
-                    type: 'bar',
-                    data: {
-                    labels: blockFixedAccCount.map(c => c.name),
-                    datasets: [
-                        {
-                        label: 'Male',
-                        backgroundColor: getRandomColor(),
-                        data: blockFixedAccCount.map(c => c.malecount)
-                        },
-                        {
-                        label: 'Female',
-                        backgroundColor: getRandomColor(),
-                        data: blockFixedAccCount.map(c => c.femalecount)
-                        },
-                        {
-                        label: 'Joint',
-                        backgroundColor: getRandomColor(),
-                        data: blockFixedAccCount.map(c => c.jointaccountcount)
-                        },
-                        {
-                        label: 'Self Help Group',
-                        backgroundColor: getRandomColor(),
-                        data: blockFixedAccCount.map(c => c.shgcount)
-                        }
-                    ]
-                    },
-                    options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: 'Block Wise Fixed Account'
-                    },
-                    scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }]
-                        }
-                    }
-                });
-
-
-
-                debugger;
-
-
-                var districtRecurringAccCount=[[${districtRecurringAccCount}]];
-
-                new Chart(document.getElementById("districtRecurringAccCount"), {
-                    type: 'bar',
-                    data: {
-                    labels: districtRecurringAccCount.map(c => c.name),
-                    datasets: [
-                        {
-                        label: 'Male',
-                        backgroundColor: getRandomColor(),
-                        data: districtRecurringAccCount.map(c => c.malecount)
-                        },
-                        {
-                        label: 'Female',
-                        backgroundColor: getRandomColor(),
-                        data: districtRecurringAccCount.map(c => c.femalecount)
-                        },
-                        {
-                        label: 'Joint',
-                        backgroundColor: getRandomColor(),
-                        data: districtRecurringAccCount.map(c => c.jointaccountcount)
-                        },
-                        {
-                        label: 'Self Help Group',
-                        backgroundColor: getRandomColor(),
-                        data: districtRecurringAccCount.map(c => c.shgcount)
-                        }
-                    ]
-                    },
-                    options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: 'District Wise Recurring Account'
-                    },
-                    scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }]
-                        }
-                    }
-                });
-
-
-                var blockRecurringAccCount=[[${blockRecurringAccCount}]];
-
-                new Chart(document.getElementById("blockRecurringAccCount"), {
-                    type: 'bar',
-                    data: {
-                    labels: blockRecurringAccCount.map(c => c.name),
-                    datasets: [
-                        {
-                        label: 'Male',
-                        backgroundColor: getRandomColor(),
-                        data: blockRecurringAccCount.map(c => c.malecount)
-                        },
-                        {
-                        label: 'Female',
-                        backgroundColor: getRandomColor(),
-                        data: blockRecurringAccCount.map(c => c.femalecount)
-                        },
-                        {
-                        label: 'Joint',
-                        backgroundColor: getRandomColor(),
-                        data: blockRecurringAccCount.map(c => c.jointaccountcount)
-                        },
-                        {
-                        label: 'Self Help Group',
-                        backgroundColor: getRandomColor(),
-                        data: blockRecurringAccCount.map(c => c.shgcount)
-                        }
-                    ]
-                    },
-                    options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: 'Block Wise Recurring Account'
-                    },
-                    scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    display:false
-                                }
-                            }]
-                        }
-                    }
-                });
-        });
-      </script>
     </div>
-    <!-- ============================================================== -->
-    <!-- End Container fluid  -->
-    <!-- ============================================================== -->
-  </body>
+    <!-- *************************************************************** -->
+    <!-- End First Cards -->
+    <!-- *************************************************************** -->
+
+    <div class="row" id="centersContainer">
+        <!-- The dynamically created cards will be added here -->
+        <div class="col-md-6" th:each="center : ${centers}">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title text-white text-center" th:text="${center.centerName}">Center Name</h4>
+                </div>
+                <div th:id="${center.centerId}" class="card-body">
+                    <div>
+                        <ol th:id="'trades-' + ${center.centerId}" class="trade-list">
+                            <!-- Trades for this center will be added here -->
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+    function populateTrades(centerId) {
+    console.log("inside populateTrades")
+    $.ajax({
+        url: 'api/getCenterTradesByCenterId/' + centerId,
+        type: 'GET',
+        success: function (data) {
+            console.log(data);
+            const tradeListElement = $('#trades-' + centerId);
+            tradeListElement.empty(); // Clear existing trade list
+            // Add each trade name and count to the trade list
+            data.forEach(function (trade) {
+                fetchApplicationCount(centerId, trade.tradeId.tradeCode, function (count) {
+                    const tradeItem = $('<li></li>').html(`${trade.tradeId.tradeName} : <strong>${count}</strong>`);
+                    tradeListElement.append(tradeItem);
+                });
+            });
+        },
+        error: function () {
+            console.log('Error fetching trades for center ID ' + centerId);
+        }
+    });
+}
+
+function fetchApplicationCount(centerId, tradeId, callback) {
+    console.log("fetchApplicationCount");
+    $.ajax({
+        url: 'getApplicationCountByCenterIdAndTradeId/' + centerId + '/' + tradeId,
+        type: 'GET',
+        success: function (count) {
+            callback(count);
+        },
+        error: function () {
+            console.log('Error fetching application count for center ID ' + centerId + ' and trade ID ' + tradeId);
+            callback(0); // Set count to 0 in case of an error
+        }
+    });
+}
+
+// Loop through each center element and fetch trades for each center
+$('.col-md-6').each(function () {
+    const centerId = $(this).find('.card-body').attr('id');
+    populateTrades(centerId);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+
+
+</body>
+
 </html>
+
+
+

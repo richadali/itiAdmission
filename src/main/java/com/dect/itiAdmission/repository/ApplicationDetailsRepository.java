@@ -20,4 +20,6 @@ public interface ApplicationDetailsRepository extends JpaRepository<ApplicationD
             "AND (ap.trades1.tradeCode = :tradeId OR ap.trades2.tradeCode = :tradeId OR ap.trades3.tradeCode = :tradeId) " +
             "AND ap.applicationnumber NOT IN (SELECT ml.applicationDetails.applicationnumber FROM MeritList ml)")
     List<ApplicationDetails> findAllNotInMeritList(Integer centerId, Integer tradeId);
+
+    long countByCentersCenterIdAndTrades1TradeCodeOrCentersCenterIdAndTrades2TradeCodeOrCentersCenterIdAndTrades3TradeCode(Integer centerId, Integer tradeId, Integer centerId1, Integer tradeId1, Integer centerId2, Integer tradeId2);
 }

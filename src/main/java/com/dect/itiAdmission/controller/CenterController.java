@@ -2,8 +2,10 @@ package com.dect.itiAdmission.controller;
 
 import com.dect.itiAdmission.domain.Centers;
 import com.dect.itiAdmission.service.CenterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 @RequestMapping("secure")
 public class CenterController {
 
+    @Autowired
     private CenterService centerService;
 
     public CenterController(CenterService centerService) {
@@ -28,5 +31,6 @@ public class CenterController {
 //        return ResponseEntity.ok(centers);
         return new ResponseEntity<>(centerService.addCenter(centers), HttpStatus.OK);
     }
+
 
 }
