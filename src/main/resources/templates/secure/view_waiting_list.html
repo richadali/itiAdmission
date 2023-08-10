@@ -389,6 +389,10 @@ $(document).ready(function() {
         columnDefs: [
             // Column Definitions for customizations
             {
+                targets: '_all', // Targets all columns
+                orderable: false // Disable sorting
+            },
+            {
                 targets: [5, 6, 7], // Indexes of columns to customize (0-based index)
             }
         ],
@@ -589,6 +593,7 @@ $(document).ready(function() {
             }
         });
     }
+
 
 
 
