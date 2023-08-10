@@ -412,6 +412,10 @@ $(document).ready(function() {
         ],
         columnDefs: [
             // Column Definitions for customizations
+             {
+                targets: '_all', // Targets all columns
+                orderable: false // Disable sorting
+            },
             {
                 targets: [5, 6, 7], // Indexes of columns to customize (0-based index)
             }
@@ -468,8 +472,8 @@ $(document).ready(function() {
                         $(thead).find('th:eq(6)').css('background-color', ''); // %10th column header
                         $(thead).find('th:eq(7)').css('background-color', ''); // %mathsSci column header
                     } else if (isMathsScienceY) {
-                        $(thead).find('th:eq(5)').css('background-color', ''); // %8th column header
-                        $(thead).find('th:eq(6)').css('background-color', '#3f4f9b'); // %10th column header
+                        $(thead).find('th:eq(5)').css('background-color', '#3f4f9b'); // %8th column header
+                        $(thead).find('th:eq(6)').css('background-color', ''); // %10th column header
                         $(thead).find('th:eq(7)').css('background-color', ''); // %mathsSci column header
                     } else if (isMathsScienceN) {
                         $(thead).find('th:eq(5)').css('background-color', '#3f4f9b'); // %8th column header
@@ -503,6 +507,7 @@ $(document).ready(function() {
                     row.push(candidate.percentageeight, candidate.percentagetenth, candidate.percentage);
                 }
                 row.push('<button onclick="abc(\'' + candidate.applicationnumber + '\')" class="btn btn-primary btn-sm view-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>');
+
 
 
                 // Add the row to the table
@@ -599,8 +604,8 @@ $(document).ready(function() {
                 $("#divisionEight").val(data.divisioneight);
                 $("#subjectsEight").val(data.subjectseight);
                 $("#preferenceOne").val(data.trades1.tradeName);
-                $("#preferenceTwo").val(data.trades2.tradeName);
-                $("#preferenceThree").val(data.trades3.tradeName);
+                $("#preferenceTwo").val(data.trades2 ? data.trades2.tradeName : '');
+                $("#preferenceThree").val(data.trades3 ? data.trades3.tradeName : '');
                 $("#submissionDate").val(data.submissiondatte);
                 $("#ph").val(data.ph);
 
@@ -611,6 +616,14 @@ $(document).ready(function() {
             }
         });
     }
+
+
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,6 @@
 package com.dect.itiAdmission.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -82,9 +84,11 @@ public class ApplicationDetails {
     private Trades trades1;
     @OneToOne
     @JoinColumn(name = "preferencetwo", nullable = true)
+//    @JsonIgnore
     private Trades trades2;
     @OneToOne
-    @JoinColumn(name = "preferencethree", nullable = true )
+    @JoinColumn(name = "preferencethree", nullable = true)
+//    @JsonIgnore
     private Trades trades3;
     @Temporal(TemporalType.DATE)
     private Date submissiondate;

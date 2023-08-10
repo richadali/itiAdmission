@@ -137,6 +137,7 @@
             url: "application_no",
             data: "id="+id,
             success: function (data) {
+                console.log(data);
                 $("#applicationNumber").val(data.applicationnumber);
                 $("#centerName").val(data.centers.centerName);
                 $("#centerId").val(data.centers.centerId);
@@ -189,17 +190,17 @@
                 $("#percentageEight").val(data.percentageeight);
                 $("#divisionEight").val(data.divisioneight);
                 $("#subjectsEight").val(data.subjectseight);
-                $("#preferenceOne").val(data.trades1.tradeName);
-                $("#preferenceTwo").val(data.trades2.tradeName);
-                $("#preferenceThree").val(data.trades3.tradeName);
                 $("#submissionDate").val(data.submissiondatte);
                 $("#ph").val(data.ph);
 
                 var selectedTrades = [
-        { id: data.trades1.tradeCode, name: data.trades1.tradeName },
-        { id: data.trades2.tradeCode, name: data.trades2.tradeName },
-        { id: data.trades3.tradeCode, name: data.trades3.tradeName }
-    ];
+                    { id: data.trades1.tradeCode, name: data.trades1.tradeName }
+                ];
+
+                if( data.trades2!=null)
+                    selectedTrades.push({ id: data.trades2.tradeCode, name: data.trades2.tradeName });
+                if(data.trades2!=null)
+                    selectedTrades.push( { id: data.trades3.tradeCode, name: data.trades3.tradeName });
 
     var selectedTradesDropdown = $('#selectedTradesDropdown');
     console.log(selectedTradesDropdown);
@@ -289,6 +290,30 @@ $(document).ready(function() {
 });
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     </script>

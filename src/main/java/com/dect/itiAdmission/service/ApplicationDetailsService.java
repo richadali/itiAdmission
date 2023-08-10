@@ -52,6 +52,7 @@ public class ApplicationDetailsService {
                 .orElseThrow(() -> new ApplicantNotPresent("Application No with " + applicationnumber + " is not present."));
     }
 
+    //    public GetApplicationDetailsDTO convertToGetApplicationDetailsDTO()
     public List<GetApplicationDetailsDTO> getApplicationByCenterIdAndTradeId(Integer centerId, Integer tradeId) {
         Trades trades = tradesRepository.findById(tradeId).orElseThrow(null);
         List<GetApplicationDetailsDTO> getApplicationDetailsDTO = new ArrayList<>();
@@ -63,7 +64,7 @@ public class ApplicationDetailsService {
                     getApplicationDetailsDTO.add(convertToGetApplicationDetailsDTO(applicationDetails, tradeId));
                 }
                 assert false;
-                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentage).reversed()).collect(Collectors.toList());
+                return getApplicationDetailsDTO.stream().sorted(Comparator.comparing(GetApplicationDetailsDTO::getPercentagetenth).reversed()).collect(Collectors.toList());
             } else if (trades.getTenthPass() == 'Y') {
                 List<ApplicationDetails> applicationDetailsList = applicationDetailsRepository.findByCentersCenterIdAndTrades1TradeCodeOrCentersCenterIdAndTrades2TradeCodeOrCentersCenterIdAndTrades3TradeCode(centerId, tradeId, centerId, tradeId, centerId, tradeId);
                 if (applicationDetailsList != null) {

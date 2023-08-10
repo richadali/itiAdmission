@@ -52,9 +52,6 @@ public class ApplicationDetailsController {
     ///secure
     @GetMapping("getApplicationByCenterIdAndTradeId/{centerId}/{tradeId}")
     public List<?> getApplicationByCenterIdAndTradeId(@PathVariable Integer centerId, @PathVariable Integer tradeId) {
-//        ApplicationDetails applicationDetails = applicationnumber.applicationDetails(id);
-//        System.out.println(applicationDetails);
-//        model.addAttribute("applicationDetails", applicationDetails);
         System.out.println("-----------------------------------------------");
         List<GetApplicationDetailsDTO> getApplicationDetailsDTO = applicationDetailsService.getApplicationByCenterIdAndTradeId(centerId, tradeId);
         getApplicationDetailsDTO.forEach(System.out::println);

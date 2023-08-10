@@ -689,8 +689,8 @@ $(document).ready(function() {
                 $("#divisionEight").val(data.divisioneight);
                 $("#subjectsEight").val(data.subjectseight);
                 $("#preferenceOne").val(data.trades1.tradeName);
-                $("#preferenceTwo").val(data.trades2.tradeName);
-                $("#preferenceThree").val(data.trades3.tradeName);
+                $("#preferenceTwo").val(data.trades2 ? data.trades2.tradeName : '');
+                $("#preferenceThree").val(data.trades3 ? data.trades3.tradeName : '');
                 $("#submissionDate").val(data.submissiondatte);
                 $("#ph").val(data.ph);
 
