@@ -57,7 +57,12 @@
                             </div>
                         </form>
                     </div>
-
+                    <div id="loader" class="d-none"
+                         style="display: flex; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000;">
+                        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
                     <div class="row mt-5" style="display: none" id="tableContainer">
 
                         <div class="table-responsive">
@@ -341,7 +346,7 @@ $(document).ready(function() {
 
                     // Set page size to A4 landscape
                     doc.pageSize = 'A4';
-                    doc.pageOrientation = 'portrait';
+                    doc.pageOrientation = 'landscape';
 
                     // Remove the "exported data" heading
     doc.content.splice(0, 1);
@@ -410,6 +415,10 @@ $(document).ready(function() {
     });
 
     function populateCandidateTable(selectedITI, selectedTrade) {
+
+        tableContainer.style.display = "none";
+        document.getElementById("loader").classList.remove("d-none");
+
         // Clear the table body
         table.clear().draw();
 
@@ -421,6 +430,7 @@ $(document).ready(function() {
             url: 'getMeritListByCenterIdAndTradeId/' + selectedITI + '/' + selectedTrade,
             method: 'GET',
             success: function(response) {
+            document.getElementById("loader").classList.add("d-none");
             console.log(response);
 
             if (response && response.length > 0) {
@@ -503,6 +513,7 @@ $(document).ready(function() {
             },
             error: function() {
                 console.error('Error fetching candidates.');
+                document.getElementById("loader").classList.add("d-none");
             }
         });
     }
@@ -620,6 +631,11 @@ $(document).ready(function() {
     });
     }
 }
+
+
+
+
+
 
 
 
